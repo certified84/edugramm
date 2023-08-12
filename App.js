@@ -11,8 +11,8 @@ const Stack = createStackNavigator();
 
 // SCREENS IMPORTS
 import {
-  // OnBoardingScreen, AnimatedSplashScreen,
-  ForgotPasswordScreen, LoginScreen, SignupScreen
+  // AnimatedSplashScreen,
+  OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen
 } from './screens';
 import { COLORS, SIZES } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -24,11 +24,12 @@ const App = () => {
 
   // FONT CONFIG 
   const [fontsLoaded] = useFonts({
-    'comic-lg': require('./assets/fonts/comic-sans-bold.ttf'), //
-    'comic-md': require('./assets/fonts/comic-sans.ttf'), // md 
-    'comic-sm': require('./assets/fonts/comic-sans-light.ttf'), // sm
-    'comic-xs': require('./assets/fonts/comic-sans-hairline.ttf'), // xs
-    'comic-xxs': require('./assets/fonts/comic-sans-hairline.ttf'), // xxs
+    'space-grotesk-bold': require('./assets/fonts/space_grotesk_bold.ttf'), // lg
+    'space-grotesk-semi-bold': require('./assets/fonts/space_grotesk_semi_bold.ttf'), // md
+    'space-grotesk-medium': require('./assets/fonts/space_grotesk_medium.ttf'), // sm
+    'space-grotesk-regular': require('./assets/fonts/space_grotesk_regular.ttf'), // xs
+    'space-grotesk-light': require('./assets/fonts/space_grotesk_light.ttf'), // xxs
+    'sansita-italic': require('./assets/fonts/sansita-italic.ttf'), // sansita-italic
   });
 
   if (!fontsLoaded) {
@@ -41,7 +42,7 @@ const App = () => {
       <MenuProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="LoginScreen"
+            initialRouteName="OnboardingScreen"
             screenOptions={{
               headerTitleStyle: { ...customHeaderTitleStyle },
               headerBackTitle: " ",
@@ -51,14 +52,14 @@ const App = () => {
               }
             }}
           >
-            {/* <Stack.Screen
-              name="OnBoardingScreen"
-              component={OnBoardingScreen}
+            <Stack.Screen
+              name="OnboardingScreen"
+              component={OnboardingScreen}
               options={{
                 headerShown: false,
                 gestureEnabled: false
               }}
-            /> */}
+            />
             <Stack.Screen
               name="ForgotPasswordScreen"
               component={ForgotPasswordScreen}
@@ -82,13 +83,6 @@ const App = () => {
                 gestureEnabled: false
               }}
             />
-            {/* <Stack.Screen
-              name="FeedDetailed"
-              component={FeedDetailed}
-              options={{
-                title: "School Feed",
-              }}
-            /> */}
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>
