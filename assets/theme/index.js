@@ -2,22 +2,65 @@ import { StyleSheet } from "react-native";
 
 
 export const COLORS = {
-    black: "#000",
-    white: "#fff",
+
+    // General Colors
+    black: '#000000',
+    black40: '#B3000000',
+    white: '#FFFFFF',
+    white50: '#80B3BD',
     green: "green",
     red: "#C00000",
     yellow: '#F5C51B',
-
-    primary: "#AE0057",
     primaryLight: "#F9BBE7",
-    primaryDark: "#650032",
-
-    secondary: "#13005C",
     secondaryLight: "",
-
-    tertiary: "#F5C51B",
     lightGray: "#E9E9E9",
-    darkGray: "#B4B4B4"
+    darkGray: "#B4B4B4",
+    
+    // Light mode colors
+    primary: '#00687B',
+    onPrimary: '#FFFFFF',
+    primaryContainer: '#AFECFF',
+    onPrimaryContainer: '#001F27',
+    secondary: '#4B6269',
+    onSecondary: '#FFFFFF',
+    secondaryContainer: '#CEE7EF',
+    onSecondaryContainer: '#061F25',
+    tertiary: '#575C7E',
+    onTertiary: '#FFFFFF',
+    tertiaryContainer: '#DEE0FF',
+    onTertiaryContainer: '#141937',
+    background: '#FBFCFE',
+    onBackground: '#191C1D',
+    surface: '#FBFCFE',
+    onSurface: '#191C1D',
+    error: '#BA1A1A',
+    onError: '#FFFFFF',
+    errorContainer: '#FFDAD6',
+    onErrorContainer: '#410002',
+    surface1: '#EEF5F7',
+    
+    // Dark mode colors
+    primaryDark: '#57D6F6',
+    onPrimaryDark: '#003641',
+    primaryContainerDark: '#004E5D',
+    onPrimaryContainerDark: '#AFECFF',
+    secondaryDark: '#B2CBD3',
+    onSecondaryDark: '#1D343A',
+    secondaryContainerDark: '#344A51',
+    onSecondaryContainerDark: '#CEE7EF',
+    tertiaryDark: '#C0C4EB',
+    onTertiaryDark: '#292E4D',
+    tertiaryContainerDark: '#404565',
+    onTertiaryContainerDark: '#DEE0FF',
+    backgroundDark: '#191C1D',
+    onBackgroundDark: '#E1E3E4',
+    surfaceDark: '#191C1D',
+    onSurfaceDark: '#E1E3E4',
+    errorDark: '#FFB4AB',
+    onErrorDark: '#690005',
+    errorContainerDark: '#93000A',
+    onErrorContainerDark: '#FFDAD6',
+    surface1Dark: '#1C2528',
 }
 
 export const SIZES = {
@@ -27,25 +70,26 @@ export const SIZES = {
     md: 18,
     lg: 22,
     xl: 26,
+    xxl: 32,
 }
 
 
 export const TYPOGRAPHY = {
     h1: {
         color: COLORS.black,
-        fontFamily: "comic-lg",
+        fontFamily: "space-grotesk-bold",
         fontWeight: "700",
         fontSize: SIZES.md
     },
     h2: {
         color: COLORS.black,
-        fontFamily: "comic-md",
+        fontFamily: "space-grotesk-medium",
         fontWeight: "400",
         fontSize: SIZES.sm
     },
     p: {
         color: COLORS.black,
-        fontFamily: "comic-sm",
+        fontFamily: "space-grotesk-regular",
         fontWeight: "400",
         fontSize: SIZES.sm
     },
