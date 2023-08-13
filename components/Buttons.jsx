@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { COLORS, SIZES, TYPOGRAPHY } from '../assets/theme'
+import { GoogleIcon } from '../assets/svg/SvgIcons'
 
 export const AuthButton = ({text, textColor, buttonColor, onPress}) => {
   return (
@@ -24,16 +25,32 @@ export const DefaultButton = ({ onPress, buttonTitle }) => {
   )
 }
 
-export const ActionButton = ({ onPress, buttonTitle, buttonColor, textColor }) => {
+export const ActionButton = ({style, onPress, buttonTitle, buttonColor, textColor }) => {
   return (
     <TouchableOpacity
-      style={{...styles.actionBtn, backgroundColor: buttonColor}}
+      style={{...styles.actionBtn, ...style, backgroundColor: buttonColor}}
       activeOpacity={0.5}
       onPress={onPress}
     >
       <Text style={{...styles.defaultBtnText, color: textColor}}>
         {buttonTitle}
       </Text>
+    </TouchableOpacity>
+  )
+}
+
+export const GoogleButton = ({style, onPress, buttonTitle, buttonColor, textColor }) => {
+  return (
+    <TouchableOpacity
+      style={{...styles.actionBtn, ...styles.googleBtn, ...style, backgroundColor: buttonColor}}
+      activeOpacity={0.5}
+      onPress={onPress}
+    >
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: SIZES.sm }}>
+          <GoogleIcon />
+          <View style={{ marginHorizontal: SIZES.xs, }} />
+          <Text style={{ ...TYPOGRAPHY.h2, ...styles.forgotPassword, textDecorationLine: "none" }}>{buttonTitle}</Text>
+      </View>
     </TouchableOpacity>
   )
 }
@@ -75,4 +92,14 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       backgroundColor: '#F5C51B',
   },
+  forgotPassword: {
+      color: COLORS.primary,
+      fontWeight: '700',
+      textDecorationLine: 'underline',
+  },
+  googleBtn: {
+    backgroundColor: COLORS.surface1,
+    borderWidth: 2,
+    borderColor: COLORS.primary,
+  }
 })

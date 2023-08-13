@@ -1,97 +1,65 @@
 import {
-    SafeAreaView, View, Text, StyleSheet,
-    TouchableOpacity, ImageBackground
+    SafeAreaView, View, Text,
+    TouchableOpacity, useWindowDimensions
 } from 'react-native'
 import { TextInput } from 'react-native-paper';
-import { TYPOGRAPHY, LINE, COLORS, SIZES } from '../../assets/theme'
-import { AuthButton } from '../../components/Buttons'
+import { TYPOGRAPHY, COLORS, SIZES } from '../../assets/theme'
+import { ActionButton, GoogleButton } from '../../components/Buttons'
 import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
-import { SkoolDuoIcon, GoogleIcon } from '../../assets/svg/SvgIcons';
 
 
 const SignupScreen = () => {
     const navigation = useNavigation()
+    const { width } = useWindowDimensions()
     return (
         <SafeAreaView style={styles.container}>
+            <View style={{flex: 1, margin: SIZES.md}}>
+                <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign up</Text>
+                <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We could use your presence here</Text>
+                
+                <TextInput
+                    mode="outlined"
+                    placeholder='Email'
+                    theme={{ roundness: SIZES.xs }}
+                    style={[styles.inputField, {marginTop: SIZES.xl}]}
+                    underlineColor={COLORS.onSecondaryContainer}
+                    activeOutlineColor={COLORS.secondaryContainer}
+                    placeholderTextColor={COLORS.onSecondaryContainer}
+                    textColor={COLORS.onSecondaryContainer}
+                />
 
-            <ImageBackground style={{ flex: 1, }}>
+                <TextInput
+                    mode="outlined"
+                    placeholder='Password'
+                    theme={{ roundness: SIZES.xs }}
+                    style={styles.inputField}
+                    underlineColor={COLORS.onSecondaryContainer}
+                    activeOutlineColor={COLORS.secondaryContainer}
+                    placeholderTextColor={COLORS.onSecondaryContainer}
+                    textColor={COLORS.onSecondaryContainer}
+                />
 
-                <View style={{ flex: 0.4, alignItems: 'center' }}>
-                    <SkoolDuoIcon />
+                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
+
+                <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
+                    <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
+                    <Text>OR</Text>
+                    <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
-                <View style={styles.cardContainer}>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            // mode="outlined"
-                            placeholder='Enter Email or Phone Number'
-                            theme={{ roundness: 2 }}
-                            left={<TextInput.Icon icon="email" iconColor={COLORS.white} />}
-                            style={[styles.inputField]}
-                            underlineColor={COLORS.white}
-                            activeOutlineColor={COLORS.primary}
-                            backgroundColor={COLORS.primary}
-                            placeholderTextColor={COLORS.white}
-                            textColor={COLORS.white}
-                        />
-                        <View style={{ marginVertical: SIZES.xs - 4, }} />
-                        <TextInput
-                            // mode="outlined"
-                            placeholder='Enter Password'
-                            theme={{ roundness: 2 }}
-                            left={<TextInput.Icon icon="lock" iconColor={COLORS.white} />}
-                            right={<TextInput.Icon icon="eye" iconColor={COLORS.white} />}
-                            style={styles.inputField}
-                            underlineColor={COLORS.white}
-                            activeOutlineColor={COLORS.primary}
-                            backgroundColor={COLORS.primary}
-                            placeholderTextColor={COLORS.white}
-                            textColor={COLORS.white}
-                        />
-                        <View style={{ marginVertical: SIZES.xs - 4, }} />
-                        <TextInput
-                            // mode="outlined"
-                            placeholder='Confirm Password'
-                            theme={{ roundness: 2 }}
-                            left={<TextInput.Icon icon="lock" iconColor={COLORS.white} />}
-                            right={<TextInput.Icon icon="eye" iconColor={COLORS.white} />}
-                            style={styles.inputField}
-                            underlineColor={COLORS.white}
-                            activeOutlineColor={COLORS.primary}
-                            backgroundColor={COLORS.primary}
-                            placeholderTextColor={COLORS.white}
-                            textColor={COLORS.white}
-                        />
+                <GoogleButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up With Google'} />
 
-                        <AuthButton text='Signup' />
-                    </View>
-
-                    <View style={styles.loginWithGoogleContainer}>
-                        <TouchableOpacity
-                            style={styles.signupButton}
-                            activeOpacity={0.5}
-                            onPress={() => { navigation.navigate("LoginScreen") }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, ...styles.forgotPassword }}>Login here</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={styles.loginWithGoogleButton}
-                            activeOpacity={0.5}
-                            onPress={() => { navigation.navigate("RegisterScreen") }}>
-                            <View style={{ flexDirection: 'row', }}>
-                                <GoogleIcon />
-                                <View style={{ marginHorizontal: SIZES.xs, }} />
-                                <Text style={{ ...TYPOGRAPHY.h2, ...styles.forgotPassword, textDecorationLine: "none" }}>Signup with Google</Text>
-                            </View>
+                <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
+                    <View style={{height: 1, width: '100%', backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Already have an account?</Text>
+                        <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}} onPress={() => { navigation.navigate("LoginScreen") }}>
+                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Sign in.</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                <View style={styles.zettaworksContainer}>
-                    <Text style={styles.zettaworks}>Powered by Zettaworks Technologies</Text>
-                </View>
-            </ImageBackground>
+            </View>
         </SafeAreaView>
     )
 }

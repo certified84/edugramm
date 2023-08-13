@@ -64,7 +64,7 @@ const App = () => {
               name="ForgotPasswordScreen"
               component={ForgotPasswordScreen}
               options={{
-                title: "Forgot Password",
+                headerShown: false,
               }}
             />
             <Stack.Screen
