@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   actionBtn: {
     backgroundColor: COLORS.primary,
-    borderRadius: '50%',
+    borderRadius: 50,
     width: "90%",
     alignSelf: "center"
   },
