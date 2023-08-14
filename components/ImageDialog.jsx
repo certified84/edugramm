@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Button, Text, View, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS, SIZES, TYPOGRAPHY } from "../assets/theme";
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
@@ -8,50 +8,60 @@ import { FlatList } from "react-native-gesture-handler";
 
 const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image }) => {
 
+    const {width, height} = useWindowDimensions()
 
     return (
         //    {/* https://www.npmjs.com/package/react-native-modal */}
         <Modal
             isVisible={showImageDialog}
             onBackdropPress={() => setShowImageDialog(false)}
-            // animationIn="slideInLeft"
-            // animationOut="slideOutRight"
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            backdropOpacity={1}
+            deviceWidth={width}
+            deviceHeight={height}
+            // swipeDirection={["down",'left','right']}
+            onSwipeComplete={(gestureState) => setShowImageDialog(false)}
+            style={{margin: 0}}
             // animationOutTiming={500}
         >
 
-            <SafeAreaView style={styles.container} >
-                {console.log(images)}
-                {console.log(image)}
+            <SafeAreaView style={{...styles.container}} >
+                {console.log(`Images: ${images}: End`)}
+                {/* {console.log(image)} */}
+                <View style={{flex: .2, justifyContent: 'center', paddingStart: SIZES.md}}>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(false)} style={{backgroundColor: COLORS.white20, width: 35, height: 35, borderRadius: 25, justifyContent: 'center'}}>
+                        <MaterialIcons style={{alignSelf: 'center'}} name='close' size={30} color={COLORS.white} />
+                    </TouchableOpacity>
+                </View>
                 {
-                    images && <FlatList
+                    images.length > 1 ? 
+                    <FlatList
                         data={images}
-                        // style={{backgroundColor: 'green'}}
+
                         horizontal
-                        renderItem={({ item }) => 
+                        renderItem={({ item }) =>
                             <Image
-                            source={{ uri: item, }}
-                            style={{
-                                flex: 1,
-                                width: "100%",
-                            }} 
+                                source={{ uri: item }}
+                                style={{
+                                    flex: 1,
+                                    width: width
+                                }} 
                             />
                         }
                         pagingEnabled
                         keyExtractor={(index) => index}
                         alwaysBounceVertical={false}
                         showsHorizontalScrollIndicator={false}
-                    />
-                }
-
-                {
-                    image && <Image
+                    /> :
+                    <Image
                         source={{ uri: image, }}
                         style={{
                             flex: 1,
-                            width: "100%",
                         }} 
                     />
                 }
+                <View style={{flex: .2}} />
             </SafeAreaView>
         </Modal>
     );
@@ -62,5 +72,6 @@ export default ChatDialog
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.black
     }
 })
