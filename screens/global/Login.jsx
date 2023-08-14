@@ -39,7 +39,7 @@ const LoginScreen = () => {
                     <Text style={{ ...TYPOGRAPHY.h2, ...styles.forgotPassword }}>Forgot Password?</Text>
                 </TouchableOpacity>
 
-                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
+                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary} onPress={() => { navigation.navigate("HomeScreen") }} />
 
                 <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
