@@ -14,7 +14,7 @@ import FeedComment from './FeedComment';
 import FeedDetailedCard from './FeedDetailedCard';
 
 const FeedDetailedScreen = ({ route }) => {
-    
+
     const item = route.params.item
     const navigation = route.params.navigation
 
@@ -30,9 +30,9 @@ const FeedDetailedScreen = ({ route }) => {
                 <ScrollView style={{flex: 1}}>
                     <FeedDetailedCard item={item} navigation={navigation} />
 
-                    <View style={{ paddingHorizontal: SIZES.md, marginBottom: SIZES.xl}}>
-                        <FeedComment />
-                        <FeedComment subComment={true} />
+                    <View style={{ marginBottom: SIZES.xl}}>
+                        <FeedComment item={item} />
+                        <FeedComment item={item} />
                     </View>
 
                 </ScrollView>

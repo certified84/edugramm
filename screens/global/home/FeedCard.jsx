@@ -15,7 +15,7 @@ const FeedCard = ({ item, navigation }) => {
     const [liked, setLiked] = useState(false);
 
     return (
-        <View activeOpacity={1} style={{flex: 1, width: width}}>
+        <View style={{flex: 1, width: width}}>
 
             <ImageDialog
                 showImageDialog={showImageDialog}
@@ -43,7 +43,7 @@ const FeedCard = ({ item, navigation }) => {
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text>{` \u2022 11h`}</Text>
+                        <Text style={{flex: 1, textAlign: 'right'}}>{` \u2022 11h`}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
                         <Text style={{ ...TYPOGRAPHY.p }} numberOfLines={8}>

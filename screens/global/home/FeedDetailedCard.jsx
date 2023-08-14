@@ -15,7 +15,7 @@ const FeedDetailedCard = ({ item, navigation }) => {
     const [liked, setLiked] = useState(false);
 
     return (
-        <View style={{flex: 1, width: width}} onPress={() => navigation.navigate("FeedDetailed", { item })}>
+        <View style={{flex: 1, width: width}}>
 
             <ImageDialog
                 showImageDialog={showImageDialog}
