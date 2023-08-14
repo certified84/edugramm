@@ -6,30 +6,31 @@ import { COLORS, SIZES, TYPOGRAPHY } from '../../../assets/theme'
 import React, { useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
-import ChatDialog from '../../../components/ChatDialog';
+import ImageDialog from '../../../components/ImageDialog';
 
 const FeedDetailedCard = ({ item, navigation }) => {
 
     const { width } = useWindowDimensions()
-    const [showPersonDialog, setShowPersonDialog] = useState(false);
+    const [showImageDialog, setShowImageDialog] = useState(false);
     const [liked, setLiked] = useState(false);
 
     return (
         <View style={{flex: 1, width: width}} onPress={() => navigation.navigate("FeedDetailed", { item })}>
-            {/* Show person dialog modal  */}
-            <ChatDialog
-                showPersonDialog={showPersonDialog}
-                setShowPersonDialog={setShowPersonDialog}
+
+            <ImageDialog
+                showImageDialog={showImageDialog}
+                setShowImageDialog={setShowImageDialog}
                 name={item.full_name}
                 image={item.image_url}
+                images={item.images}
             />
 
             <View style={{paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
                 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => { setShowPersonDialog(true) }} >
-                        <Avatar.Image size={50} source={{ uri: item.user_photo }} />
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => { }}>
+                        <Avatar.Image size={40} source={{ uri: item.user_photo }} />
                     </TouchableOpacity>
 
                     <View style={{marginHorizontal: SIZES.xxs}}>
@@ -46,15 +47,13 @@ const FeedDetailedCard = ({ item, navigation }) => {
                             }
                         </View>
 
-                        <Text style={{ ...TYPOGRAPHY.h2, color: "#6F6F6F" }}>@{item.username}</Text>
-
                     </View>
 
                     <Text style={{flex: 1, textAlign: 'right'}}>{`1d`}</Text>
                 
                 </View>
 
-                <View style={{flex: 1, marginStart: SIZES.xxs, marginTop: SIZES.xxs}}>
+                <View style={{flex: 1, marginTop: SIZES.xxs}}>
                     <Text style={{ ...TYPOGRAPHY.p }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
                         molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
@@ -65,18 +64,33 @@ const FeedDetailedCard = ({ item, navigation }) => {
                         tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
                         quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
                     </Text>
+
                     { 
-                        item.images.length === 1 && <Image source={{ uri: item.images[0] }} style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm, marginTop: SIZES.xxs}} />
+                        item.images.length === 1 && 
+                        <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: '100%', height: width * .8, marginTop: SIZES.xs}}>
+                            <Image 
+                                source={{ uri: item.images[0] }} 
+                                style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm}} 
+                                onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}
+                            />
+                        </TouchableOpacity>
                     }
                     { 
-                        item.images.length > 1 && <FlatList
-                            data={item.images}
-                            horizontal
-                            renderItem={({ item }) => <Image source={{ uri: item }} style={{ width: width * .7, height: width * .8, borderRadius: SIZES.sm, marginTop: SIZES.xs, marginEnd: SIZES.xs}} />}
-                            keyExtractor={(index) => index}
-                            alwaysBounceVertical={false}
-                            showsHorizontalScrollIndicator={false}
-                        />
+                        item.images.length > 1 && 
+                        <>
+                            <FlatList
+                                data={item.images}
+                                horizontal
+                                renderItem={({ item }) => 
+                                    <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs, marginEnd: SIZES.xs}}>
+                                        <Image source={{ uri: item }} style={{ width: width * .7, height: width * .8, borderRadius: SIZES.sm}} />
+                                    </TouchableOpacity>
+                                }
+                                keyExtractor={(index) => index}
+                                alwaysBounceVertical={false}
+                                showsHorizontalScrollIndicator={false}
+                            />
+                        </>
                     }
 
                     <View style={{...styles.bottomSection}}>

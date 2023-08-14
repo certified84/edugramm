@@ -16,7 +16,7 @@ const FeedCard = ({ item, navigation }) => {
 
     return (
         <View activeOpacity={1} style={{flex: 1, width: width}}>
-            
+
             <ImageDialog
                 showImageDialog={showImageDialog}
                 setShowImageDialog={setShowImageDialog}
@@ -28,9 +28,9 @@ const FeedCard = ({ item, navigation }) => {
             <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
                 <View>
                     <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {}} >
-                        <Avatar.Image size={50} source={{ uri: item.user_photo }} />
+                        <Avatar.Image size={40} source={{ uri: item.user_photo }} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("FeedDetailedScreen", { item })}/>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("FeedDetailedScreen", { item, navigation })}/>
                 </View>
                 <View style={{flex: 1, marginStart: SIZES.xxs}}>
                     <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
@@ -43,10 +43,9 @@ const FeedCard = ({ item, navigation }) => {
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text style={{ ...TYPOGRAPHY.h2, color: "#6F6F6F" }}>@{item.username}</Text>
                         <Text>{` \u2022 11h`}</Text>
                     </View>
-                    <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
                         <Text style={{ ...TYPOGRAPHY.p }} numberOfLines={8}>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
                             molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
@@ -64,7 +63,7 @@ const FeedCard = ({ item, navigation }) => {
                             <Image 
                                 source={{ uri: item.images[0] }} 
                                 style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm}} 
-                                onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}
+                                onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}
                             />
                         </TouchableOpacity>
                     }
@@ -86,7 +85,7 @@ const FeedCard = ({ item, navigation }) => {
                         </>
                     }
 
-                    <TouchableOpacity style={{...styles.bottomSection}} activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}>
+                    <TouchableOpacity style={{...styles.bottomSection}} activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
                         <View style={{ flexDirection: "row", flex: 1, alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => { setLiked(!liked) }}>
                                 <AntDesign name={liked ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />

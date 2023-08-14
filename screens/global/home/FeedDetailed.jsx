@@ -13,13 +13,21 @@ import FeedCard from './FeedCard';
 import FeedComment from './FeedComment';
 import FeedDetailedCard from './FeedDetailedCard';
 
-const FeedDetailedScreen = ({ route, navigation }) => {
+const FeedDetailedScreen = ({ route }) => {
+    
     const item = route.params.item
+    const navigation = route.params.navigation
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flex: 0.9 }}>
-                <ScrollView>
+                <View style={{flex: .1, flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
+                        <MaterialIcons name='arrow-back' size={SIZES.xl}/>
+                    </TouchableOpacity>
+                    <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl}}>Post</Text>
+                </View>
+                <ScrollView style={{flex: 1}}>
                     <FeedDetailedCard item={item} navigation={navigation} />
 
                     <View style={{ paddingHorizontal: SIZES.md, marginBottom: SIZES.xl}}>
@@ -29,7 +37,6 @@ const FeedDetailedScreen = ({ route, navigation }) => {
 
                 </ScrollView>
             </View>
-
 
             <View style={{ flex: 0.1 }}>
                 <TextInput
