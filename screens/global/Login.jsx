@@ -1,4 +1,4 @@
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, StatusBar } from 'react-native'
 import { TYPOGRAPHY, COLORS, SIZES } from '../../assets/theme'
 import { TextInput } from 'react-native-paper';
 import { ActionButton, GoogleButton } from '../../components/Buttons'
@@ -9,7 +9,7 @@ const LoginScreen = () => {
     const { width } = useWindowDimensions()
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{flex: 1, margin: SIZES.md}}>
+            <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign in</Text>
                 <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We missed you while you were away</Text>
                 
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.surface1,
-        paddingTop: SIZES.lg
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     inputField: {
         backgroundColor: COLORS.surface1,

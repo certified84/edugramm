@@ -14,7 +14,7 @@ const SignupScreen = () => {
     const { width } = useWindowDimensions()
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{flex: 1, margin: SIZES.md}}>
+            <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign up</Text>
                 <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We could use your presence here</Text>
                 

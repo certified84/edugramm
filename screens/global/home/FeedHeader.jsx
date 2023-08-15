@@ -38,7 +38,7 @@ const FeedHeader = ({ titleText, showDate }) => {
 
     return (
         <View style={styles.container}>
-                <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface}}>{titleText}</Text>
+                <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface, opacity: .5}}>{titleText}</Text>
             {/* https://www.npmjs.com/package/react-native-popup-menu */}
             <Menu renderer={Popover} rendererProps={{ placement: 'bottom' }}>
                 <MenuTrigger>
