@@ -1,8 +1,7 @@
 import { StyleSheet, SafeAreaView, Text, View, TouchableOpacity } from 'react-native'
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../assets/theme'
 import React, { useState } from 'react';
-import { Feather, MaterialIcons } from '@expo/vector-icons'
-import Svg, { Path } from "react-native-svg"
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { Avatar } from 'react-native-paper';
 import {
@@ -38,9 +37,19 @@ const FeedHeader = ({ titleText, showDate }) => {
 
     return (
         <View style={styles.container}>
-                <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface, opacity: .5}}>{titleText}</Text>
+            <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface, opacity: .5}}>{titleText}</Text>
+            <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity style={{marginHorizontal: SIZES.xs}} activeOpacity={.5}>
+                    <MaterialCommunityIcons name='bell-outline' color={COLORS.black} size={SIZES.xl + 5} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7}>
+                    <View style={{width: SIZES.xl + 5, height: SIZES.xl + 5, borderRadius: (SIZES.xl + 5) / 2, backgroundColor: COLORS.onSurface}}>
+
+                    </View>
+                </TouchableOpacity>
+            </View>
             {/* https://www.npmjs.com/package/react-native-popup-menu */}
-            <Menu renderer={Popover} rendererProps={{ placement: 'bottom' }}>
+            {/* <Menu renderer={Popover} rendererProps={{ placement: 'bottom' }}>
                 <MenuTrigger>
                     <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: COLORS.primary, paddingHorizontal: SIZES.xs, paddingVertical: SIZES.xxs, borderRadius: SIZES.lg, width: "100%" }}>
                         <Avatar.Image size={40} source={{ uri: "https://source.unsplash.com/random/?child,kid" }} />
@@ -96,7 +105,7 @@ const FeedHeader = ({ titleText, showDate }) => {
                         }
                     />
                 </MenuOptions>
-            </Menu>
+            </Menu> */}
         </View>
     )
 }

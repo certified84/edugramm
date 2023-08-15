@@ -1,6 +1,6 @@
 import {
     StyleSheet, SafeAreaView, Text, View,
-    TouchableOpacity, FlatList, Image, ScrollView, KeyboardAvoidingView
+    TouchableOpacity, FlatList, Image, ScrollView, KeyboardAvoidingView, Platform, StatusBar
 } from 'react-native'
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../assets/theme'
 import React, { useState } from 'react';
@@ -73,7 +73,8 @@ export default FeedDetailedScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.surface
+        backgroundColor: COLORS.surface,
+        marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     inputField: {
         borderRadius: 55,

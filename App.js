@@ -13,9 +13,7 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  HomeScreen,
-  FeedDetailedScreen,
-  PanZoomImage,
+  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage,
 } from './screens';
 import { COLORS, SIZES } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -82,6 +80,14 @@ const App = () => {
               component={SignupScreen}
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MainScreen"
+              component={MainScreen}
+              options={{
+                headerShown: false,
+                gestureEnabled: false
               }}
             />
             <Stack.Screen
