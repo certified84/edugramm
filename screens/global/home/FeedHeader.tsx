@@ -16,9 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const { ContextMenu, SlideInMenu, Popover } = renderers;
 
-const FeedHeader = ({ titleText, showDate }) => {
+const FeedHeader = ({ titleText, navigation }) => {
 
-    const navigation = useNavigation()
     const otherAccounts = [
         {
             id: 1,
@@ -38,10 +37,10 @@ const FeedHeader = ({ titleText, showDate }) => {
         <View style={styles.container}>
             <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface}}>{titleText}</Text>
             <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity style={{marginHorizontal: SIZES.xs}} activeOpacity={.5}>
+                <TouchableOpacity style={{marginHorizontal: SIZES.xs}} activeOpacity={.5} onPress={() => navigation.navigate('NotificationScreen')}>
                     <MaterialCommunityIcons name='bell-outline' color={COLORS.onSurface} size={SIZES.xl + 5} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7}>
+                <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7} onPress={() => navigation.navigate('ProfileScreen')}>
                     <View style={{width: SIZES.xl + 5, height: SIZES.xl + 5, borderRadius: (SIZES.xl + 5) / 2, backgroundColor: COLORS.onSurface}}>
 
                     </View>

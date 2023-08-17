@@ -8,10 +8,13 @@ import FeedDetailedScreen from './global/home/FeedDetailed'
 import PanZoomImage from './global/home/PanZoomImage'
 import MainScreen from './global/Main'
 import ChatScreen from './global/Chat'
+import NotificationScreen from './global/Notification'
+import ProfileScreen from './global/Profile'
 // import AnimatedSplashScreen from './global/AnimatedSplashScreen'
 
 export {
     // GLOBAL EXPORT 
     OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-    MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen
+    MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen,
+    NotificationScreen, ProfileScreen, 
 }

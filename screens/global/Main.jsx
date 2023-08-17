@@ -6,6 +6,9 @@ import HomeScreen from './home/Home';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper';
 import CommunityScreen from './Community';
+import EventScreen from './Event';
+import JobScreen from './Job';
+import SearchScreen from './Search';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -39,7 +42,7 @@ const MainScreen = () => {
             tabBarBadge: 2
           }}
         />
-        <Tab.Screen name="SearchScreen" component={HomeScreen}
+        <Tab.Screen name="SearchScreen" component={SearchScreen}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color, focused }) => {
@@ -65,7 +68,7 @@ const MainScreen = () => {
             },
           }}
         />
-        <Tab.Screen name="EventsScreen" component={HomeScreen}
+        <Tab.Screen name="EventsScreen" component={EventScreen}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color, focused }) => {
@@ -77,7 +80,7 @@ const MainScreen = () => {
             },
           }}
         />
-        <Tab.Screen name="JobsScreen" component={HomeScreen}
+        <Tab.Screen name="JobScreen" component={JobScreen}
           options={{
             tabBarLabel: "",
             tabBarIcon: ({ color, focused }) => {

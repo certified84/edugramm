@@ -21,7 +21,7 @@ const FeedDetailedScreen = ({ route }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flex: 0.9 }}>
-                <View style={{flex: .1, flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
                     <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
                         <Ionicons name='chevron-back' size={SIZES.xl} color={COLORS.onSurface}/>
                     </TouchableOpacity>

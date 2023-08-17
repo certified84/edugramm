@@ -23,7 +23,7 @@ export default function OnboardingScreen() {
     const onboardingItems = [
         {
             id: 1,
-            animation: require('../../../assets/animations/learn.json'),
+            animation: require('../../../assets/animations/connect.json'),
             text: "Connect with a world of knowledge",
             color: 'blue'
         },

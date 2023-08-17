@@ -19,7 +19,7 @@ const HomeScreen = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={data}
-                    ListHeaderComponent={() => <FeedHeader titleText={"EduGramm"} showDate={false} />}
+                    ListHeaderComponent={() => <FeedHeader titleText={"EduGramm"} navigation={navigation} />}
                     renderItem={({ item }) => <FeedCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}

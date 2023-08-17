@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen,
+  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen,
 } from './screens';
 import { COLORS, SIZES } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -133,6 +133,20 @@ const App = () => {
                   paddingEnd: SIZES.xs
                 }
                 // headerShadowVisible: false
+              }}
+            />
+            <Stack.Screen
+              name="NotificationScreen"
+              component={NotificationScreen}
+              options={{
+                headerShown: false
+              }}
+            />
+            <Stack.Screen
+              name="ProfileScreen"
+              component={ProfileScreen}
+              options={{
+                headerShown: false
               }}
             />
           </Stack.Navigator>
