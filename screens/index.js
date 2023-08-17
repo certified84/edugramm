@@ -7,10 +7,11 @@ import HomeScreen from './global/home/Home'
 import FeedDetailedScreen from './global/home/FeedDetailed'
 import PanZoomImage from './global/home/PanZoomImage'
 import MainScreen from './global/Main'
+import ChatScreen from './global/Chat'
 // import AnimatedSplashScreen from './global/AnimatedSplashScreen'
 
 export {
     // GLOBAL EXPORT 
     OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-    MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage,
+    MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen
 }

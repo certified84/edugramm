@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage,
+  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen,
 } from './screens';
 import { COLORS, SIZES } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -47,9 +47,11 @@ const App = () => {
             screenOptions={{
               headerTitleStyle: { ...customHeaderTitleStyle },
               headerBackTitle: " ",
-              headerTintColor: COLORS.primary, // COLOR OF THE ALL HEADER TEXT 
+              headerTintColor: COLORS.onSurface, // COLOR OF THE ALL HEADER TEXT 
+              title: ' ',
               headerStyle: {
-                backgroundColor: COLORS.lightGray
+                backgroundColor: COLORS.surface,
+                height: 120,
               }
             }}
           >
@@ -112,6 +114,27 @@ const App = () => {
                 headerShown: false
               }}
             />
+            <Stack.Screen
+              name="ChatScreen"
+              component={ChatScreen}
+              options={{
+                headerShown: true,
+                headerTitleContainerStyle: {
+                  overflow: 'hidden',
+                  margin: 0
+                },
+                headerLeftContainerStyle: {
+                  width: 100,
+                  marginEnd: 0,
+                  paddingStart: SIZES.xs
+                },
+                headerRightContainerStyle: {
+                  width: 150,
+                  paddingEnd: SIZES.xs
+                }
+                // headerShadowVisible: false
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </MenuProvider>
@@ -123,8 +146,8 @@ export default App
 
 
 const customHeaderTitleStyle = {
-  fontFamily: "comic-md",
+  fontFamily: "space-grotesk-medium",
   fontWeight: "700",
   fontSize: SIZES.md,
-  color: COLORS.black,
+  color: COLORS.onSurface,
 }

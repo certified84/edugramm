@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
+import VerifiedIcon from '../../../components/VerifiedIcon';
 
 const FeedCard = ({ item, navigation }) => {
 
@@ -35,14 +36,7 @@ const FeedCard = ({ item, navigation }) => {
                 <View style={{flex: 1, marginStart: SIZES.xxs}}>
                     <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
                         <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
-                        {
-                            item.isVerified && <MaterialIcons
-                                name='verified'
-                                size={SIZES.sm}
-                                color={"#0082CB"}
-                                style={{ alignSelf: "center" }}
-                            />
-                        }
+                        { item.isVerified && <VerifiedIcon /> }
                         <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 11h`}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>

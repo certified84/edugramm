@@ -1,7 +1,7 @@
 import { Appearance, StyleSheet } from "react-native";
 
 const colorScheme = Appearance.getColorScheme()
-const isDarkTheme = colorScheme !== 'dark';
+const isDarkTheme = colorScheme === 'dark';
 export const COLORS = {
 
     // General Colors

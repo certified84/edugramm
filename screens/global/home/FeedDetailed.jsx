@@ -6,7 +6,7 @@ import { COLORS, SIZES, TYPOGRAPHY } from '../../../assets/theme'
 import React, { useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar, TextInput } from 'react-native-paper';
-import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons, AntDesign } from '@expo/vector-icons'
 import FeedHeader from './FeedHeader';
 import { useNavigation } from '@react-navigation/native';
 import FeedCard from './FeedCard';
@@ -23,7 +23,7 @@ const FeedDetailedScreen = ({ route }) => {
             <View style={{ flex: 0.9 }}>
                 <View style={{flex: .1, flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
                     <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
-                        <MaterialIcons name='arrow-back' size={SIZES.xl} color={COLORS.onSurface}/>
+                        <Ionicons name='chevron-back' size={SIZES.xl} color={COLORS.onSurface}/>
                     </TouchableOpacity>
                     <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl, color: COLORS.onSurface}}>Post</Text>
                 </View>
