@@ -1,6 +1,7 @@
-import { StyleSheet } from "react-native";
+import { Appearance, StyleSheet } from "react-native";
 
-
+const colorScheme = Appearance.getColorScheme()
+const isDarkTheme = colorScheme !== 'dark';
 export const COLORS = {
 
     // General Colors
@@ -15,27 +16,27 @@ export const COLORS = {
     darkGray: "#B4B4B4",
     
     // Light mode colors
-    primary: '#00687B',
-    onPrimary: '#FFFFFF',
-    primaryContainer: '#AFECFF',
-    onPrimaryContainer: '#001F27',
-    secondary: '#4B6269',
-    onSecondary: '#FFFFFF',
-    secondaryContainer: '#CEE7EF',
-    onSecondaryContainer: '#061F25',
-    tertiary: '#575C7E',
-    onTertiary: '#FFFFFF',
-    tertiaryContainer: '#DEE0FF',
-    onTertiaryContainer: '#141937',
-    background: '#FBFCFE',
-    onBackground: '#191C1D',
-    surface: '#FBFCFE',
-    onSurface: '#191C1D',
-    error: '#BA1A1A',
-    onError: '#FFFFFF',
-    errorContainer: '#FFDAD6',
-    onErrorContainer: '#410002',
-    surface1: '#EEF5F7',
+    primary: !isDarkTheme ? '#00687B' : '#57D6F6',
+    onPrimary: !isDarkTheme ? '#FFFFFF' : '#003641',
+    primaryContainer: !isDarkTheme ? '#AFECFF' : '#004E5D',
+    onPrimaryContainer: !isDarkTheme ? '#001F27' : '#AFECFF',
+    secondary: !isDarkTheme ? '#4B6269' : '#B2CBD3',
+    onSecondary: !isDarkTheme ? '#FFFFFF' : '#1D343A',
+    secondaryContainer: !isDarkTheme ? '#CEE7EF' : '#344A51',
+    onSecondaryContainer: !isDarkTheme ? '#061F25' : '#CEE7EF',
+    tertiary: !isDarkTheme ? '#575C7E' : '#C0C4EB',
+    onTertiary: !isDarkTheme ? '#FFFFFF' : '#292E4D',
+    tertiaryContainer: !isDarkTheme ? '#DEE0FF' : '#C0C4EB',
+    onTertiaryContainer: !isDarkTheme ? '#141937' : '#DEE0FF',
+    background: !isDarkTheme ? '#FBFCFE' : '#191C1D',
+    onBackground: !isDarkTheme ? '#191C1D' : '#E1E3E4',
+    surface: !isDarkTheme ? '#FBFCFE' : '#191C1D',
+    onSurface: !isDarkTheme ? '#191C1D' : '#E1E3E4',
+    error: !isDarkTheme ? '#BA1A1A' : '#FFB4AB',
+    onError: !isDarkTheme ? '#FFFFFF' : '#690005',
+    errorContainer: !isDarkTheme ? '#FFDAD6' : '#93000A',
+    onErrorContainer: !isDarkTheme ? '#410002' : '#FFDAD6',
+    surface1: !isDarkTheme ? '#EEF5F7' : '#1C2528',
     
     // Dark mode colors
     primaryDark: '#57D6F6',

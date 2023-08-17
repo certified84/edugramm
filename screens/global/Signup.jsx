@@ -44,7 +44,7 @@ const SignupScreen = () => {
 
                 <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
-                    <Text>OR</Text>
+                    <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>OR</Text>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 

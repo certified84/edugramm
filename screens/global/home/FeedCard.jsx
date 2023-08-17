@@ -34,7 +34,7 @@ const FeedCard = ({ item, navigation }) => {
                 </View>
                 <View style={{flex: 1, marginStart: SIZES.xxs}}>
                     <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ ...TYPOGRAPHY.h2 }}>{item.full_name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
                         {
                             item.isVerified && <MaterialIcons
                                 name='verified'
@@ -43,10 +43,10 @@ const FeedCard = ({ item, navigation }) => {
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text style={{flex: 1, textAlign: 'right'}}>{` \u2022 11h`}</Text>
+                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 11h`}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
-                        <Text style={{ ...TYPOGRAPHY.p }} numberOfLines={8}>
+                        <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
                             molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
                             numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium    
@@ -91,7 +91,7 @@ const FeedCard = ({ item, navigation }) => {
                                 <AntDesign name={liked ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
-                            <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.black} />
+                            <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
                             <Text style={styles.commentSection}>{item.comments.length}</Text>
                         </View>
                     </TouchableOpacity>
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
     commentSection: {
         ...TYPOGRAPHY.h2,
         fontSize: SIZES.md,
-        marginHorizontal: SIZES.xs
+        marginHorizontal: SIZES.xs,
+        color: COLORS.onSurface
     },
     dateSection: {
         flex: 0.6,

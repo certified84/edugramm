@@ -36,7 +36,7 @@ const FeedDetailedCard = ({ item, navigation }) => {
                     <View style={{marginHorizontal: SIZES.xxs}}>
                         
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{ ...TYPOGRAPHY.h2 }}>{item.full_name}</Text>
+                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
                             {
                                 !item.isVerified && <MaterialIcons
                                     name='verified'
@@ -49,12 +49,12 @@ const FeedDetailedCard = ({ item, navigation }) => {
 
                     </View>
 
-                    <Text style={{flex: 1, textAlign: 'right'}}>{`1d`}</Text>
+                    <Text style={{flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface}}>{`1d`}</Text>
                 
                 </View>
 
                 <View style={{flex: 1, marginTop: SIZES.xxs}}>
-                    <Text style={{ ...TYPOGRAPHY.p }}>
+                    <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
                         molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
                         numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium    
@@ -100,7 +100,7 @@ const FeedDetailedCard = ({ item, navigation }) => {
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
                             <TouchableOpacity onPress={() => { }}>
-                                <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.black} />
+                                <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.comments.length}</Text>
                         </View>
@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
     commentSection: {
         ...TYPOGRAPHY.h2,
         fontSize: SIZES.md,
-        marginHorizontal: SIZES.xs
+        marginHorizontal: SIZES.xs,
+        color: COLORS.onSurface
     },
     dateSection: {
         flex: 0.6,

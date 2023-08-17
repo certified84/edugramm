@@ -46,7 +46,7 @@ export default function OnboardingScreen() {
             <View style={styles.container}>
 
                 <View style={{flex: .6, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.white, opacity: .5}}>EduGramm</Text>
+                    <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onPrimary}}>EduGramm</Text>
                     <View style={{flex: 1, alignItems: 'center'}}>
                         <FlatList
                             data={onboardingItems}
@@ -74,13 +74,13 @@ export default function OnboardingScreen() {
 
                 <View style={{flex: .1, justifyContent: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.white, opacity: .5}}>Read about our</Text>
+                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary, opacity: .5}}>Read about our</Text>
                         <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}}>
-                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.white}}>Terms</Text>
+                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Terms</Text>
                         </TouchableOpacity>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.white, opacity: .5}}>and</Text>
+                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary, opacity: .5}}>and</Text>
                         <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}}>
-                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.white}}>Privacy Policy</Text>
+                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Privacy Policy</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

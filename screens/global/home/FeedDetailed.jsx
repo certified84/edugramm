@@ -23,9 +23,9 @@ const FeedDetailedScreen = ({ route }) => {
             <View style={{ flex: 0.9 }}>
                 <View style={{flex: .1, flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
                     <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
-                        <MaterialIcons name='arrow-back' size={SIZES.xl}/>
+                        <MaterialIcons name='arrow-back' size={SIZES.xl} color={COLORS.onSurface}/>
                     </TouchableOpacity>
-                    <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl}}>Post</Text>
+                    <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl, color: COLORS.onSurface}}>Post</Text>
                 </View>
                 <ScrollView style={{flex: 1}}>
                     <FeedDetailedCard item={item} navigation={navigation} />

@@ -5,6 +5,7 @@ import { COLORS, SHADOWS, SIZES, TYPOGRAPHY } from '../../assets/theme';
 import HomeScreen from './home/Home';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper';
+import CommunityScreen from './Community';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -12,14 +13,14 @@ const MainScreen = () => {
 
   // REMOVE WEIRD TAB NAVIGATION COLOR 
   const theme = useTheme()
-  // theme.colors.secondaryContainer = "transparent"
+  theme.colors.secondaryContainer = "transparent"
 
   return (
     <View style={styles.container}>
       <Tab.Navigator
         initialRouteName="HomeScreen"
         activeColor={COLORS.onSurface}
-        inactiveColor={COLORS.black}
+        inactiveColor={COLORS.onSurface}
         barStyle={{ backgroundColor: COLORS.surface }}
         screenListeners={{
           tabPress: (e) => { }
@@ -51,7 +52,7 @@ const MainScreen = () => {
             tabBarBadge: 3
           }}
         />
-        <Tab.Screen name="CommunitiesScreen" component={HomeScreen}
+        <Tab.Screen name="CommunitiesScreen" component={CommunityScreen}
           options={{
             tabBarLabel: "",
             showLabel: false,

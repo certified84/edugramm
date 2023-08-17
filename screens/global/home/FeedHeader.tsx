@@ -12,7 +12,6 @@ import {
     renderers
 } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
-import { FlatList } from 'react-native-gesture-handler';
 
 
 const { ContextMenu, SlideInMenu, Popover } = renderers;
@@ -37,10 +36,10 @@ const FeedHeader = ({ titleText, showDate }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface, opacity: .5}}>{titleText}</Text>
+            <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface}}>{titleText}</Text>
             <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity style={{marginHorizontal: SIZES.xs}} activeOpacity={.5}>
-                    <MaterialCommunityIcons name='bell-outline' color={COLORS.black} size={SIZES.xl + 5} />
+                    <MaterialCommunityIcons name='bell-outline' color={COLORS.onSurface} size={SIZES.xl + 5} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7}>
                     <View style={{width: SIZES.xl + 5, height: SIZES.xl + 5, borderRadius: (SIZES.xl + 5) / 2, backgroundColor: COLORS.onSurface}}>

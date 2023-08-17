@@ -23,7 +23,6 @@ const HomeScreen = () => {
                     renderItem={({ item }) => <FeedCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
-                    ListFooterComponent={<View style={{ height: 90 }} />}
                 />
             </SafeAreaView>
         </View>
