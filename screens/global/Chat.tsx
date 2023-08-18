@@ -16,7 +16,7 @@ export default function ChatScreen({ route }) {
                 return (
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                         <TouchableOpacity onPress={() => {navigation.goBack()}}>
-                            <Ionicons name="chevron-back" size={SIZES.xl}/>
+                            <Ionicons name="chevron-back" size={SIZES.xl} color={COLORS.onSurface}/>
                         </TouchableOpacity>
                         <View style={{width: SIZES.sm}}/>
                         <TouchableOpacity style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>

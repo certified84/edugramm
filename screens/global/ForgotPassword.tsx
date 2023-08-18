@@ -29,7 +29,7 @@ const ForgotPasswordScreen = () => {
                     textColor={COLORS.onSecondaryContainer}
                 />
 
-                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Reset password'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
+                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Reset password'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary} onPress={() => {}}/>
             </View>
         </SafeAreaView>
     )

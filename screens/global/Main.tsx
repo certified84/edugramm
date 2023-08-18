@@ -58,7 +58,6 @@ const MainScreen = () => {
         <Tab.Screen name="CommunitiesScreen" component={CommunityScreen}
           options={{
             tabBarLabel: "",
-            showLabel: false,
             tabBarIcon: ({ color, focused }) => {
                 return  (
                   <View style={styles.tabBarIcon}>
