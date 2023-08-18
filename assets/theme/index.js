@@ -1,7 +1,7 @@
 import { Appearance, StyleSheet } from "react-native";
 
 const colorScheme = Appearance.getColorScheme()
-const isDarkTheme = colorScheme === 'dark';
+const isDarkTheme = colorScheme !== 'dark';
 export const COLORS = {
 
     // General Colors
@@ -14,6 +14,7 @@ export const COLORS = {
     secondaryLight: "",
     lightGray: "#E9E9E9",
     darkGray: "#B4B4B4",
+    searchInput: !isDarkTheme ? '#E9E9E9' : '#B4B4B4',
     
     // Light mode colors
     primary: !isDarkTheme ? '#00687B' : '#57D6F6',
@@ -75,21 +76,18 @@ export const SIZES = {
 
 export const TYPOGRAPHY = {
     h1: {
-        color: COLORS.black,
+        color: COLORS.onSurface,
         fontFamily: "space-grotesk-bold",
-        fontWeight: "700",
-        fontSize: SIZES.md
+        fontSize: SIZES.lg
     },
     h2: {
-        color: COLORS.black,
+        color: COLORS.onSurface,
         fontFamily: "space-grotesk-medium",
-        fontWeight: "400",
-        fontSize: SIZES.sm
+        fontSize: SIZES.sm,
     },
     p: {
-        color: COLORS.black,
+        color: COLORS.onSurface,
         fontFamily: "space-grotesk-regular",
-        fontWeight: "400",
         fontSize: SIZES.sm
     },
 }
