@@ -12,9 +12,17 @@ const FeedComment = ({ item }) => {
 
     const { width } = useWindowDimensions()
     const [liked, setLiked] = useState(false);
+    const [showImageDialog, setShowImageDialog] = useState(false);
 
     return (
         <View style={{flex: 1, width: width}}>
+
+            <ImageDialog
+                showImageDialog={showImageDialog}
+                setShowImageDialog={setShowImageDialog}
+                image={item.image_url}
+                images={item.images}
+            />
 
             <View style={{flexDirection: 'row', paddingStart: SIZES.md, paddingEnd: SIZES.md, paddingVertical: SIZES.xs}}>
                 <View>

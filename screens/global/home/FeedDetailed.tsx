@@ -47,7 +47,6 @@ const FeedDetailedScreen = ({ route }) => {
                     style={styles.inputField}
                     underlineColor={COLORS.white}
                     activeOutlineColor={COLORS.primary}
-                    backgroundColor={COLORS.lightGray}
                     placeholderTextColor={COLORS.black}
                     textColor={COLORS.black}
                 />
