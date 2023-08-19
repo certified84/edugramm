@@ -7,18 +7,17 @@ import React, { useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
-import FeedHeader from './FeedHeader';
 import { useNavigation } from '@react-navigation/native';
-import FeedCard from './FeedCard';
+import FeedCard from '../home/FeedCard';
+import { Account } from '../Search';
 
-const HomeScreen = () => {
+export const PostsTab = () => {
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={data}
-                    ListHeaderComponent={() => <FeedHeader titleText={"EduGramm"} navigation={navigation} />}
                     renderItem={({ item }) => <FeedCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
@@ -28,7 +27,41 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+export const FollowersTab = ({accounts, navigation}) => {
+    return (
+        <View style={{flex: 1}}>
+            { 
+                !accounts || accounts.length > 0 ? <FlatList
+                    data={accounts}
+                    renderItem={({ item }) => <Account account={item} navigation={navigation} />}
+                    keyExtractor={(item) => item.id}
+                    alwaysBounceVertical={true}
+                /> : <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
+                    <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>There's nothing here yet.</Text>
+                    <Text style={{...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center'}}>Accounts that follows this user will appear here when they are available...</Text>
+                </View>
+            }
+        </View>
+    )
+}
+
+export const FollowingTab = ({accounts, navigation}) => {
+    return (
+        <View style={{flex: 1}}>
+            { 
+                !accounts || accounts.length > 0 ? <FlatList
+                    data={accounts}
+                    renderItem={({ item }) => <Account account={item} navigation={navigation} />}
+                    keyExtractor={(item) => item.id}
+                    alwaysBounceVertical={true}
+                /> : <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
+                    <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>There's nothing here yet.</Text>
+                    <Text style={{...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center'}}>Accounts this user follows will appear here when they are available...</Text>
+                </View>
+            }
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {

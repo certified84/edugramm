@@ -9,12 +9,13 @@ import PanZoomImage from './global/home/PanZoomImage'
 import MainScreen from './global/Main'
 import ChatScreen from './global/Chat'
 import NotificationScreen from './global/Notification'
-import ProfileScreen from './global/Profile'
+import ProfileScreen from './global/profile/Profile'
+import UserDetailScreen from './global/profile/UserDetail'
 // import AnimatedSplashScreen from './global/AnimatedSplashScreen'
 
 export {
     // GLOBAL EXPORT 
     OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
     MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen,
-    NotificationScreen, ProfileScreen, 
+    NotificationScreen, ProfileScreen, UserDetailScreen
 }

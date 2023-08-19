@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   defaultBtnText: {
-    ...TYPOGRAPHY.h1,
+    ...TYPOGRAPHY.h2,
     color: COLORS.white,
     textAlign: "center",
     padding: SIZES.sm

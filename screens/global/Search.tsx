@@ -1,4 +1,4 @@
-import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { FlatList, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, useWindowDimensions } from "react-native";
 import { View } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../assets/theme";
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
@@ -6,8 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar, TextInput } from "react-native-paper";
 import VerifiedIcon from "../../components/VerifiedIcon";
 import { useEffect, useState } from "react";
+import { followerCount } from "../../util/Utils";
 
-const accounts = [
+export   const accounts = [
     {
         id: '1',
         name: 'Samson Achiaga',
@@ -40,7 +41,43 @@ const accounts = [
     },
     {
         id: '6',
-        name: 'James Oluseyi Famodimu James Olu',
+        name: 'James Oluseyi ',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '7',
+        name: 'Samson Achiaga',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '8',
+        name: 'Samson Achiaga',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 99990,
+    },
+    {
+        id: '9',
+        name: 'Kolawole Godstime',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '10',
+        name: 'Okafe Vincent',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 20000,
+    },
+    {
+        id: '11',
+        name: 'Olorunnegan Ifeoluwa',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000000,
+    },
+    {
+        id: '12',
+        name: 'James Oluseyi Famodimu James, Oluseyi',
         image: 'https://source.unsplash.com/random/?man,kid',
         follower_count: 200000,
     },
@@ -107,31 +144,25 @@ export default function SearchScreen() {
     )
 }
 
-const Account = ({ account, navigation }) => {
-    let count = ''
-    if (account.follower_count >= 1000000) {
-        count = `${account.follower_count / 1000000}M followers`
-    } else if (account.follower_count >= 10000) {
-        count = `${account.follower_count / 1000}K followers`
-    } else {
-        count = `${account.follower_count} followers`
-    }
+export const Account = ({ account, navigation }) => {
+    const {width} = useWindowDimensions()
     return (
-        <TouchableOpacity activeOpacity={.9} style={{flexDirection: 'row', flex: 1, paddingHorizontal: SIZES.md, marginTop: SIZES.sm}} onPress={() => {}}>
+        <TouchableOpacity activeOpacity={.9} style={{ flex: 1, flexDirection: 'row', paddingHorizontal: SIZES.md, marginTop: SIZES.sm}} onPress={() => navigation.navigate('UserDetailScreen', {account})}>
             <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
                 <Avatar.Image size={40} source={{ uri: account.image }} />
             </View>
             <View style={{flex: 1, justifyContent: 'space-between', paddingStart: SIZES.sm}}>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <View style={{flex: 1}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{flex: .95}}>
+                        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}} numberOfLines={1}>{account.name}</Text>
-                            <VerifiedIcon style={{marginEnd: 30}}/>
+                            <VerifiedIcon style={{marginEnd: 2}}/>
+                            {/* <View style={{width: SIZES.md}}/> */}
                         </View>
-                        <Text style={{...TYPOGRAPHY.p, color: COLORS.onSurface, opacity: .4, fontSize: SIZES.sm - 3}}>{count}</Text>
+                        <Text style={{...TYPOGRAPHY.p, color: COLORS.onSurface, opacity: .4, fontSize: SIZES.sm - 3}}>{followerCount(account.follower_count)}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.5} style={{marginStart: SIZES.md, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Follow</Text>
+                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Follow</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{width: '100%', height: 1, marginTop: SIZES.xs, backgroundColor: COLORS.darkGray, alignContent: 'flex-end', opacity: .2}}/>
