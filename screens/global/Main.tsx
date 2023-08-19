@@ -52,7 +52,6 @@ const MainScreen = () => {
                   </View>
                 )
             },
-            tabBarBadge: 3
           }}
         />
         <Tab.Screen name="CommunitiesScreen" component={CommunityScreen}
@@ -65,6 +64,7 @@ const MainScreen = () => {
                   </View>
                 )
             },
+            tabBarBadge: 3
           }}
         />
         <Tab.Screen name="EventsScreen" component={EventScreen}

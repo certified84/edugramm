@@ -145,7 +145,6 @@ export default function SearchScreen() {
 }
 
 export const Account = ({ account, navigation }) => {
-    const {width} = useWindowDimensions()
     return (
         <TouchableOpacity activeOpacity={.9} style={{ flex: 1, flexDirection: 'row', paddingHorizontal: SIZES.md, marginTop: SIZES.sm}} onPress={() => navigation.navigate('UserDetailScreen', {account})}>
             <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
@@ -159,7 +158,7 @@ export const Account = ({ account, navigation }) => {
                             <VerifiedIcon style={{marginEnd: 2}}/>
                             {/* <View style={{width: SIZES.md}}/> */}
                         </View>
-                        <Text style={{...TYPOGRAPHY.p, color: COLORS.onSurface, opacity: .4, fontSize: SIZES.sm - 3}}>{followerCount(account.follower_count)}</Text>
+                        <Text style={{...TYPOGRAPHY.p, color: COLORS.onSurface, opacity: .4, fontSize: SIZES.sm - 3}}>{`${followerCount(account.follower_count)} followers`}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.5} style={{marginStart: SIZES.md, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Follow</Text>
