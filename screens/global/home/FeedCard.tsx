@@ -11,6 +11,12 @@ import VerifiedIcon from '../../../components/VerifiedIcon';
 
 const FeedCard = ({ item, navigation }) => {
 
+    const account = {
+        id: '3',
+        name: 'Kolawole Godstime',
+        image: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    }
     const { width } = useWindowDimensions()
     const [showImageDialog, setShowImageDialog] = useState(false);
     const [liked, setLiked] = useState(false);
@@ -27,18 +33,20 @@ const FeedCard = ({ item, navigation }) => {
 
             <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
                 <View>
-                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {}} >
-                        <Avatar.Image size={40} source={{ uri: item.user_photo }} />
+                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {navigation.navigate('UserDetailScreen', {account})}} >
+                        <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                            <Avatar.Image size={40} source={{ uri: item.user_photo }} />
+                        </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("FeedDetailedScreen", { item, navigation })}/>
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("FeedDetailedScreen", { item })}/>
                 </View>
                 <View style={{flex: 1, marginStart: SIZES.xxs}}>
                     <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
                         <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
-                        { item.isVerified && <VerifiedIcon /> }
+                        { !item.isVerified && <VerifiedIcon /> }
                         <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 11h`}</Text>
                     </View>
-                    <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}>
                         <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
                             molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
@@ -77,7 +85,7 @@ const FeedCard = ({ item, navigation }) => {
                         </>
                     }
 
-                    <TouchableOpacity style={{...styles.bottomSection}} activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item, navigation })}}>
+                    <TouchableOpacity style={{...styles.bottomSection}} activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}>
                         <View style={{ flexDirection: "row", flex: 1, alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => { setLiked(!liked) }}>
                                 <AntDesign name={liked ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />

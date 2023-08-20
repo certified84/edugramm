@@ -20,9 +20,20 @@ const SignupScreen = () => {
                 
                 <TextInput
                     mode="outlined"
-                    placeholder='Email'
+                    placeholder='Name'
                     theme={{ roundness: SIZES.xs }}
                     style={[styles.inputField, {marginTop: SIZES.xl}]}
+                    underlineColor={COLORS.onSecondaryContainer}
+                    activeOutlineColor={COLORS.secondaryContainer}
+                    placeholderTextColor={COLORS.onSecondaryContainer}
+                    textColor={COLORS.onSecondaryContainer}
+                />
+                
+                <TextInput
+                    mode="outlined"
+                    placeholder='Email'
+                    theme={{ roundness: SIZES.xs }}
+                    style={[styles.inputField]}
                     underlineColor={COLORS.onSecondaryContainer}
                     activeOutlineColor={COLORS.secondaryContainer}
                     placeholderTextColor={COLORS.onSecondaryContainer}

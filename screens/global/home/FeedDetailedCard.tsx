@@ -7,9 +7,16 @@ import React, { useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
+import VerifiedIcon from '../../../components/VerifiedIcon';
 
 const FeedDetailedCard = ({ item, navigation }) => {
 
+    const account = {
+        id: '5',
+        name: 'James Oluseyi Famodimu',
+        image: 'https://source.unsplash.com/random/?teenager,console',
+        follower_count: 200000,
+    }
     const { width } = useWindowDimensions()
     const [showImageDialog, setShowImageDialog] = useState(false);
     const [liked, setLiked] = useState(false);
@@ -28,8 +35,10 @@ const FeedDetailedCard = ({ item, navigation }) => {
                 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => { }}>
-                        <Avatar.Image size={40} source={{ uri: item.user_photo }} />
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('UserDetailScreen', {account})}>
+                        <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                            <Avatar.Image size={40} source={{ uri: item.user_photo }} />
+                        </View>
                     </TouchableOpacity>
 
                     <View style={{marginHorizontal: SIZES.xxs}}>
@@ -37,12 +46,7 @@ const FeedDetailedCard = ({ item, navigation }) => {
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
                             {
-                                !item.isVerified && <MaterialIcons
-                                    name='verified'
-                                    size={SIZES.sm}
-                                    color={"#0082CB"}
-                                    style={{ alignSelf: "center" }}
-                                />
+                                !item.isVerified && <VerifiedIcon />
                             }
                         </View>
 

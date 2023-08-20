@@ -16,7 +16,7 @@ import FeedDetailedCard from './FeedDetailedCard';
 const FeedDetailedScreen = ({ route }) => {
 
     const item = route.params.item
-    const navigation = route.params.navigation
+    const navigation = useNavigation()
 
     return (
         <SafeAreaView style={styles.container}>
