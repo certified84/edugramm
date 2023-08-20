@@ -44,7 +44,7 @@ export default function ProfileScreen() {
                     </View>
                     
                     <View style={{flexDirection: 'row', marginTop: SIZES.sm}}>
-                        <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen')}>
+                        <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
                             <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(200000000)} \u2022 `}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={.8}>

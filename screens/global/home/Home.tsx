@@ -5,7 +5,7 @@ import {
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../assets/theme'
 import React, { useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
-import { Avatar } from 'react-native-paper';
+import { Avatar, FAB } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
 import FeedHeader from './FeedHeader';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +23,13 @@ const HomeScreen = () => {
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 />
+                <FAB
+                    icon="plus"
+                    style={styles.fab}
+                    color={COLORS.onPrimary}
+                    onPress={() => navigation.navigate('AddPostScreen' as never) }
+                    theme={{colors: fabColors}}
+                />
             </SafeAreaView>
         </View>
     )
@@ -30,10 +37,25 @@ const HomeScreen = () => {
 
 export default HomeScreen
 
+const fabColors = {
+    primary: COLORS.primary, 
+    secondary: COLORS.secondary, 
+    tertiary: COLORS.tertiary,
+    surface: COLORS.surface
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.surface
+    },
+    fab: {
+        position: 'absolute',
+        margin: SIZES.sm,
+        right: 0,
+        bottom: 0,
+        backgroundColor: COLORS.primary,
+        borderRadius: 50
     }
 })
 

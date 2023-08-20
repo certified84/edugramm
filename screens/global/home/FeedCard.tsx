@@ -18,8 +18,9 @@ const FeedCard = ({ item, navigation }) => {
         follower_count: 200000,
     }
     const { width } = useWindowDimensions()
-    const [showImageDialog, setShowImageDialog] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [showImageDialog, setShowImageDialog] = useState(false)
+    const [liked, setLiked] = useState(false)
+    const [imageIndex, setImageIndex] = useState(0)
 
     return (
         <View style={{flex: 1, width: width}}>
@@ -29,6 +30,7 @@ const FeedCard = ({ item, navigation }) => {
                 setShowImageDialog={setShowImageDialog}
                 image={item.image_url}
                 images={item.images}
+                index={imageIndex}
             />
 
             <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
@@ -73,8 +75,14 @@ const FeedCard = ({ item, navigation }) => {
                             <FlatList
                                 data={item.images}
                                 horizontal
-                                renderItem={({ item }) => 
-                                    <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs, marginEnd: SIZES.xs}}>
+                                renderItem={({ item, index }) => 
+                                    <TouchableOpacity 
+                                        activeOpacity={.9} 
+                                        onPress={() => {
+                                            setImageIndex(index)
+                                            setShowImageDialog(true)
+                                        }} 
+                                        style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs, marginEnd: SIZES.xs}}>
                                         <Image source={{ uri: item }} style={{ width: width * .7, height: width * .8, borderRadius: SIZES.sm}} />
                                     </TouchableOpacity>
                                 }

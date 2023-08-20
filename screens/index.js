@@ -12,11 +12,13 @@ import NotificationScreen from './global/Notification'
 import ProfileScreen from './global/profile/Profile'
 import UserDetailScreen from './global/profile/UserDetail'
 import FollowScreen from './global/profile/Follows'
+import AddPostScreen from './global/home/AddPost'
 // import AnimatedSplashScreen from './global/AnimatedSplashScreen'
 
 export {
     // GLOBAL EXPORT 
     OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
     MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen,
-    NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen
+    NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen,
+    AddPostScreen, 
 }

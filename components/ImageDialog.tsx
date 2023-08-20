@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Text, View, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS, SIZES, TYPOGRAPHY } from "../assets/theme";
@@ -6,9 +6,16 @@ import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
 import { SafeAreaView } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image }) => {
+const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image, index }) => {
 
     const {width, height} = useWindowDimensions()
+    const slidesRef = useRef(null)
+
+    useEffect(() => {
+        // console.log(index)
+        if (index > 0)
+            slidesRef.current.scrollToIndex({ index: index })
+    }, [])
 
     return (
         //    {/* https://www.npmjs.com/package/react-native-modal */}
@@ -37,8 +44,9 @@ const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image }) => {
                     images.length > 1 ? 
                     <FlatList
                         data={images}
-
                         horizontal
+                        ref={slidesRef}
+                        initialScrollIndex={index}
                         renderItem={({ item }) =>
                             <Image
                                 source={{ uri: item }}
@@ -51,6 +59,7 @@ const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image }) => {
                         pagingEnabled
                         keyExtractor={(index) => index}
                         alwaysBounceVertical={false}
+                        onScrollToIndexFailed={() => {}}
                         showsHorizontalScrollIndicator={false}
                     /> :
                     <Image
