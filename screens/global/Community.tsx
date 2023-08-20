@@ -122,7 +122,7 @@ export default function CommunityScreen() {
             <View>
                 <FlatList
                     data={messages}
-                    renderItem={({ item }) => <Message onPress={() => navigation.navigate('ChatScreen', {message: item})} message={item} />}
+                    renderItem={({ item }) => <Message onPress={() => navigation.navigate('ChatScreen' as never, {message: item} as never)} message={item} />}
                     keyExtractor={(item) => `${item.id}`}
                     alwaysBounceVertical={false}
                     ListFooterComponent={<View style={{ height: 220 }} />}

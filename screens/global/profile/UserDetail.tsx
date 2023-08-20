@@ -41,7 +41,7 @@ export default function UserDetailScreen({ route }) {
                     </View>
                     
                     <View style={{flexDirection: 'row', marginTop: SIZES.sm}}>
-                        <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen')}>
+                        <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
                             <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(account.follower_count)} followers \u2022 `}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={.8}>
@@ -54,7 +54,7 @@ export default function UserDetailScreen({ route }) {
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.surface}}>Follow</Text>
                         </TouchableOpacity>
                         
-                        <TouchableOpacity activeOpacity={.5} style={{flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center'}}>
+                        <TouchableOpacity onPress={()=> navigation.navigate('ChatScreen', {message: account})} activeOpacity={.5} style={{flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Message</Text>
                         </TouchableOpacity>
                     </View>

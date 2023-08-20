@@ -48,7 +48,7 @@ export default function ChatScreen({ route }) {
                 )
             }
         })
-    })
+    },[])
 
     return (
         <SafeAreaView style={styles.container}>

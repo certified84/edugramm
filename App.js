@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { LogBox, View, Text } from 'react-native';
+import { LogBox, View, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -13,9 +13,9 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen,
+  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen,
 } from './screens';
-import { COLORS, SIZES } from './assets/theme';
+import { COLORS, SIZES, TYPOGRAPHY } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
 
 
@@ -169,6 +169,17 @@ const App = () => {
               options={{
                 headerShown: false,
                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS
+              }}
+            />
+            <Stack.Screen
+              name="EditProfileScreen"
+              component={EditProfileScreen}
+              options={{
+                headerTitle: () => {return(<Text style={TYPOGRAPHY.h1}>Edit profile</Text>)},
+                cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+                headerShadowVisible: false,
+                headerLeftContainerStyle: { paddingStart: SIZES.xs },
+                headerRightContainerStyle: { paddingEnd: SIZES.xs }
               }}
             />
           </Stack.Navigator>

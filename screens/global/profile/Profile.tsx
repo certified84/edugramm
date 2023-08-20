@@ -45,15 +45,15 @@ export default function ProfileScreen() {
                     
                     <View style={{flexDirection: 'row', marginTop: SIZES.sm}}>
                         <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
-                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(200000000)} \u2022 `}</Text>
+                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(200000000)} followers \u2022 `}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={.8}>
-                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>github.com/certified84</Text>
+                        <TouchableOpacity activeOpacity={.8} style={{flex: 1}}>
+                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}} numberOfLines={1}>github.com/certified84</Text>
                         </TouchableOpacity>
                     </View>
-                    
+
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: SIZES.md}}>
-                        <TouchableOpacity activeOpacity={.5} style={{flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center'}}>
+                        <TouchableOpacity activeOpacity={.5} onPress={() => navigation.navigate('EditProfileScreen' as never)} style={{flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center'}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.surface}}>Edit Profile</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={.5} style={{flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center'}}>
