@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen,
+  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
 } from './screens';
 import { COLORS, SIZES, TYPOGRAPHY } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -178,6 +178,16 @@ const App = () => {
                 headerTitle: () => {return(<Text style={TYPOGRAPHY.h1}>Edit profile</Text>)},
                 cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
                 headerShadowVisible: false,
+                headerLeftContainerStyle: { paddingStart: SIZES.xs },
+                headerRightContainerStyle: { paddingEnd: SIZES.xs }
+              }}
+            />
+            <Stack.Screen
+              name="SettingsScreen"
+              component={SettingsScreen}
+              options={{
+                headerTitle: () => {return(<Text style={TYPOGRAPHY.h1}>Settings</Text>)},
+                // headerShadowVisible: false,
                 headerLeftContainerStyle: { paddingStart: SIZES.xs },
                 headerRightContainerStyle: { paddingEnd: SIZES.xs }
               }}

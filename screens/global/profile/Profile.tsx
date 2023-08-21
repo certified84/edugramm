@@ -1,15 +1,11 @@
 import { SafeAreaView, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../assets/theme";
-import { Feather, Ionicons } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import { followerCount } from "../../../util/Utils";
 import { Avatar } from "react-native-paper";
 import { PostsTab } from "./Tabs";
-
-const jobs = [
-
-]
 
 export default function ProfileScreen() {
 
@@ -20,10 +16,16 @@ export default function ProfileScreen() {
             <View style={{flex: 1}}>
                 <View style={{paddingHorizontal: SIZES.md}}>
 
-                    <TouchableOpacity style={{width: '30%', flexDirection: 'row', alignItems: 'center'}} onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={SIZES.xl} color={COLORS.onSurface}/>
-                        {/* <Text style={{...TYPOGRAPHY.h2}}>Back</Text> */}
-                    </TouchableOpacity>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <TouchableOpacity style={{width: '30%', flexDirection: 'row', alignItems: 'center'}} onPress={() => navigation.goBack()}>
+                            <Ionicons name="chevron-back" size={SIZES.xl} color={COLORS.onSurface}/>
+                            {/* <Text style={{...TYPOGRAPHY.h2}}>Back</Text> */}
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{width: '30%', flexDirection: 'row-reverse', alignItems: 'center'}} onPress={() => navigation.navigate('SettingsScreen' as never)}>
+                            <MaterialIcons name="menu-open" size={SIZES.xl} color={COLORS.onSurface}/>
+                        </TouchableOpacity>
+                    </View>
                     
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: SIZES.md}}>
                         <View style={{flex: 1, marginEnd: SIZES.sm}}>
