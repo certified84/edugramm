@@ -8,7 +8,7 @@ import { useTheme } from 'react-native-paper';
 import CommunityScreen from './Community';
 import EventScreen from './Event';
 import JobScreen from './Job';
-import SearchScreen from './Search';
+import SearchScreen from './search/Search';
 
 const Tab = createMaterialBottomTabNavigator();
 

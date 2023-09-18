@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Text, View, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native";
+import { Button, Text, FlatList, View, Image, TouchableOpacity, StyleSheet, useWindowDimensions } from "react-native";
 import Modal from "react-native-modal";
 import { COLORS, SIZES, TYPOGRAPHY } from "../assets/theme";
 import { Foundation, FontAwesome5, MaterialIcons } from '@expo/vector-icons'
 import { SafeAreaView } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 
 const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image, index }) => {
 

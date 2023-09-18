@@ -18,6 +18,7 @@ const FeedComment = ({ item }) => {
         <View style={{flex: 1, width: width}}>
 
             <ImageDialog
+                index={0}
                 showImageDialog={showImageDialog}
                 setShowImageDialog={setShowImageDialog}
                 image={item.image_url}

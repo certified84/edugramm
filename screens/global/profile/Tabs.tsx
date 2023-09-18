@@ -9,7 +9,7 @@ import { Avatar } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
 import FeedCard from '../home/FeedCard';
-import { Account } from '../Search';
+import { Account } from '../search/Search';
 
 export const PostsTab = () => {
     const navigation = useNavigation()

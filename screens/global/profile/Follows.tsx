@@ -2,7 +2,7 @@ import { SafeAreaView, Text, TouchableOpacity, View, useWindowDimensions } from 
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../assets/theme";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { FollowersTab, FollowingTab } from "./Tabs";
-import { accounts } from "../Search";
+import { accounts } from "../search/Search";
 import { useState } from "react";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
