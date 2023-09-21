@@ -39,7 +39,7 @@ export const ActionButton = ({style, onPress, buttonTitle, buttonColor, textColo
   )
 }
 
-export const GoogleButton = ({style, onPress, buttonTitle, buttonColor, textColor}) => {
+export const GoogleButton = ({style, onPress, buttonTitle, buttonColor}) => {
   return (
     <TouchableOpacity
       style={{...styles.actionBtn, ...styles.googleBtn, ...style, backgroundColor: buttonColor}}

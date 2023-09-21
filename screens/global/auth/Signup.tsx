@@ -3,8 +3,8 @@ import {
     TouchableOpacity, useWindowDimensions
 } from 'react-native'
 import { TextInput } from 'react-native-paper';
-import { TYPOGRAPHY, COLORS, SIZES } from '../../assets/theme'
-import { ActionButton, GoogleButton } from '../../components/Buttons'
+import { TYPOGRAPHY, COLORS, SIZES } from '../../../assets/theme'
+import { ActionButton, GoogleButton } from '../../../components/Buttons'
 import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
 
@@ -51,7 +51,7 @@ const SignupScreen = () => {
                     textColor={COLORS.onSecondaryContainer}
                 />
 
-                <ActionButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
+                <ActionButton onPress={() => {}} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
 
                 <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
@@ -59,13 +59,13 @@ const SignupScreen = () => {
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
-                <GoogleButton style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up With Google'} />
+                <GoogleButton onPress={() => {}} buttonColor={COLORS.surface1} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in With Google'} />
 
                 <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
-                    <View style={{height: 1, width: '100%', backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
+                    <View style={{height: 1, backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Already have an account?</Text>
-                        <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}} onPress={() => { navigation.navigate("LoginScreen") }}>
+                        <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}} onPress={() => { navigation.navigate("LoginScreen" as never) }}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Sign in.</Text>
                         </TouchableOpacity>
                     </View>

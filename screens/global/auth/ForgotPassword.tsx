@@ -3,8 +3,8 @@ import {
     TouchableOpacity, useWindowDimensions
 } from 'react-native'
 import { TextInput } from 'react-native-paper';
-import { TYPOGRAPHY, COLORS, SIZES } from '../../assets/theme'
-import { ActionButton, GoogleButton } from '../../components/Buttons'
+import { TYPOGRAPHY, COLORS, SIZES } from '../../../assets/theme'
+import { ActionButton, GoogleButton } from '../../../components/Buttons'
 import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
 
