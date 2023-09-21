@@ -9,17 +9,17 @@ import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
 import VerifiedIcon from '../../../components/VerifiedIcon';
 
-const FeedDetailedCard = ({ item, navigation }) => {
+export const PostCard = ({ item, navigation }) => {
 
     const account = {
-        id: '5',
-        name: 'James Oluseyi Famodimu',
-        image: 'https://source.unsplash.com/random/?teenager,console',
+        id: '3',
+        name: 'Kolawole Godstime',
+        image: 'https://source.unsplash.com/random/?man,kid',
         follower_count: 200000,
     }
     const { width } = useWindowDimensions()
-    const [showImageDialog, setShowImageDialog] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [showImageDialog, setShowImageDialog] = useState(false)
+    const [liked, setLiked] = useState(false)
     const [imageIndex, setImageIndex] = useState(0)
 
     return (
@@ -33,46 +33,36 @@ const FeedDetailedCard = ({ item, navigation }) => {
                 index={imageIndex}
             />
 
-            <View style={{paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
-                
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('UserDetailScreen', {account})}>
+            <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
+                <View>
+                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {navigation.navigate('UserDetailScreen', {account})}} >
                         <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
                             <Avatar.Image size={40} source={{ uri: item.user_photo }} />
                         </View>
                     </TouchableOpacity>
-
-                    <View style={{marginHorizontal: SIZES.xxs}}>
-                        
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
-                            {
-                                !item.isVerified && <VerifiedIcon />
-                            }
-                        </View>
-
-                    </View>
-
-                    <Text style={{flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface}}>{`1d`}</Text>
-                
+                    <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("PostDetailedScreen", { item })}/>
                 </View>
-
-                <View style={{flex: 1, marginTop: SIZES.xxs}}>
-                    <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                        molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                        numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium    
-                        optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-                        obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-                        nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-                        tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-                        quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-                    </Text>
-
+                <View style={{flex: 1, marginStart: SIZES.xxs}}>
+                    <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
+                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
+                        { !item.isVerified && <VerifiedIcon /> }
+                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 11h`}</Text>
+                    </View>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('PostDetailedScreen', { item })}}>
+                        <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                            molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                            numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium    
+                            optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+                            obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+                            nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+                            tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+                            quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
+                        </Text>
+                    </TouchableOpacity>
                     { 
                         item.images.length === 1 && 
-                        <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: '100%', height: width * .8, marginTop: SIZES.xs}}>
+                        <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs}}>
                             <Image 
                                 source={{ uri: item.images[0] }} 
                                 style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm}} 
@@ -103,18 +93,16 @@ const FeedDetailedCard = ({ item, navigation }) => {
                         </>
                     }
 
-                    <View style={{...styles.bottomSection}}>
-                        <View style={{ flexDirection: "row", flex: 0.4, alignItems: 'center' }}>
+                    <TouchableOpacity style={{...styles.bottomSection}} activeOpacity={.9} onPress={() => { navigation.navigate('FeedDetailedScreen', { item })}}>
+                        <View style={{ flexDirection: "row", flex: 1, alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => { setLiked(!liked) }}>
                                 <AntDesign name={liked ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
-                            <TouchableOpacity onPress={() => { }}>
-                                <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
-                            </TouchableOpacity>
+                            <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
                             <Text style={styles.commentSection}>{item.comments.length}</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -131,8 +119,6 @@ const FeedDetailedCard = ({ item, navigation }) => {
         </View>
     )
 }
-
-export default FeedDetailedCard
 
 const styles = StyleSheet.create({
     bottomSection: {

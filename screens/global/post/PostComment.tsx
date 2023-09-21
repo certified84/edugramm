@@ -8,7 +8,7 @@ import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
 
-const FeedComment = ({ item }) => {
+const PostComment = ({ item }) => {
 
     const { width } = useWindowDimensions()
     const [liked, setLiked] = useState(false);
@@ -18,6 +18,7 @@ const FeedComment = ({ item }) => {
         <View style={{flex: 1, width: width}}>
 
             <ImageDialog
+                index={0}
                 showImageDialog={showImageDialog}
                 setShowImageDialog={setShowImageDialog}
                 image={item.image_url}
@@ -93,14 +94,14 @@ const FeedComment = ({ item }) => {
                 </View>
             </View>
             
-            <FeedSubComment item={item}/>
+            <PostSubComment item={item}/>
 
             <View style={{height: 1, width: '100%', backgroundColor: COLORS.lightGray}}/>
         </View>
     )
 }
 
-const FeedSubComment = ({ item }) => {
+const PostSubComment = ({ item }) => {
 
     const { width } = useWindowDimensions()
     const [liked, setLiked] = useState(false);
@@ -182,7 +183,7 @@ const FeedSubComment = ({ item }) => {
     )
 }
 
-export default FeedComment
+export default PostComment
 
 const styles = StyleSheet.create({
     bottomSection: {
