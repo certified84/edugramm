@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
-  MainScreen, HomeScreen, FeedDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
+  MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
 } from './screens';
 import { COLORS, SIZES, TYPOGRAPHY } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -101,8 +101,8 @@ const App = () => {
               }}
             />
             <Stack.Screen
-              name="FeedDetailedScreen"
-              component={FeedDetailedScreen}
+              name="PostDetailedScreen"
+              component={PostDetailedScreen}
               options={{
                 headerShown: false
               }}

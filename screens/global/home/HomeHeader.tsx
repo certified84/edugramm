@@ -4,7 +4,7 @@ import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-paper';
 
-export default function FeedHeader({ titleText, navigation }) {
+export default function HomeHeader({ titleText, navigation }) {
     return (
         <View style={styles.container}>
             <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface}}>{titleText}</Text>

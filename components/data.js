@@ -1,3 +1,79 @@
+export   const accounts = [
+    {
+        id: '1',
+        name: 'Samson Achiaga',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '2',
+        name: 'Samson Achiaga',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 99990,
+    },
+    {
+        id: '3',
+        name: 'Kolawole Godstime',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '4',
+        name: 'Okafe Vincent',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 20000,
+    },
+    {
+        id: '5',
+        name: 'Olorunnegan Ifeoluwa',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000000,
+    },
+    {
+        id: '6',
+        name: 'James Oluseyi ',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '7',
+        name: 'Samson Achiaga',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '8',
+        name: 'Samson Achiaga',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 99990,
+    },
+    {
+        id: '9',
+        name: 'Kolawole Godstime',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+    {
+        id: '10',
+        name: 'Okafe Vincent',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 20000,
+    },
+    {
+        id: '11',
+        name: 'Olorunnegan Ifeoluwa',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000000,
+    },
+    {
+        id: '12',
+        name: 'James Oluseyi Famodimu James, Oluseyi',
+        image_url: 'https://source.unsplash.com/random/?man,kid',
+        follower_count: 200000,
+    },
+]
+
+
 export const data = [
     {
         id: '1',
@@ -500,83 +576,6 @@ export const data = [
         date: "13:30am"
     },
 ]
-
-
-export   const accounts = [
-    {
-        id: '1',
-        name: 'Samson Achiaga',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-    {
-        id: '2',
-        name: 'Samson Achiaga',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 99990,
-    },
-    {
-        id: '3',
-        name: 'Kolawole Godstime',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-    {
-        id: '4',
-        name: 'Okafe Vincent',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 20000,
-    },
-    {
-        id: '5',
-        name: 'Olorunnegan Ifeoluwa',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000000,
-    },
-    {
-        id: '6',
-        name: 'James Oluseyi ',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-    {
-        id: '7',
-        name: 'Samson Achiaga',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-    {
-        id: '8',
-        name: 'Samson Achiaga',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 99990,
-    },
-    {
-        id: '9',
-        name: 'Kolawole Godstime',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-    {
-        id: '10',
-        name: 'Okafe Vincent',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 20000,
-    },
-    {
-        id: '11',
-        name: 'Olorunnegan Ifeoluwa',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000000,
-    },
-    {
-        id: '12',
-        name: 'James Oluseyi Famodimu James, Oluseyi',
-        image_url: 'https://source.unsplash.com/random/?man,kid',
-        follower_count: 200000,
-    },
-]
-
 
 
 export const posts = [

@@ -8,8 +8,8 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
-import FeedCard from '../home/FeedCard';
-import { Account } from '../search/Search';
+import { PostCard } from '../post/PostCard';
+import { Account } from '../search/Components/Account';
 
 export const PostsTab = () => {
     const navigation = useNavigation()
@@ -18,7 +18,7 @@ export const PostsTab = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={data}
-                    renderItem={({ item }) => <FeedCard item={item} navigation={navigation} />}
+                    renderItem={({ item }) => <PostCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 />

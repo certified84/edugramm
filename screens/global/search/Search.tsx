@@ -10,12 +10,14 @@ import { followerCount } from "../../../util/Utils";
 import { Post } from "./Components/Post";
 import { accounts, data } from "../../../components/data";
 import { ImageDialog } from "./Components/ImageDialog";
+import { Account } from "./Components/Account";
 
 export default function SearchScreen() {
 
     const navigation = useNavigation()
     const [searchQuery, setSearchQuery] = useState('')
     const [filteredAccounts, setFilteredAccounts] = useState(accounts)
+    const [searching, setSearching] = useState(false)
     const [posts, setPosts] = useState([])
     const [showImageDialog, setShowImageDialog] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
@@ -48,60 +50,77 @@ export default function SearchScreen() {
             }
 
             <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <View style={{flex: .2}}/>
-                    <Text style={{...TYPOGRAPHY.h1, alignSelf: 'center', color: COLORS.onSurface}}>Search</Text>
-                    <TouchableOpacity activeOpacity={.8} style={{flex: .2, alignItems: 'center'}}>
-                        <MaterialCommunityIcons name={'calendar-edit'} color={COLORS.surface} size={SIZES.xl} />
-                    </TouchableOpacity>
-                </View>
                 {
-                    !posts || data.length === 0 ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Coming soon...</Text>
-                        <View style={{flex: .1}}/>
-                    </View>
-                    : <View style={{flex: 1}}>
-                        <View style={{marginHorizontal: SIZES.md, borderRadius: SIZES.xs, overflow: 'hidden'}}>
-                            <TextInput
-                                value={searchQuery}
-                                onChangeText={setSearchQuery}
-                                mode="outlined"
-                                placeholder='Search'
-                                left={
-                                    <TextInput.Icon icon={'calendar-edit'} color={COLORS.onSurface} />
-                                }
-                                theme={{ roundness: SIZES.xs }}
-                                style={styles.inputField}
-                                underlineColor={COLORS.onSecondaryContainer}
-                                outlineColor={'transparent'}
-                                activeOutlineColor={'transparent'}
-                                placeholderTextColor={COLORS.onSecondaryContainer}
-                                textColor={COLORS.onSecondaryContainer}
+                    searching ? <View style={{flex: 1}}>
+                        <View>
+                            <View style={{flexDirection: 'row', backgroundColor: COLORS.surface1, alignItems: 'center', paddingHorizontal: SIZES.md, marginHorizontal: SIZES.md, borderRadius: SIZES.xs, overflow: 'hidden'}}>
+                                <Feather name="search" size={20} color={COLORS.onSecondaryContainer} style={{flex: .1}}/>
+                                <View style={{flex: .7}}>
+                                    <TextInput
+                                        value={searchQuery}
+                                        onChangeText={setSearchQuery}
+                                        mode="outlined"
+                                        placeholder='Search'
+                                        // left={
+                                            // <TextInput.Icon icon={'search'} color={COLORS.onSurface} />
+                                        // }
+                                        // theme={{ roundness: SIZES.xs }}
+                                        style={styles.inputField}
+                                        underlineColor={COLORS.onSecondaryContainer}
+                                        outlineColor={'transparent'}
+                                        activeOutlineColor={'transparent'}
+                                        placeholderTextColor={COLORS.darkGray}
+                                        textColor={COLORS.onSecondaryContainer}
+                                    />
+                                </View>
+                                <TouchableOpacity onPress={() => setSearching(false)} activeOpacity={.9} style={{flex: .2, paddingVertical: SIZES.sm, alignItems: 'center'}}>
+                                    <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSecondaryContainer}}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <FlatList
+                                key={'search'}
+                                data={filteredAccounts}
+                                renderItem={({ item }) => <Account account={item} navigation={navigation} />}
+                                keyExtractor={(item) => item.id}
+                                alwaysBounceVertical={true}
                             />
                         </View>
-
-                        <FlatList
-                            style={{ padding: SIZES.sm }}
-                            data={posts}
-                            renderItem={({ item, index }) => <Post 
-                                item={item} 
-                                index={index} 
-                                setCurrentIndex={setCurrentIndex} 
-                                setShowImageDialog={setShowImageDialog} 
-                                navigation={navigation}
-                            />}
-                            //Setting the number of column
-                            numColumns={3}
-                            keyExtractor={(item, index) => `${index}`}
-                        />
-                        {/* <FlatList
-                            data={filteredAccounts}
-                            renderItem={({ item }) => <Account account={item} navigation={navigation} />}
-                            keyExtractor={(item) => item.id}
-                            alwaysBounceVertical={true}
-                        /> */}
                     </View>
-                }
+
+                    : <View style={{flex: 1}}>
+
+                        {
+                            !posts || data.length === 0 ? <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
+                                <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Coming soon...</Text>
+                                <View style={{flex: .1}}/>
+                            </View>
+
+                            : <View style={{flex: 1}}>
+                                <TouchableOpacity onPress={() => setSearching(true)} activeOpacity={.9} style={{paddingVertical: SIZES.sm, backgroundColor: COLORS.surface1, alignItems: 'center', paddingHorizontal: SIZES.md, marginHorizontal: SIZES.md, flexDirection: 'row', borderRadius: SIZES.xs, overflow: 'hidden'}}>
+                                    <Feather name="search" size={20} color={COLORS.black}/>
+                                    <Text style={{...TYPOGRAPHY.h2, marginStart: SIZES.md, color: COLORS.onSecondaryContainer}}>Search</Text>
+                                </TouchableOpacity>
+
+                                <FlatList
+                                    key={'posts'}
+                                    style={{ padding: SIZES.sm }}
+                                    data={posts}
+                                    renderItem={({ item, index }) => <Post 
+                                        item={item} 
+                                        index={index} 
+                                        setCurrentIndex={setCurrentIndex} 
+                                        setShowImageDialog={setShowImageDialog} 
+                                        navigation={navigation}
+                                    />}
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => `${index}`}
+                                />
+                            </View>
+                        }
+
+                    </View>
+                }                
             </View>
         </SafeAreaView>
     )

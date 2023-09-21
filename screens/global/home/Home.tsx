@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar, FAB } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
-import FeedHeader from './FeedHeader';
+import HomeHeader from './HomeHeader';
 import { useNavigation } from '@react-navigation/native';
-import FeedCard from './FeedCard';
+import { PostCard } from '../post/PostCard';
 import { data } from '../../../components/data';
 
 const HomeScreen = () => {
@@ -19,8 +19,8 @@ const HomeScreen = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={data}
-                    ListHeaderComponent={() => <FeedHeader titleText={"EduGramm"} navigation={navigation} />}
-                    renderItem={({ item }) => <FeedCard item={item} navigation={navigation} />}
+                    ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} />}
+                    renderItem={({ item }) => <PostCard item={item} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 />

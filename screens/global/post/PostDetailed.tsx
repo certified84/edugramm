@@ -7,13 +7,13 @@ import React, { useState } from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar, TextInput } from 'react-native-paper';
 import { MaterialIcons, Ionicons, AntDesign } from '@expo/vector-icons'
-import FeedHeader from './FeedHeader';
+import HomeHeader from '../home/HomeHeader';
 import { useNavigation } from '@react-navigation/native';
-import FeedCard from './FeedCard';
-import FeedComment from './FeedComment';
-import FeedDetailedCard from './FeedDetailedCard';
+import { PostCard } from './PostCard';
+import PostComment from './PostComment';
+import PostDetailedCard from './PostDetailedCard';
 
-const FeedDetailedScreen = ({ route }) => {
+const PostDetailedScreen = ({ route }) => {
 
     const item = route.params.item
     const navigation = useNavigation()
@@ -28,11 +28,11 @@ const FeedDetailedScreen = ({ route }) => {
                     <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl, color: COLORS.onSurface}}>Post</Text>
                 </View>
                 <ScrollView style={{flex: 1}}>
-                    <FeedDetailedCard item={item} navigation={navigation} />
+                    <PostDetailedCard item={item} navigation={navigation} />
 
                     <View style={{ marginBottom: SIZES.xl}}>
-                        <FeedComment item={item} />
-                        <FeedComment item={item} />
+                        <PostComment item={item} />
+                        <PostComment item={item} />
                     </View>
 
                 </ScrollView>
@@ -67,7 +67,7 @@ const FeedDetailedScreen = ({ route }) => {
     )
 }
 
-export default FeedDetailedScreen
+export default PostDetailedScreen
 
 const styles = StyleSheet.create({
     container: {
