@@ -1,19 +1,48 @@
 import {
     SafeAreaView, View, Text,
-    TouchableOpacity, useWindowDimensions
+    TouchableOpacity, useWindowDimensions, Animated
 } from 'react-native'
 import { TextInput } from 'react-native-paper';
 import { TYPOGRAPHY, COLORS, SIZES } from '../../../assets/theme'
 import { ActionButton, GoogleButton } from '../../../components/Buttons'
 import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
+import { Loader } from '../../../components/Loader';
+import { useEffect, useState } from 'react';
 
 
 const SignupScreen = () => {
+
     const navigation = useNavigation()
     const { width } = useWindowDimensions()
+    const [loading, setLoading] = useState(true)
+    const loaderWidth = new Animated.Value(360)
+    const loaderHeight = new Animated.Value(600)
+
+    useEffect(() => {
+        Animated.timing(
+            loaderWidth, // The animated value to drive
+          {
+            toValue: 360, // Animate to opacity: 1 (opaque)
+            duration: 450, // Make it take a while
+            useNativeDriver: false,
+          },
+        ).start(); // Starts the animation
+        Animated.timing(
+            loaderHeight, // The animated value to drive
+          {
+            toValue: 750, // Animate to opacity: 1 (opaque)
+            duration: 10000, // Make it take a while
+            useNativeDriver: false,
+          },
+        ).start(); // Starts the animation
+      }, [loading === true]);
+
     return (
         <SafeAreaView style={styles.container}>
+
+            <Loader showLoader={loading} setShowLoader={setLoading} />
+
             <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign up</Text>
                 <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We could use your presence here</Text>
@@ -51,7 +80,7 @@ const SignupScreen = () => {
                     textColor={COLORS.onSecondaryContainer}
                 />
 
-                <ActionButton onPress={() => {}} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
+                <ActionButton onPress={() => {setLoading(true)}} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up'} buttonColor={COLORS.primary} textColor={COLORS.onPrimary}/>
 
                 <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />

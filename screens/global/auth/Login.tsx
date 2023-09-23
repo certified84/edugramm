@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     inputField: {
         backgroundColor: COLORS.surface1,
         color: COLORS.black,
-        // marginTop: SIZES.lg
+        marginTop: SIZES.sm
     },
     forgotPasswordButton: {
         paddingTop: SIZES.sm,

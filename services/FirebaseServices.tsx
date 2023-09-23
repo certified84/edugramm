@@ -1,6 +1,8 @@
 import { Auth, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import firebase, { initializeApp } from "firebase/app";
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+
 export const signup = (auth, email, password) => {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
