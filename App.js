@@ -14,7 +14,7 @@ import {
   // AnimatedSplashScreen,
   OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
   MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
-} from './screens';
+} from './src/screens';
 import { COLORS, SIZES, TYPOGRAPHY } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
 
@@ -204,7 +204,7 @@ export default App
 
 const customHeaderTitleStyle = {
   fontFamily: "space-grotesk-medium",
-  fontWeight: "700",
+  // fontWeight: 'bold',
   fontSize: SIZES.md,
   color: COLORS.onSurface,
 }
