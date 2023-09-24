@@ -42,7 +42,7 @@ export const Loader = ({ showLoader, setShowLoader }) => {
     return (
         <Modal
             isVisible={showLoader}
-            onBackdropPress={() => {setShowLoader(false)}}
+            // onBackdropPress={() => {setShowLoader(false)}}
             animationIn="zoomIn"
             animationOut="zoomOut"
             backdropOpacity={.4}
