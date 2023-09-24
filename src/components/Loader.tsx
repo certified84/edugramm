@@ -30,8 +30,7 @@ export const Loader = ({ showLoader }) => {
       };
     
       useEffect(() => {
-        startAnimation();
-        console.log("Animating...")
+        startAnimation()
       }, [showLoader === true]);
 
       const animatedScale = scale.interpolate({

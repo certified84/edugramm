@@ -9,8 +9,10 @@ import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
 import { Loader } from '../../../components/Loader';
 import { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../../../firebase';
+import { User as FirebaseUser, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { auth, firestore } from '../../../../firebase';
+import { addDoc, collection } from 'firebase/firestore';
+import { User, defaultUser } from '../../../data/model/User'
 
 
 const SignupScreen = () => {
@@ -25,6 +27,7 @@ const SignupScreen = () => {
         message: "",
         loading: false,
         showSnackBar: false,
+        success: false,
     })
 
     const [errors, setErrors] = useState({
@@ -55,17 +58,42 @@ const SignupScreen = () => {
         await createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
             const user = userCredential.user
-            sendEmailVerification(user)
-            setValue({ ...value, message: "A verification email has been sent to your email address." })
-            auth.signOut()
-            setValue({...value, loading: false})
+            uploadData(user)
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            setValue({ ...value, message: "An error occurred. Please try again." })
-            setValue({...value, loading: false})
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        })
+    }
+
+    async function uploadData(user: FirebaseUser) {
+        const data: User = { ...defaultUser, uid: user.uid, name: value.name, email: value.email.toLowerCase() }
+        await addDoc(collection(firestore, "users"), data)
+        .then(() => {
+            updateUserProfile(user, value.name)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        })
+    }
+
+    async function updateUserProfile(user: FirebaseUser, displayName? : string | null, photoUrl? : string | null) {
+        await updateProfile(user, {displayName: displayName, photoURL: photoUrl})
+        .then(() => {
+            sendEmailVerification(user)
+            setValue({ ...value, message: "A verification email has been sent to your email address.", loading: false, success: true })
+            auth.signOut()
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
         })
     }
 
@@ -170,7 +198,7 @@ const SignupScreen = () => {
                 action={{ 
                     textColor: COLORS.primary,
                     label: 'OK',
-                    onPress: () => navigation.navigate("LoginScreen" as never),
+                    onPress: () => {if(value.success) navigation.navigate("LoginScreen" as never)},
                 }}>
                     <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.message}</Text>
             </Snackbar>

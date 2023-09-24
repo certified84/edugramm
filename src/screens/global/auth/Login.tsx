@@ -52,8 +52,7 @@ const LoginScreen = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            setValue({ ...value, message: "An error occurred. Please try again." })
-            setValue({...value, loading: false})
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
         })
     }
 
