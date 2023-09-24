@@ -2,6 +2,7 @@ import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { MaterialIcons, Ionicons, Feather, EvilIcons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../../../firebase";
 
 export default function SettingsScreen() {
 
@@ -48,7 +49,7 @@ export default function SettingsScreen() {
 
                 <View style={{width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .3, marginVertical: SIZES.md, marginBottom: SIZES.xs}}/>
 
-                <TouchableOpacity onPress={() => navigation.navigate('LoginScreen' as never)} activeOpacity={.6} style={{paddingVertical: SIZES.xxs, paddingHorizontal: SIZES.sm}}>
+                <TouchableOpacity onPress={() => auth.signOut()} activeOpacity={.6} style={{paddingVertical: SIZES.xxs, paddingHorizontal: SIZES.sm}}>
                     <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Log out</Text>
                 </TouchableOpacity>
             </View>

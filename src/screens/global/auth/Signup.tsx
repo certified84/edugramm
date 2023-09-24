@@ -50,26 +50,19 @@ const SignupScreen = () => {
             return
         }
     
-        try {
-            setLoading(true)
-            await createUserWithEmailAndPassword(auth, value.email, value.password)
-            .then((userCredential) => {
-                const user = userCredential.user
-                setLoading(false)
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                setValue({ ...value, error: "An error occurred. Please try again." })
-                setLoading(false)
-            })
-        } catch (error) {
+        setLoading(true)
+        await createUserWithEmailAndPassword(auth, value.email, value.password)
+        .then((userCredential) => {
+            const user = userCredential.user
+            setLoading(false)
+        })
+        .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
             setValue({ ...value, error: "An error occurred. Please try again." })
-        }
+            setLoading(false)
+        })
     }
 
     return (
