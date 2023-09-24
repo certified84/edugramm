@@ -46,6 +46,7 @@ const LoginScreen = () => {
             setValue({...value, loading: false})
             if (!user.emailVerified) {
                 setValue({ ...value, message: "Please verify your email address." })
+                auth.signOut()
             }
         })
         .catch((error) => {
