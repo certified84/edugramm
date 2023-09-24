@@ -9,7 +9,7 @@ import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
 import { Loader } from '../../../components/Loader';
 import { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '../../../../firebase';
 
 
@@ -17,14 +17,15 @@ const SignupScreen = () => {
 
     const navigation = useNavigation()
     const { width } = useWindowDimensions()
-    const [loading, setLoading] = useState(false)
 
     const [value, setValue] = useState({
         name: "",
         email: "",
         password: "",
-        error: "",
-    });
+        message: "",
+        loading: false,
+        showSnackBar: false,
+    })
 
     const [errors, setErrors] = useState({
         name: false,
@@ -32,7 +33,7 @@ const SignupScreen = () => {
         password: false,
     })
 
-    useEffect(() => {}, [value.error]);
+    useEffect(() => setValue({...value, showSnackBar: value.message !== ""}), [value.message])
 
     async function signUp() {
         if (value.name === "") {
@@ -50,25 +51,28 @@ const SignupScreen = () => {
             return
         }
     
-        setLoading(true)
+        setValue({...value, loading: true})
         await createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
             const user = userCredential.user
-            setLoading(false)
+            sendEmailVerification(user)
+            setValue({ ...value, message: "A verification email has been sent to your email address." })
+            auth.signOut()
+            setValue({...value, loading: false})
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            setValue({ ...value, error: "An error occurred. Please try again." })
-            setLoading(false)
+            setValue({ ...value, message: "An error occurred. Please try again." })
+            setValue({...value, loading: false})
         })
     }
 
     return (
         <SafeAreaView style={styles.container}>
 
-            <Loader showLoader={loading} setShowLoader={setLoading} />
+            <Loader showLoader={value.loading} />
 
             <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign up</Text>
@@ -160,15 +164,15 @@ const SignupScreen = () => {
             </View>
 
             <Snackbar
-                visible={value.error !== ""}
-                onDismiss={() => setValue({...value, error: ""})}
+                visible={value.showSnackBar}
+                onDismiss={() => setValue({...value, message: ""})}
                 theme={{ colors: { primary: COLORS.primary } }}
                 action={{ 
                     textColor: COLORS.primary,
                     label: 'OK',
-                    onPress: () => {},
+                    onPress: () => navigation.navigate("LoginScreen" as never),
                 }}>
-                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.error}</Text>
+                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.message}</Text>
             </Snackbar>
         </SafeAreaView>
     )

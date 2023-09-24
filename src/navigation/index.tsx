@@ -8,7 +8,7 @@ export default function RootNavigation() {
 
     const [user] = useAuthState(auth);
 
-    return user ? <MainStack customHeaderTitleStyle={customHeaderTitleStyle} /> 
+    return user && user.emailVerified ? <MainStack customHeaderTitleStyle={customHeaderTitleStyle} /> 
     : <AuthStack customHeaderTitleStyle={customHeaderTitleStyle} />;
 }
 

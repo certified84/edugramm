@@ -12,20 +12,21 @@ const LoginScreen = () => {
 
     const navigation = useNavigation()
     const { width } = useWindowDimensions()
-    const [loading, setLoading] = useState(false)
 
     const [value, setValue] = useState({
         email: "",
         password: "",
-        error: "",
-    });
+        message: "",
+        loading: false,
+        showSnackBar: false,
+    })
 
     const [errors, setErrors] = useState({
         email: false,
         password: false,
     })
 
-    useEffect(() => {}, [value.error]);
+    useEffect(() => setValue({...value, showSnackBar: value.message !== ""}), [value.message])
     
     async function signIn() {
         if (value.email === "") {
@@ -38,18 +39,21 @@ const LoginScreen = () => {
             return
         }
     
-        setLoading(true)
+        setValue({...value, loading: true})
         await signInWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
             const user = userCredential.user
-            setLoading(false)
+            setValue({...value, loading: false})
+            if (!user.emailVerified) {
+                setValue({ ...value, message: "Please verify your email address." })
+            }
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            setValue({ ...value, error: "An error occurred. Please try again." })
-            setLoading(false)
+            setValue({ ...value, message: "An error occurred. Please try again." })
+            setValue({...value, loading: false})
         })
     }
 
@@ -57,8 +61,7 @@ const LoginScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
 
-
-            <Loader showLoader={loading} setShowLoader={setLoading} />
+            <Loader showLoader={value.loading} />
 
             <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign in</Text>
@@ -135,15 +138,15 @@ const LoginScreen = () => {
             </View>
 
             <Snackbar
-                visible={value.error !== ""}
-                onDismiss={() => setValue({...value, error: ""})}
+                visible={value.showSnackBar}
+                onDismiss={() => setValue({...value, message: ""})}
                 theme={{ colors: { primary: COLORS.primary } }}
                 action={{ 
                     textColor: COLORS.primary,
                     label: 'OK',
                     onPress: () => {},
                 }}>
-                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.error}</Text>
+                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.message}</Text>
             </Snackbar>
         </SafeAreaView>
     )

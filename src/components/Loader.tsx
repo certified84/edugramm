@@ -3,7 +3,7 @@ import { Animated, Easing, Image, View, useWindowDimensions } from "react-native
 import Modal from "react-native-modal";
 import { SplashIcon } from "../../assets/svg/SplashIcon";
 
-export const Loader = ({ showLoader, setShowLoader }) => {
+export const Loader = ({ showLoader }) => {
 
     const {width, height} = useWindowDimensions()
     const loaderWidth = new Animated.Value(360)
