@@ -1,14 +1,89 @@
 import { SafeAreaView, View, TouchableOpacity, Image, Text, StyleSheet, ScrollView } from "react-native";
 import { COLORS, LINE, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import VerifiedIcon from "../../../components/VerifiedIcon";
 import { MaterialIcons, Ionicons, AntDesign, Feather } from '@expo/vector-icons'
-import { Avatar, TextInput } from "react-native-paper";
+import { Avatar, Snackbar, TextInput } from "react-native-paper";
+import { User as FirebaseUser, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { User, defaultUser } from '../../../data/model/User'
+import { auth, firestore } from '../../../../firebase';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Loader } from "../../../components/Loader";
 
 export default function EditProfileScreen() {
     
     const navigation = useNavigation()
+    const user = auth.currentUser
+    const [userData, setUserData] = useState(defaultUser)
+    const [value, setValue] = useState({
+        bio: "",
+        company: "",
+        school: "",
+        link: "",
+        message: "",
+        loading: false,
+        showSnackBar: false,
+    })
+
+    useEffect(() => {
+        getUserData()
+        return () => {}
+    }, [])
+
+    useEffect(() => setValue({...value, showSnackBar: value.message !== ""}), [value.message])
+
+    async function getUserData() {
+        console.log("Called")
+        setValue({ ...value, loading: true })
+        const docRef = doc(firestore, "users", user.uid)
+        await getDoc(docRef).then((docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data() as User
+                console.log("Data: ", data)
+                setUserData(data)
+                setValue({
+                    ...value,
+                    bio: data.bio,
+                    company: data.company,
+                    school: data.school,
+                    link: data.link
+                })
+                console.log(value)
+            } else {
+                setValue({ ...value, message: "An error occurred. Please try again."})
+            }
+            setValue({ ...value, loading: false })
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        })
+    }
+
+    async function updateUserProfile() {
+        setValue({...value, loading: true})
+        console.log("Bio", value.bio)
+        const userRef = doc(firestore, "users", user.uid)
+        await updateDoc(userRef, { 
+            bio: value.bio,
+            company: value.company,
+            school: value.school,
+            link: value.link
+         }).then(() => {
+            setValue({...value, loading: false})
+            navigation.goBack()
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        })
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -18,7 +93,7 @@ export default function EditProfileScreen() {
               </TouchableOpacity>
             )},
             headerRight: () => {return (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={updateUserProfile}>
                 <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Done</Text>
               </TouchableOpacity>
             )},
@@ -27,6 +102,9 @@ export default function EditProfileScreen() {
 
     return ( 
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
+
+            <Loader showLoader={value.loading} />
+
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                 <View style={{flex: 1}}>
 
@@ -45,8 +123,7 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Name</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={'Samson Achiaga'}
-                                        // onChangeText={setText}
+                                        value={user.displayName}
                                         mode="outlined"
                                         placeholder='e.g Samson Achiaga'
                                         editable={false}
@@ -66,8 +143,11 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Bio</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        // value={text}
-                                        // onChangeText={setText}
+                                        value={value.bio}
+                                        onChangeText={(text) => {
+                                            setValue({ ...value, bio: text})
+                                            console.log(value.bio)
+                                        }}
                                         mode="outlined"
                                         placeholder='Enter a short description about yourself'
                                         style={styles.inputField}
@@ -87,8 +167,10 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Company</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        // value={text}
-                                        // onChangeText={setText}
+                                        value={value.company}
+                                        onChangeText={(text) => {
+                                            setValue({ ...value, company: text})
+                                        }}
                                         mode="outlined"
                                         placeholder='Where do you work?'
                                         style={styles.inputField}
@@ -108,8 +190,10 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>School</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        // value={text}
-                                        // onChangeText={setText}
+                                        value={value.school}
+                                        onChangeText={(text) => {
+                                            setValue({ ...value, school: text})
+                                        }}
                                         mode="outlined"
                                         placeholder='Where do/did you study?'
                                         style={styles.inputField}
@@ -129,8 +213,10 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Link</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        // value={text}
-                                        // onChangeText={setText}
+                                        value={value.link}
+                                        onChangeText={(text) => {
+                                            setValue({ ...value, link: text})
+                                        }}
                                         mode="outlined"
                                         placeholder='e.g edugramm.com/edugramm'
                                         style={styles.inputField}
@@ -156,6 +242,18 @@ export default function EditProfileScreen() {
                     </View>
                 </View>
             </ScrollView>
+
+            <Snackbar
+                visible={value.showSnackBar}
+                onDismiss={() => setValue({...value, message: ""})}
+                theme={{ colors: { primary: COLORS.primary } }}
+                action={{ 
+                    textColor: COLORS.primary,
+                    label: 'OK',
+                    onPress: () => {},
+                }}>
+                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.message}</Text>
+            </Snackbar>
         </SafeAreaView>
     )
 }

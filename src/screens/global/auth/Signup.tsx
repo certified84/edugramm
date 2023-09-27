@@ -11,7 +11,7 @@ import { Loader } from '../../../components/Loader';
 import { useEffect, useState } from 'react';
 import { User as FirebaseUser, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { auth, firestore } from '../../../../firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { User, defaultUser } from '../../../data/model/User'
 
 
@@ -70,7 +70,7 @@ const SignupScreen = () => {
 
     async function uploadData(user: FirebaseUser) {
         const data: User = { ...defaultUser, uid: user.uid, name: value.name, email: value.email.toLowerCase() }
-        await addDoc(collection(firestore, "users"), data)
+        await setDoc(doc(firestore, "users", user.uid), data)
         .then(() => {
             updateUserProfile(user, value.name)
         })
