@@ -5,13 +5,23 @@ import { ActionButton, GoogleButton } from '../../../components/Buttons'
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { auth } from '../../../../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithCredential,  } from 'firebase/auth';
 import { Loader } from '../../../components/Loader';
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin';
+// import auth from '@react-native-firebase/auth';
 
 const LoginScreen = () => {
 
     const navigation = useNavigation()
     const { width } = useWindowDimensions()
+    const provider = new GoogleAuthProvider();
+
+    const [ {}, userCredential ] = useSignInWithGoogle(auth)
+
+    // GoogleSignin.configure({
+    //     webClientId: '535570809491-rfd6nbbqpi8178tpdcbe079k6qhlscmm.apps.googleusercontent.com',
+    // });
 
     const [value, setValue] = useState({
         email: "",
@@ -27,6 +37,36 @@ const LoginScreen = () => {
     })
 
     useEffect(() => setValue({...value, showSnackBar: value.message !== ""}), [value.message])
+
+    async function signInWithGoogle() {
+        setValue({...value, loading: true})
+        // await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
+        // .then((has) => {
+        //     if (!has) return
+        // })
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        //     console.log(errorCode, errorMessage)
+        //     setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        // })
+        // await useSignInWithGoogle(auth, provider)
+        // const { idToken } = await GoogleSignin.signIn();
+        // const credential = GoogleAuthProvider.credential(idToken);
+
+        // await signInWithCredential(auth, userCredential)
+        setValue({...value, message: userCredential.user.displayName, loading: false})
+        // .then((credential) => {
+        //     const user = credential.user
+        //     setValue({...value, loading: false})
+        // })
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message;
+        //     console.log(errorCode, errorMessage)
+        //     setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+        // })
+    }
     
     async function signIn() {
         if (value.email === "") {
@@ -124,7 +164,7 @@ const LoginScreen = () => {
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
-                <GoogleButton onPress={() => {}} buttonColor={COLORS.surface1} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in With Google'} />
+                <GoogleButton onPress={signInWithGoogle} buttonColor={COLORS.surface1} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in With Google'} />
 
                 <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
                     <View style={{height: 1, backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
