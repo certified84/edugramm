@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "535570809491",
+    "project_id": "edugramm-998b6",
+    "storage_bucket": "edugramm-998b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535570809491:android:a294b788bb0ff6e05b8366",
+        "android_client_info": {
+          "package_name": "com.certified.edugramm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535570809491-rfd6nbbqpi8178tpdcbe079k6qhlscmm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.certified.edugramm",
+            "certificate_hash": "01a6724b9a457b12aa3d39297f9618180e5c288c"
+          }
+        },
+        {
+          "client_id": "535570809491-8la74063k3gjltq424qs7365mesh93rq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKDNYNFtPe1ri7w4oxa_CElwrOSYXlTcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535570809491-8la74063k3gjltq424qs7365mesh93rq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
