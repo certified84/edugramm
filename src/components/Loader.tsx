@@ -44,7 +44,7 @@ export const Loader = ({ showLoader }) => {
             // onBackdropPress={() => {setShowLoader(false)}}
             animationIn="zoomIn"
             animationOut="zoomOut"
-            backdropOpacity={.4}
+            backdropOpacity={.8}
             deviceWidth={width}
             deviceHeight={height}
             // onSwipeComplete={(gestureState) => setShowLoader(false)}

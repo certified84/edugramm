@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { COLORS, SIZES, TYPOGRAPHY } from '../../assets/theme'
-import { GoogleIcon } from '../../assets/svg/SvgIcons'
+import { COLORS, SIZES, TYPOGRAPHY, SHADOWS } from '../../assets/theme'
+import { AppleIcon, GoogleIcon } from '../../assets/svg/SvgIcons'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 export const AuthButton = ({text, textColor, buttonColor, onPress}) => {
   return (
@@ -39,17 +40,33 @@ export const ActionButton = ({style, onPress, buttonTitle, buttonColor, textColo
   )
 }
 
-export const GoogleButton = ({style, onPress, buttonTitle, buttonColor}) => {
+export const GoogleButton = ({style, onPress, buttonTitle}) => {
   return (
     <TouchableOpacity
-      style={{...styles.actionBtn, ...styles.googleBtn, ...style, backgroundColor: buttonColor}}
+      style={{ ...SHADOWS.light, ...styles.actionBtn, ...style, backgroundColor: Colors.white }}
       activeOpacity={0.5}
       onPress={onPress}
     >
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: SIZES.sm }}>
-          <GoogleIcon />
+        <GoogleIcon />
+        <View style={{ marginHorizontal: SIZES.xs, }} />
+        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+export const AppleButton = ({style, onPress, buttonTitle}) => {
+  return (
+    <TouchableOpacity
+      style={{ ...SHADOWS.light, ...styles.actionBtn, ...style, backgroundColor: COLORS.white}}
+      activeOpacity={0.5}
+      onPress={onPress}
+    >
+      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: SIZES.sm }}>
+          <AppleIcon />
           <View style={{ marginHorizontal: SIZES.xs, }} />
-          <Text style={{ ...TYPOGRAPHY.h2, ...styles.forgotPassword, textDecorationLine: "none" }}>{buttonTitle}</Text>
+          <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
       </View>
     </TouchableOpacity>
   )

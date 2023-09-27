@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { Snackbar, TextInput } from 'react-native-paper';
 import { TYPOGRAPHY, COLORS, SIZES } from '../../../../assets/theme'
-import { ActionButton, GoogleButton } from '../../../components/Buttons'
+import { ActionButton, AppleButton, GoogleButton } from '../../../components/Buttons'
 import { styles } from './Login';
 import { useNavigation } from '@react-navigation/native';
 import { Loader } from '../../../components/Loader';
@@ -178,7 +178,9 @@ const SignupScreen = () => {
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
-                <GoogleButton onPress={() => {}} buttonColor={COLORS.surface1} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in With Google'} />
+                <GoogleButton onPress={() => setValue({ ...value, showSnackBar: true, message: "Coming soon.."})} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up with Google'} />
+
+                <AppleButton onPress={() => setValue({ ...value, showSnackBar: true, message: "Coming soon.."})} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign up with Apple'} />
 
                 <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
                     <View style={{height: 1, backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>

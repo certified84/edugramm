@@ -1,7 +1,7 @@
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, useWindowDimensions, Platform, StatusBar } from 'react-native'
 import { TYPOGRAPHY, COLORS, SIZES } from '../../../../assets/theme'
 import { Snackbar, TextInput } from 'react-native-paper';
-import { ActionButton, GoogleButton } from '../../../components/Buttons'
+import { ActionButton, AppleButton, GoogleButton } from '../../../components/Buttons'
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { auth } from '../../../../firebase';
@@ -164,7 +164,9 @@ const LoginScreen = () => {
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
-                <GoogleButton onPress={signInWithGoogle} buttonColor={COLORS.surface1} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in With Google'} />
+                <GoogleButton onPress={() => setValue({ ...value, showSnackBar: true, message: "Coming soon.."})} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in with Google'} />
+
+                <AppleButton onPress={() => setValue({ ...value, showSnackBar: true, message: "Coming soon.."})} style={{width: '100%', marginTop: SIZES.lg}} buttonTitle={'Sign in with Apple'} />
 
                 <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
                     <View style={{height: 1, backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
