@@ -16,17 +16,18 @@ import { ScrollView } from "react-native-gesture-handler";
 import { data } from "../../../components/data";
 import { PostCard } from "../post/PostCard";
 import { SplashIcon } from "../../../../assets/svg/SplashIcon";
+import VerifiedIcon from "../../../components/VerifiedIcon";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({route}) {
 
     const navigation = useNavigation() 
     const user = auth.currentUser
+    const userInfo = route.params.userInfo
 
     const reference = doc(firestore, "users", user.uid)
     const [snapshot, loading, error] = useDocument(reference)
 
     const [values, setValues] = useState({
-        ...defaultUser,
         message: "",
         loading: false,
         showSnackBar: false,
@@ -37,10 +38,6 @@ export default function ProfileScreen() {
             const data = snapshot.data()
             setValues({
                 ...values,
-                bio: data.bio,
-                company: data.company,
-                school: data.school,
-                link: data.link
             })
         }
     }, [snapshot])
@@ -77,8 +74,9 @@ export default function ProfileScreen() {
             <ScrollView style={{flex: 1}}>
                 <View style={{paddingHorizontal: SIZES.md}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: SIZES.md}}>
-                        <View style={{flex: 1, marginEnd: SIZES.sm}}>
+                        <View style={{flex: 1, marginEnd: SIZES.sm, flexDirection: 'row'}}>
                             <Text style={{...TYPOGRAPHY.h1}} numberOfLines={2}>{user.displayName}</Text>
+                            { userInfo.verified && <VerifiedIcon /> }
                         </View>
                         <View style={{overflow: 'hidden', width: 53, height: 53, borderRadius: 53 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
                             { user.photoURL ? 
@@ -88,19 +86,19 @@ export default function ProfileScreen() {
                         </View>
                     </View>
                     
-                    <Text style={{...TYPOGRAPHY.p}}>{values.bio}</Text>
+                    <Text style={{...TYPOGRAPHY.p}}>{userInfo.bio}</Text>
                     
                     <View style={{marginTop: SIZES.md}}>
-                        <Text style={{...TYPOGRAPHY.p}}>{`${values.company} \u2022 ${values.school}`}</Text>
+                        <Text style={{...TYPOGRAPHY.p}}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>
                         <Text style={{...TYPOGRAPHY.p, opacity: .5}}>{`Badagry, Lagos state, Nigeria`}</Text>
                     </View>
                     
                     <View style={{flexDirection: 'row', marginTop: SIZES.sm}}>
                         <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
-                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(200000000)} followers \u2022 `}</Text>
+                            <Text style={{...TYPOGRAPHY.h2, opacity: .5}}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={.8} style={{flex: 1}}>
-                            <Text style={{...TYPOGRAPHY.h2, opacity: .5, color: COLORS.primary}} numberOfLines={1}>{values.link}</Text>
+                            <Text style={{...TYPOGRAPHY.h2, opacity: .5, color: COLORS.primary}} numberOfLines={1}>{userInfo.link}</Text>
                         </TouchableOpacity>
                     </View>
 

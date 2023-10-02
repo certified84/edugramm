@@ -10,12 +10,14 @@ import { Timestamp, addDoc, collection, doc, serverTimestamp, setDoc, updateDoc 
 import { User as FirebaseUser } from 'firebase/auth';
 import { Post, defaultPost } from "../../../data/model/Post";
 import { Loader } from "../../../components/Loader";
+import VerifiedIcon from "../../../components/VerifiedIcon";
 
 export default function AddPostScreen({ route }) {
 
     const navigation = useNavigation()
     const user = auth.currentUser
-    // const userInfo = route.params.userInfo
+    const userInfo = route.params.userInfo
+    console.log(userInfo)
 
     const { width } = useWindowDimensions()
     const [text, setText] = useState('')
@@ -41,8 +43,10 @@ export default function AddPostScreen({ route }) {
             ...defaultPost,
             post: values.post,
             date: Timestamp.now().toMillis(),
-            uid: user.uid, name: user.displayName,
-            photoUrl: user.photoURL
+            uid: user.uid,
+            name: user.displayName,
+            photoUrl: user.photoURL,
+            verified: userInfo.verified,
         }
         const docRef = addDoc(collection(firestore, "posts"), data)
         await docRef.then((snapshot) => {
@@ -88,8 +92,11 @@ export default function AddPostScreen({ route }) {
                             : <SplashIcon />
                         }
                     </View>
-                    <View style={{flex: 1}}>
-                        <Text style={{...TYPOGRAPHY.h2, marginStart: SIZES.sm}}>Samson Achiaga</Text>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{...TYPOGRAPHY.h2, marginStart: SIZES.sm}}>Samson Achiaga</Text>
+                            { userInfo.verified && <VerifiedIcon /> }
+                        </View>
                         <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                             <TextInput
                                 value={text}
