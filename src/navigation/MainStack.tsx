@@ -19,7 +19,7 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     headerBackTitle: " ",
                     headerTintColor: COLORS.onSurface,
                     title: ' ',
-                    headerStyle: { backgroundColor: COLORS.surface, height: 120, }
+                    headerStyle: { backgroundColor: COLORS.surface, height: 120 }
                 }}
             >
                 <Stack.Screen
@@ -84,7 +84,7 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     name="ProfileScreen"
                     component={ProfileScreen}
                     options={{
-                        headerShown: false
+                        headerShadowVisible: false,
                     }}
                 />
                 <Stack.Screen

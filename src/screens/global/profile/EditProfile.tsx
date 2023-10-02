@@ -1,87 +1,67 @@
-import { SafeAreaView, View, TouchableOpacity, Image, Text, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView, View, TouchableOpacity, Text, StyleSheet, ScrollView } from "react-native";
 import { COLORS, LINE, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import VerifiedIcon from "../../../components/VerifiedIcon";
-import { MaterialIcons, Ionicons, AntDesign, Feather } from '@expo/vector-icons'
 import { Avatar, Snackbar, TextInput } from "react-native-paper";
-import { User as FirebaseUser, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
-import { User, defaultUser } from '../../../data/model/User'
+import { defaultUser } from '../../../data/model/User'
 import { auth, firestore } from '../../../../firebase';
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { useAuthState } from "react-firebase-hooks/auth";
+import { doc, updateDoc } from 'firebase/firestore';
 import { Loader } from "../../../components/Loader";
+import { useDocumentOnce } from 'react-firebase-hooks/firestore'
 
 export default function EditProfileScreen() {
     
     const navigation = useNavigation()
     const user = auth.currentUser
-    const [userData, setUserData] = useState(defaultUser)
-    const [value, setValue] = useState({
-        bio: "",
-        company: "",
-        school: "",
-        link: "",
+
+    const reference = doc(firestore, "users", user.uid)
+    const [snapshot, loading, error, reload] = useDocumentOnce(reference)
+
+    const [values, setValues] = useState({
+        ...defaultUser,
         message: "",
         loading: false,
         showSnackBar: false,
     })
 
     useEffect(() => {
-        getUserData()
-        return () => {}
-    }, [])
+        if(snapshot && snapshot.exists()) {
+            const data = snapshot.data()
+            setValues({
+                ...values,
+                bio: data.bio,
+                company: data.company,
+                school: data.school,
+                link: data.link
+            })
+        }
+    }, [snapshot])
 
-    useEffect(() => setValue({...value, showSnackBar: value.message !== ""}), [value.message])
-
-    async function getUserData() {
-        console.log("Called")
-        setValue({ ...value, loading: true })
-        const docRef = doc(firestore, "users", user.uid)
-        await getDoc(docRef).then((docSnap) => {
-            if (docSnap.exists()) {
-                const data = docSnap.data() as User
-                console.log("Data: ", data)
-                setUserData(data)
-                setValue({
-                    ...value,
-                    bio: data.bio,
-                    company: data.company,
-                    school: data.school,
-                    link: data.link
-                })
-                console.log(value)
-            } else {
-                setValue({ ...value, message: "An error occurred. Please try again."})
-            }
-            setValue({ ...value, loading: false })
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
-        })
-    }
+    useEffect(() => setValues({...values, showSnackBar: values.message !== ""}), [values.message])
+    useEffect(() => {
+        if (error && error.message !== "") {
+            setValues({...values, showSnackBar: true, message: error.message})
+        }
+    }, [error])
 
     async function updateUserProfile() {
-        setValue({...value, loading: true})
-        console.log("Bio", value.bio)
+        console.log("Update Values: ", values)
+        setValues({...values, loading: true})
         const userRef = doc(firestore, "users", user.uid)
         await updateDoc(userRef, { 
-            bio: value.bio,
-            company: value.company,
-            school: value.school,
-            link: value.link
+            bio: values.bio,
+            company: values.company,
+            school: values.school,
+            link: values.link
          }).then(() => {
-            setValue({...value, loading: false})
+            setValues({...values, loading: false})
             navigation.goBack()
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            setValue({ ...value, message: "An error occurred. Please try again.", loading: false })
+            setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
         })
     }
 
@@ -91,19 +71,24 @@ export default function EditProfileScreen() {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Text style={TYPOGRAPHY.h2}>Cancel</Text>
               </TouchableOpacity>
-            )},
+            )}
+        })
+    },[])
+
+    useEffect(() => {
+        navigation.setOptions({
             headerRight: () => {return (
               <TouchableOpacity onPress={updateUserProfile}>
                 <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Done</Text>
               </TouchableOpacity>
             )},
         })
-    },[])
+    }, [values])
 
     return ( 
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
 
-            <Loader showLoader={value.loading} />
+            <Loader showLoader={values.loading || loading} />
 
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                 <View style={{flex: 1}}>
@@ -123,76 +108,75 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Name</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={user.displayName}
-                                        mode="outlined"
-                                        placeholder='e.g Samson Achiaga'
-                                        editable={false}
-                                        style={styles.inputField}
-                                        selectionColor={COLORS.onSurface}
-                                        contentStyle={{margin: 0, padding: 0}}
-                                        outlineColor={'transparent'}
-                                        activeOutlineColor={'transparent'}
-                                        placeholderTextColor={COLORS.darkGray}
-                                        textColor={COLORS.onSurface}
-                                    />
+                                    value={user.displayName}
+                                    mode="outlined"
+                                    placeholder='e.g Samson Achiaga'
+                                    editable={false}
+                                    style={styles.inputField}
+                                    selectionColor={COLORS.onSurface}
+                                    contentStyle={{margin: 0, padding: 0}}
+                                    outlineColor={'transparent'}
+                                    activeOutlineColor={'transparent'}
+                                    placeholderTextColor={COLORS.darkGray}
+                                    textColor={COLORS.onSurface}
+                                />
                                 <View style={{width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .1, marginStart: SIZES.sm}}/>
                             </View>
                         </View>
 
                         <View style={{flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center'}}>
-                            <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Bio</Text>
+                            <Text style={{...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs}}>Bio</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={value.bio}
-                                        onChangeText={(text) => {
-                                            setValue({ ...value, bio: text})
-                                            console.log(value.bio)
-                                        }}
-                                        mode="outlined"
-                                        placeholder='Enter a short description about yourself'
-                                        style={styles.inputField}
-                                        selectionColor={COLORS.onSurface}
-                                        multiline
-                                        contentStyle={{margin: 0, padding: 0}}
-                                        outlineColor={'transparent'}
-                                        activeOutlineColor={'transparent'}
-                                        placeholderTextColor={COLORS.darkGray}
-                                        textColor={COLORS.onSurface}
-                                    />
+                                    value={values.bio}
+                                    onChangeText={(text) => {
+                                        setValues({ ...values, bio: text})
+                                    }}
+                                    mode="outlined"
+                                    placeholder='Enter a short description about yourself'
+                                    style={styles.inputField}
+                                    selectionColor={COLORS.onSurface}
+                                    multiline
+                                    contentStyle={{margin: 0, padding: 0}}
+                                    outlineColor={'transparent'}
+                                    activeOutlineColor={'transparent'}
+                                    placeholderTextColor={COLORS.darkGray}
+                                    textColor={COLORS.onSurface}
+                                />
                                 <View style={{width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .1, marginStart: SIZES.sm}}/>
                             </View>
                         </View>
 
                         <View style={{flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center'}}>
-                            <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Company</Text>
+                            <Text style={{...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs}}>Company</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={value.company}
-                                        onChangeText={(text) => {
-                                            setValue({ ...value, company: text})
-                                        }}
-                                        mode="outlined"
-                                        placeholder='Where do you work?'
-                                        style={styles.inputField}
-                                        selectionColor={COLORS.onSurface}
-                                        multiline
-                                        contentStyle={{margin: 0, padding: 0}}
-                                        outlineColor={'transparent'}
-                                        activeOutlineColor={'transparent'}
-                                        placeholderTextColor={COLORS.darkGray}
-                                        textColor={COLORS.onSurface}
-                                    />
+                                    value={values.company}
+                                    onChangeText={(text) => {
+                                        setValues({ ...values, company: text})
+                                    }}
+                                    mode="outlined"
+                                    placeholder='Where do you work?'
+                                    style={styles.inputField}
+                                    selectionColor={COLORS.onSurface}
+                                    multiline
+                                    contentStyle={{margin: 0, padding: 0}}
+                                    outlineColor={'transparent'}
+                                    activeOutlineColor={'transparent'}
+                                    placeholderTextColor={COLORS.darkGray}
+                                    textColor={COLORS.onSurface}
+                                />
                                 <View style={{width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .1, marginStart: SIZES.sm}}/>
                             </View>
                         </View>
 
                         <View style={{flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center'}}>
-                            <Text style={{...TYPOGRAPHY.h2, flex: .25}}>School</Text>
+                            <Text style={{...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs}}>School</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={value.school}
+                                        value={values.school}
                                         onChangeText={(text) => {
-                                            setValue({ ...value, school: text})
+                                            setValues({ ...values, school: text})
                                         }}
                                         mode="outlined"
                                         placeholder='Where do/did you study?'
@@ -213,23 +197,23 @@ export default function EditProfileScreen() {
                             <Text style={{...TYPOGRAPHY.h2, flex: .25}}>Link</Text>
                             <View style={{flex: 1}}>
                                 <TextInput
-                                        value={value.link}
-                                        onChangeText={(text) => {
-                                            setValue({ ...value, link: text})
-                                        }}
-                                        mode="outlined"
-                                        placeholder='e.g edugramm.com/edugramm'
-                                        style={styles.inputField}
-                                        selectionColor={COLORS.primary}
-                                        multiline
-                                        contentStyle={{margin: 0, padding: 0}}
-                                        outlineColor={'transparent'}
-                                        autoCapitalize="none"
-                                        autoCorrect={false}
-                                        activeOutlineColor={'transparent'}
-                                        placeholderTextColor={COLORS.darkGray}
-                                        textColor={COLORS.primary}
-                                    />
+                                    value={values.link}
+                                    onChangeText={(text) => {
+                                        setValues({ ...values, link: text})
+                                    }}
+                                    mode="outlined"
+                                    placeholder='e.g edugramm.com/edugramm'
+                                    style={styles.inputField}
+                                    selectionColor={COLORS.primary}
+                                    multiline
+                                    contentStyle={{margin: 0, padding: 0}}
+                                    outlineColor={'transparent'}
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    activeOutlineColor={'transparent'}
+                                    placeholderTextColor={COLORS.darkGray}
+                                    textColor={COLORS.primary}
+                                />
                             </View>
                         </View>
                         
@@ -244,15 +228,15 @@ export default function EditProfileScreen() {
             </ScrollView>
 
             <Snackbar
-                visible={value.showSnackBar}
-                onDismiss={() => setValue({...value, message: ""})}
+                visible={values.showSnackBar}
+                onDismiss={() => setValues({...values, message: ""})}
                 theme={{ colors: { primary: COLORS.primary } }}
                 action={{ 
                     textColor: COLORS.primary,
                     label: 'OK',
                     onPress: () => {},
                 }}>
-                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{value.message}</Text>
+                    <Text style={{...TYPOGRAPHY.p, color: COLORS.white}}>{values.message}</Text>
             </Snackbar>
         </SafeAreaView>
     )

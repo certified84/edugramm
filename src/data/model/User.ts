@@ -1,7 +1,11 @@
+import { auth } from "../../../firebase"
+
+const user = auth.currentUser
+
 export type User = {
-    uid: string,
-    name: string,
-    email: string,
+    uid?: string | null,
+    name?: string | null,
+    email?: string | null,
     photo? : string | null,
     followers: [],
     following: [],
@@ -14,10 +18,10 @@ export type User = {
 }
 
 export const defaultUser: User = {
-    uid: "",
-    name: "",
-    email: "",
-    photo: "",
+    uid: user ? user.uid : "",
+    name: user ? user.displayName : "",
+    email: user ? user.email : "",
+    photo: user ? user.photoURL : "",
     followers: [],
     following: [],
     bio: "",
