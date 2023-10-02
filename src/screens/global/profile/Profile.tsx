@@ -15,6 +15,7 @@ import { useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore'
 import { ScrollView } from "react-native-gesture-handler";
 import { data } from "../../../components/data";
 import { PostCard } from "../post/PostCard";
+import { SplashIcon } from "../../../../assets/svg/SplashIcon";
 
 export default function ProfileScreen() {
 
@@ -79,8 +80,11 @@ export default function ProfileScreen() {
                         <View style={{flex: 1, marginEnd: SIZES.sm}}>
                             <Text style={{...TYPOGRAPHY.h1}} numberOfLines={2}>{user.displayName}</Text>
                         </View>
-                        <View style={{width: 53, height: 53, borderRadius: 53 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            <Avatar.Image size={50} source={{ uri: 'https://source.unsplash.com/random/?man,kid' }} />
+                        <View style={{overflow: 'hidden', width: 53, height: 53, borderRadius: 53 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                            { user.photoURL ? 
+                                <Avatar.Image size={80} source={{ uri: user.photoURL }} />
+                                : <SplashIcon />
+                            }
                         </View>
                     </View>
                     

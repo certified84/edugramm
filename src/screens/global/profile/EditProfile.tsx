@@ -8,6 +8,7 @@ import { auth, firestore } from '../../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Loader } from "../../../components/Loader";
 import { useDocumentOnce } from 'react-firebase-hooks/firestore'
+import { SplashIcon } from "../../../../assets/svg/SplashIcon";
 
 export default function EditProfileScreen() {
     
@@ -94,8 +95,11 @@ export default function EditProfileScreen() {
                 <View style={{flex: 1}}>
 
                     <TouchableOpacity activeOpacity={.6} style={{alignSelf: 'center'}}>
-                        <View style={{width: 85, height: 85, borderRadius: 83 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            <Avatar.Image size={80} source={{ uri: 'https://source.unsplash.com/random/?man,kid' }} />
+                        <View style={{ overflow: 'hidden', width: 85, height: 85, borderRadius: 83 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                            { user.photoURL ? 
+                                <Avatar.Image size={80} source={{ uri: user.photoURL }} />
+                                : <SplashIcon />
+                            }
                         </View>
                         <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary, marginTop: SIZES.sm}}>Edit picture</Text>
                     </TouchableOpacity>

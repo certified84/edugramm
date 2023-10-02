@@ -4,19 +4,65 @@ import { useNavigation } from "@react-navigation/native";
 import { Avatar, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { Feather, Ionicons } from '@expo/vector-icons'
+import { SplashIcon } from "../../../../assets/svg/SplashIcon";
+import { auth, firestore } from "../../../../firebase";
+import { Timestamp, addDoc, collection, doc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
+import { User as FirebaseUser } from 'firebase/auth';
+import { Post, defaultPost } from "../../../data/model/Post";
+import { Loader } from "../../../components/Loader";
 
-export default function AddPostScreen() {
+export default function AddPostScreen({ route }) {
+
     const navigation = useNavigation()
+    const user = auth.currentUser
+    // const userInfo = route.params.userInfo
+
     const { width } = useWindowDimensions()
     const [text, setText] = useState('')
-    const [images, setImages] = useState([
-        'https://source.unsplash.com/random/?woman,kid',
-        'https://source.unsplash.com/random/?man,kid',
-        'https://source.unsplash.com/random/?woman,bike',
-        'https://source.unsplash.com/random/?man,car',
-    ])
+
+    const [values, setValues] = useState({
+        post: "",
+        message: "",
+        images: [],
+        loading: false,
+        showSnackBar: false,
+        success: false,
+    })
+
+    const [errors, setErrors] = useState({
+        name: false,
+        email: false,
+        password: false,
+    })
+
+    async function uploadPost() {
+        setValues({...values, loading: true})
+        const data: Post  = {
+            ...defaultPost,
+            post: values.post,
+            date: Timestamp.now().toMillis(),
+            uid: user.uid, name: user.displayName,
+            photoUrl: user.photoURL
+        }
+        const docRef = addDoc(collection(firestore, "posts"), data)
+        await docRef.then((snapshot) => {
+            updateDoc(snapshot, { id: snapshot.id })
+            setValues({...values, loading: false})
+            navigation.goBack()
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            setValues({...values, message: "An error occurred. Please try again.", loading: false})
+            console.log(errorCode, errorMessage)
+        })
+    }
+
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
+
+            <Loader showLoader={values.loading} />
+            
             <View style={{flex: 1, paddingHorizontal: SIZES.md}}>
                 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -25,9 +71,9 @@ export default function AddPostScreen() {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         activeOpacity={.6} 
-                        style={{opacity: text.length > 0 || images.length > 0 ? 1 : .5}} 
-                        disabled={text.length <= 0 || images.length <= 0} 
-                        onPress={() => text.length > 0 || images.length > 0 ? {} : {}}
+                        style={{opacity: text.length > 0 || values.images.length > 0 ? 1 : .5}} 
+                        disabled={text.length <= 0 && values.images.length <= 0} 
+                        onPress={() => text.length > 0 || values.images.length > 0 ? uploadPost() : {}}
                     >
                         <View style={{borderRadius: 50, paddingHorizontal: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.primary}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Post</Text>
@@ -36,8 +82,11 @@ export default function AddPostScreen() {
                 </View>
                 
                 <View style={{flexDirection: 'row', flex: .8, marginTop: SIZES.sm}}>
-                    <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                        <Avatar.Image size={40} source={{ uri: 'https://source.unsplash.com/random/?woman,kid' }} />
+                    <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                        { user.photoURL ? 
+                            <Avatar.Image size={80} source={{ uri: user.photoURL }} />
+                            : <SplashIcon />
+                        }
                     </View>
                     <View style={{flex: 1}}>
                         <Text style={{...TYPOGRAPHY.h2, marginStart: SIZES.sm}}>Samson Achiaga</Text>
@@ -57,7 +106,7 @@ export default function AddPostScreen() {
                                 textColor={COLORS.onSurface}
                             />
                             <FlatList
-                                data={images}
+                                data={values.images}
                                 style={{flex: 1}}
                                 horizontal
                                 renderItem={({ item, index }) => 
@@ -76,12 +125,14 @@ export default function AddPostScreen() {
                                                 borderRadius: 50
                                             }}
                                             onPress={() => {
-                                                const newImages = []
-                                                images.forEach((value, i) => {
-                                                    if (index !== i)
-                                                    newImages.push(value)
+                                                const newImages = values.images.filter((value, i) => {
+                                                    index !== i
                                                 })
-                                                setImages(newImages)
+                                                // values.images.forEach((value, i) => {
+                                                //     if (index !== i)
+                                                //     newImages.push(value)
+                                                // })
+                                                setValues({...values, images: newImages})
                                             }}
                                         >
                                             <Ionicons size={SIZES.lg} name='close' color={COLORS.white}/>
