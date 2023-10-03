@@ -15,12 +15,10 @@ import VerifiedIcon from "../../../components/VerifiedIcon";
 export default function AddPostScreen({ route }) {
 
     const navigation = useNavigation()
+    const { width } = useWindowDimensions()
     const user = auth.currentUser
     const userInfo = route.params.userInfo
     console.log(userInfo)
-
-    const { width } = useWindowDimensions()
-    const [text, setText] = useState('')
 
     const [values, setValues] = useState({
         post: "",
@@ -75,9 +73,9 @@ export default function AddPostScreen({ route }) {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         activeOpacity={.6} 
-                        style={{opacity: text.length > 0 || values.images.length > 0 ? 1 : .5}} 
-                        disabled={text.length <= 0 && values.images.length <= 0} 
-                        onPress={() => text.length > 0 || values.images.length > 0 ? uploadPost() : {}}
+                        style={{opacity: values.post.length > 0 || values.images.length > 0 ? 1 : .5}} 
+                        disabled={values.post.length <= 0 && values.images.length <= 0} 
+                        onPress={() => values.post.length > 0 || values.images.length > 0 ? uploadPost() : {}}
                     >
                         <View style={{borderRadius: 50, paddingHorizontal: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.primary}}>
                             <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Post</Text>
@@ -99,8 +97,13 @@ export default function AddPostScreen({ route }) {
                         </View>
                         <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                             <TextInput
-                                value={text}
-                                onChangeText={setText}
+                                value={values.post}
+                                onChangeText={(text) => {
+                                    setValues({
+                                        ...values,
+                                        post: text
+                                    })
+                                }}
                                 mode="outlined"
                                 placeholder='What knowledge are you sharing today?'
                                 style={styles.inputField}

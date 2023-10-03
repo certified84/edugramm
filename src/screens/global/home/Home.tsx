@@ -11,8 +11,8 @@ import HomeHeader from './HomeHeader';
 import { useNavigation } from '@react-navigation/native';
 import { PostCard } from '../post/PostCard';
 import { data } from '../../../components/data';
-import { useDocument } from 'react-firebase-hooks/firestore';
-import { doc } from 'firebase/firestore';
+import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
+import { collection, doc, query, where } from 'firebase/firestore';
 import { auth, firestore } from '../../../../firebase';
 import { defaultUser } from '../../../data/model/User'
 import { Loader } from '../../../components/Loader';
@@ -22,9 +22,8 @@ const HomeScreen = () => {
     const navigation = useNavigation()
     const user = auth.currentUser
 
-
-    const reference = doc(firestore, "users", user.uid)
-    const [snapshot, loading, error] = useDocument(reference)
+    const userRef = doc(firestore, "users", user.uid)
+    const [snapshot, loading, error] = useDocument(userRef)
 
     const [values, setValues] = useState({
         ...defaultUser,
@@ -33,15 +32,18 @@ const HomeScreen = () => {
         showSnackBar: false,
     })
 
+    const postRef = collection(firestore, "posts")
+    const q = query(postRef, where("uid", "==", user.uid))
+    const [postsSnapshot, postsLoading, postsError] = useCollection(q)
+
+    const [posts, setPosts] = useState([])
+
     useEffect(() => {
-        if(snapshot && snapshot.exists()) {
-            const data = snapshot.data()
-            setValues({
-                ...values,
-                ...data
-            })
+        if(postsSnapshot) {
+            const data = postsSnapshot.docs
+            setPosts(data)
         }
-    }, [snapshot])
+    }, [postsSnapshot])
 
     useEffect(() => setValues({...values, showSnackBar: values.message !== ""}), [values.message])
     useEffect(() => {
@@ -57,11 +59,11 @@ const HomeScreen = () => {
 
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
-                    data={data}
+                    data={posts}
                     ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} userInfo={values} />}
-                    renderItem={({ item }) => <PostCard item={item} navigation={navigation} />}
+                    renderItem={({ item }) => <PostCard item={item.data()} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
-                    alwaysBounceVertical={true}
+                    // alwaysBounceVertical={false}
                 />
                 <FAB
                     icon="plus"

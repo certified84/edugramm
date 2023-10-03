@@ -3,24 +3,51 @@ import {
     TouchableOpacity, Image, useWindowDimensions, FlatList
 } from 'react-native'
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
 import VerifiedIcon from '../../../components/VerifiedIcon';
+import { auth, firestore } from '../../../../firebase';
+import { doc, updateDoc } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { SplashIcon } from '../../../../assets/svg/SplashIcon';
 
 const PostDetailedCard = ({ item, navigation }) => {
 
-    const account = {
-        id: item.id,
-        name: item.full_name,
-        image: item.user_photo,
-        follower_count: 200000,
-    }
+    const user = auth.currentUser
+
     const { width } = useWindowDimensions()
+
+    const reference = doc(firestore, "posts", item.id)
+    const [snapshot, loading, error] = useDocument(reference)
+    const [post, setPost] = useState(item)
+
     const [showImageDialog, setShowImageDialog] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(post.likes.includes(user.uid))
     const [imageIndex, setImageIndex] = useState(0)
+
+    useEffect(() => {
+        if(snapshot && snapshot.exists()) {
+            setPost(snapshot.data())
+        }
+    }, [snapshot])
+
+    async function likePost(isLiked: boolean) {
+        let likes = post.likes
+        isLiked ? likes.push(user.uid) : likes = post.likes.filter((it) => { it !== user.uid })
+        const postRef = doc(firestore, "posts", post.id)
+        await updateDoc(postRef, {
+            likes: [...likes]
+         }).then(() => {
+            // setLiked(!isLiked)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        })
+    }
 
     return (
         <View style={{flex: 1, width: width}}>
@@ -28,8 +55,8 @@ const PostDetailedCard = ({ item, navigation }) => {
             <ImageDialog
                 showImageDialog={showImageDialog}
                 setShowImageDialog={setShowImageDialog}
-                image={item.image_url}
-                images={item.images}
+                image={post.photoUrl}
+                images={post.images}
                 index={imageIndex}
             />
 
@@ -38,17 +65,20 @@ const PostDetailedCard = ({ item, navigation }) => {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     
                     <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('UserDetailScreen', { account })}>
-                        <View style={{width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            <Avatar.Image size={40} source={{ uri: item.user_photo }} />
+                        <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                            { post.photoUrl ? 
+                                <Avatar.Image size={40} source={{ uri: post.photoUrl }} />
+                                : <SplashIcon />
+                            }
                         </View>
                     </TouchableOpacity>
 
                     <View style={{marginHorizontal: SIZES.xxs}}>
                         
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
+                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{post.name}</Text>
                             {
-                                !item.isVerified && <VerifiedIcon />
+                                post.verified && <VerifiedIcon />
                             }
                         </View>
 
@@ -59,31 +89,22 @@ const PostDetailedCard = ({ item, navigation }) => {
                 </View>
 
                 <View style={{flex: 1, marginTop: SIZES.xxs}}>
-                    <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                        molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                        numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium    
-                        optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-                        obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-                        nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-                        tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-                        quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
-                    </Text>
+                    <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }}>{post.post}</Text>
 
                     { 
-                        item.images.length === 1 && 
+                        post.images.length === 1 && 
                         <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: '100%', height: width * .8, marginTop: SIZES.xs}}>
                             <Image 
-                                source={{ uri: item.images[0] }} 
+                                source={{ uri: post.images[0] }} 
                                 style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm}} 
                             />
                         </TouchableOpacity>
                     }
                     { 
-                        item.images.length > 1 && 
+                        post.images.length > 1 && 
                         <>
                             <FlatList
-                                data={item.images}
+                                data={post.images}
                                 horizontal
                                 renderItem={({ item, index }) => 
                                     <TouchableOpacity 
@@ -105,14 +126,17 @@ const PostDetailedCard = ({ item, navigation }) => {
 
                     <View style={{...styles.bottomSection}}>
                         <View style={{ flexDirection: "row", flex: 0.4, alignItems: 'center' }}>
-                            <TouchableOpacity onPress={() => { setLiked(!liked) }}>
-                                <AntDesign name={liked ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />
+                            <TouchableOpacity onPress={() => { 
+                                setLiked(!liked)
+                                likePost(!liked)
+                            }}>
+                                <AntDesign name={post.likes.includes(user.uid) ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
-                            <Text style={styles.commentSection}>{item.likes.length}</Text>
+                            <Text style={styles.commentSection}>{post.likes.length}</Text>
                             <TouchableOpacity onPress={() => { }}>
                                 <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
                             </TouchableOpacity>
-                            <Text style={styles.commentSection}>{item.comments.length}</Text>
+                            <Text style={styles.commentSection}>{post.comments.length}</Text>
                         </View>
                     </View>
                 </View>
