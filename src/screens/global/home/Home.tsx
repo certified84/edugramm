@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PostCard } from '../post/PostCard';
 import { data } from '../../../components/data';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
-import { collection, doc, query, where } from 'firebase/firestore';
+import { collection, doc, orderBy, query, where } from 'firebase/firestore';
 import { auth, firestore } from '../../../../firebase';
 import { defaultUser } from '../../../data/model/User'
 import { Loader } from '../../../components/Loader';
@@ -33,9 +33,8 @@ const HomeScreen = () => {
     })
 
     const postRef = collection(firestore, "posts")
-    const q = query(postRef, where("uid", "==", user.uid))
+    const q = query(postRef, orderBy("date", "desc"))
     const [postsSnapshot, postsLoading, postsError] = useCollection(q)
-
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
@@ -44,6 +43,15 @@ const HomeScreen = () => {
             setPosts(data)
         }
     }, [postsSnapshot])
+
+    useEffect(() => {
+        if(snapshot && snapshot.exists()) {
+            setValues({
+                ...values,
+                ...snapshot.data()
+            })
+        }
+    }, [snapshot])
 
     useEffect(() => setValues({...values, showSnackBar: values.message !== ""}), [values.message])
     useEffect(() => {
@@ -55,13 +63,13 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
 
-            <Loader showLoader={values.loading || loading} />
+            <Loader showLoader={values.loading || loading || postsLoading} />
 
             <SafeAreaView style={{ flex: 1 }}>
                 <FlatList
                     data={posts}
                     ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} userInfo={values} />}
-                    renderItem={({ item }) => <PostCard item={item.data()} navigation={navigation} />}
+                    renderItem={({ item }) => <PostCard item={item.data()} navigation={navigation} userInfo={values} />}
                     keyExtractor={(item) => item.id}
                     // alwaysBounceVertical={false}
                 />

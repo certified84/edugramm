@@ -9,9 +9,9 @@ import { PostsTab } from "./Tabs";
 import { useEffect, useState } from "react";
 import { defaultUser } from '../../../data/model/User'
 import { auth, firestore } from '../../../../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { Loader } from "../../../components/Loader";
-import { useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore'
+import { useCollection, useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore'
 import { ScrollView } from "react-native-gesture-handler";
 import { data } from "../../../components/data";
 import { PostCard } from "../post/PostCard";
@@ -22,10 +22,21 @@ export default function ProfileScreen({route}) {
 
     const navigation = useNavigation() 
     const user = auth.currentUser
-    const userInfo = route.params.userInfo
+    const [userInfo, setUserInfo] = useState(route.params.userInfo)
 
     const reference = doc(firestore, "users", user.uid)
     const [snapshot, loading, error] = useDocument(reference)
+
+    const postRef = collection(firestore, "posts")
+    const q = query(postRef, where("uid", "==", user.uid), orderBy("uid"), orderBy("date", "desc"))
+    const [postsSnapshot, postsLoading, postsError] = useCollection(q)
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        if(postsSnapshot) {
+            setPosts(postsSnapshot.docs)
+        }
+    }, [postsSnapshot])
 
     const [values, setValues] = useState({
         message: "",
@@ -35,10 +46,7 @@ export default function ProfileScreen({route}) {
 
     useEffect(() => {
         if(snapshot && snapshot.exists()) {
-            const data = snapshot.data()
-            setValues({
-                ...values,
-            })
+            setUserInfo(snapshot.data())
         }
     }, [snapshot])
 
@@ -69,7 +77,7 @@ export default function ProfileScreen({route}) {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
 
-            <Loader showLoader={values.loading || loading} />
+            <Loader showLoader={values.loading || loading || postsLoading} />
 
             <ScrollView style={{flex: 1}}>
                 <View style={{paddingHorizontal: SIZES.md}}>
@@ -112,7 +120,7 @@ export default function ProfileScreen({route}) {
                     </View>
                 </View>
 
-                { data.map((item) => {return (<PostCard item={item} key={item.id} navigation={navigation} />)}) }
+                { posts.map((item) => {return (<PostCard item={item.data()} key={item.id} navigation={navigation} userInfo={{}} />)}) }
             </ScrollView>
 
             <Snackbar

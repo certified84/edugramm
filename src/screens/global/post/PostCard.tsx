@@ -11,8 +11,9 @@ import VerifiedIcon from '../../../components/VerifiedIcon';
 import { SplashIcon } from '../../../../assets/svg/SplashIcon';
 import { auth, firestore } from '../../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
+import { formatDate } from '../../../util/Utils';
 
-export const PostCard = ({ item, navigation }) => {
+export const PostCard = ({ item, navigation, userInfo }) => {
 
     // const account = {
     //     id: '3',
@@ -55,7 +56,9 @@ export const PostCard = ({ item, navigation }) => {
 
             <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
                 <View>
-                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {navigation.navigate('UserDetailScreen', {account})}} >
+                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {
+                        item.uid === user.uid ? navigation.navigate('ProfileScreen', {userInfo: userInfo}) : navigation.navigate('UserDetailScreen', {account})
+                    }}>
                         <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
                             { item.photoUrl ? 
                                 <Avatar.Image size={40} source={{ uri: item.photoUrl }} />
@@ -69,7 +72,7 @@ export const PostCard = ({ item, navigation }) => {
                     <View style={{flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
                         <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.name}</Text>
                         { item.verified && <VerifiedIcon /> }
-                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 11h`}</Text>
+                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 ${formatDate(item.date)}`}</Text>
                     </View>
                     <TouchableOpacity activeOpacity={.9} onPress={() => { navigation.navigate('PostDetailedScreen', { item })}}>
                         <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>{item.post}</Text>
@@ -132,7 +135,7 @@ export const PostCard = ({ item, navigation }) => {
                     </TouchableOpacity>
                 )
             } */}
-            <View style={{height: 1, width: '100%', backgroundColor: COLORS.lightGray}}/>
+            <View style={{height: 1, width: '100%', backgroundColor: COLORS.white, opacity: .1}}/>
         </View>
     )
 }
