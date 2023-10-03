@@ -3,6 +3,7 @@ import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-paper';
+import { SplashIcon } from '../../../../assets/svg/SplashIcon';
 
 export default function HomeHeader({ titleText, navigation, userInfo }) {
     return (
@@ -13,8 +14,11 @@ export default function HomeHeader({ titleText, navigation, userInfo }) {
                     <MaterialCommunityIcons name='bell-outline' color={COLORS.onSurface} size={SIZES.xl + 5} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7} onPress={() => navigation.navigate('ProfileScreen', { userInfo: {...userInfo} })}>
-                    <View style={{width: 38, height: 38, borderRadius: 19, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                        <Avatar.Image size={35} source={{ uri: 'https://source.unsplash.com/random/?woman,kid'}} />
+                    <View style={{overflow: 'hidden', width: 38, height: 38, borderRadius: 19, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+                        { userInfo.photoUrl ? 
+                            <Avatar.Image size={35} source={{ uri: userInfo.photoUrl }} />
+                            : <SplashIcon />
+                        }
                     </View>
                 </TouchableOpacity>
             </View>

@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../assets/theme";
 import { Feather, Ionicons } from '@expo/vector-icons'
@@ -13,7 +13,7 @@ export default function NotificationScreen() {
     const navigation = useNavigation()
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
+        <SafeAreaView style={styles.container}>
             <View style={{flex: 1}}>
 
                 <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
@@ -33,3 +33,11 @@ export default function NotificationScreen() {
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1, 
+        backgroundColor: COLORS.surface,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    }
+})

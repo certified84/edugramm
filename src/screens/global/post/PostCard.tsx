@@ -116,10 +116,10 @@ export const PostCard = ({ item, navigation, userInfo }) => {
                                 setLiked(!liked)
                                 likePost(!liked)
                              }}>
-                                <AntDesign name={item.likes.includes(user.uid) ? 'heart' : 'hearto'} size={SIZES.xl} color={item.likes.includes(user.uid) ? COLORS.red : COLORS.onSurface} />
+                                <AntDesign name={item.likes.includes(user.uid) ? 'heart' : 'hearto'} size={SIZES.md} color={item.likes.includes(user.uid) ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
-                            <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
+                            <Ionicons name='chatbubble-outline' size={SIZES.md} color={COLORS.onSurface} />
                             <Text style={styles.commentSection}>{item.comments.length}</Text>
                         </View>
                     </TouchableOpacity>
@@ -149,8 +149,9 @@ const styles = StyleSheet.create({
     },
     commentSection: {
         ...TYPOGRAPHY.h2,
-        fontSize: SIZES.md,
-        marginHorizontal: SIZES.xs,
+        fontSize: SIZES.sm,
+        marginStart: SIZES.xxs,
+        marginEnd: SIZES.md,
         color: COLORS.onSurface
     },
     dateSection: {

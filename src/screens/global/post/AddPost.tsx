@@ -1,4 +1,4 @@
-import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet, Image, FlatList, useWindowDimensions, ScrollView } from "react-native";
+import { SafeAreaView, TouchableOpacity, View, Text, StyleSheet, Image, FlatList, useWindowDimensions, ScrollView, Platform, StatusBar } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { useNavigation } from "@react-navigation/native";
 import { Avatar, TextInput } from "react-native-paper";
@@ -61,7 +61,7 @@ export default function AddPostScreen({ route }) {
     }
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
+        <SafeAreaView style={styles.container}>
 
             <Loader showLoader={values.loading} />
             
@@ -168,6 +168,11 @@ export default function AddPostScreen({ route }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.surface,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    },
     inputField: {
         ...TYPOGRAPHY.p,
         // flex: .4,

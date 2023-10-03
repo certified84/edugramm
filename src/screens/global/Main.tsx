@@ -1,4 +1,4 @@
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { Platform, StatusBar, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { COLORS, SHADOWS, SIZES, TYPOGRAPHY } from '../../../assets/theme';
@@ -101,8 +101,8 @@ export default MainScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray,
-    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: COLORS.surface,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   tabBarIcon: {
     alignItems: 'center',

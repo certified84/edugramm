@@ -61,11 +61,11 @@ const HomeScreen = () => {
     }, [error])
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
 
             <Loader showLoader={values.loading || loading || postsLoading} />
 
-            <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
                 <FlatList
                     data={posts}
                     ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} userInfo={values} />}
@@ -80,8 +80,8 @@ const HomeScreen = () => {
                     onPress={() => navigation.navigate('AddPostScreen', { userInfo: {...values} }) }
                     theme={{colors: fabColors}}
                 />
-            </SafeAreaView>
-        </View>
+            </View>
+        </SafeAreaView>
     )
 }
 

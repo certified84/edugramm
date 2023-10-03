@@ -32,7 +32,7 @@ export function formatDate(millis: number): string {
     const minutes = Math.floor(seconds / 60)
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
-
+    
     switch(true) {
         case seconds < 60 : return `${seconds}s`
         case minutes < 60 : return `${minutes}m`

@@ -12,6 +12,7 @@ import { auth, firestore } from '../../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { SplashIcon } from '../../../../assets/svg/SplashIcon';
+import { formatDate } from '../../../util/Utils';
 
 const PostDetailedCard = ({ item, navigation }) => {
 
@@ -77,14 +78,12 @@ const PostDetailedCard = ({ item, navigation }) => {
                         
                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{post.name}</Text>
-                            {
-                                post.verified && <VerifiedIcon />
-                            }
+                            { post.verified && <VerifiedIcon /> }
                         </View>
 
                     </View>
 
-                    <Text style={{flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface}}>{`1d`}</Text>
+                    <Text style={{flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface}}>{`${formatDate(post.date)}`}</Text>
                 
                 </View>
 
@@ -130,11 +129,11 @@ const PostDetailedCard = ({ item, navigation }) => {
                                 setLiked(!liked)
                                 likePost(!liked)
                             }}>
-                                <AntDesign name={post.likes.includes(user.uid) ? 'heart' : 'hearto'} size={SIZES.xl} color={liked ? COLORS.red : COLORS.onSurface} />
+                                <AntDesign name={post.likes.includes(user.uid) ? 'heart' : 'hearto'} size={SIZES.md} color={liked ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{post.likes.length}</Text>
                             <TouchableOpacity onPress={() => { }}>
-                                <Ionicons name='chatbubble-outline' size={SIZES.xl} color={COLORS.onSurface} />
+                                <Ionicons name='chatbubble-outline' size={SIZES.md} color={COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{post.comments.length}</Text>
                         </View>
@@ -167,8 +166,9 @@ const styles = StyleSheet.create({
     },
     commentSection: {
         ...TYPOGRAPHY.h2,
-        fontSize: SIZES.md,
-        marginHorizontal: SIZES.xs,
+        fontSize: SIZES.sm,
+        marginStart: SIZES.xxs,
+        marginEnd: SIZES.md,
         color: COLORS.onSurface
     },
     dateSection: {
