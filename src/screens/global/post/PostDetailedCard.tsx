@@ -36,7 +36,7 @@ const PostDetailedCard = ({ item, navigation }) => {
 
     async function likePost(isLiked: boolean) {
         let likes = post.likes
-        isLiked ? likes.push(user.uid) : likes = post.likes.filter((it) => { it !== user.uid })
+        isLiked ? likes.push(user.uid) : likes = post.likes.filter((it: string) => { it !== user.uid })
         const postRef = doc(firestore, "posts", post.id)
         await updateDoc(postRef, {
             likes: [...likes]

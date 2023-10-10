@@ -33,8 +33,9 @@ export const PostCard = ({ item, navigation, userInfo }) => {
     const [photo, setPhoto] = useState<string>(null)
 
     async function likePost(isLiked: boolean) {
+        console.log("Liked: ", isLiked)
         let likes = item.likes
-        isLiked ? likes.push(user.uid) : likes = item.likes.filter((it) => { it !== user.uid })
+        isLiked ? likes.push(user.uid) : likes = item.likes.filter((it: string) => { it !== user.uid })
         const postRef = doc(firestore, "posts", item.id)
         await updateDoc(postRef, {
             likes: [...likes]
