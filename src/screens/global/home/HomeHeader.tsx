@@ -4,8 +4,10 @@ import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Avatar } from 'react-native-paper';
 import { SplashIcon } from '../../../../assets/svg/SplashIcon';
+import { auth } from '../../../../firebase';
 
 export default function HomeHeader({ titleText, navigation, userInfo }) {
+    const user = auth.currentUser
     return (
         <View style={styles.container}>
             <Text style={{...TYPOGRAPHY.h1, fontFamily: 'sansita-italic', fontSize: SIZES.xxl, color: COLORS.onSurface}}>{titleText}</Text>
@@ -15,10 +17,10 @@ export default function HomeHeader({ titleText, navigation, userInfo }) {
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginStart: SIZES.xs}} activeOpacity={.7} onPress={() => navigation.navigate('ProfileScreen', { userInfo: {...userInfo} })}>
                     <View style={{overflow: 'hidden', width: 38, height: 38, borderRadius: 19, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                        { userInfo.photoUrl ? 
-                            <Avatar.Image size={35} source={{ uri: userInfo.photoUrl }} />
-                            : <SplashIcon />
-                        }
+                            { user.photoURL ? 
+                                <Avatar.Image size={35} source={{ uri: user.photoURL }} />
+                                : <SplashIcon />
+                            }
                     </View>
                 </TouchableOpacity>
             </View>

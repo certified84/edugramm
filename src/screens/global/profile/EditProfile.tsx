@@ -1,14 +1,19 @@
-import { SafeAreaView, View, TouchableOpacity, Text, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView, View, TouchableOpacity, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { COLORS, LINE, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Avatar, Snackbar, TextInput } from "react-native-paper";
 import { defaultUser } from '../../../data/model/User'
-import { auth, firestore } from '../../../../firebase';
+import { auth, firestore, storage } from '../../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { Loader } from "../../../components/Loader";
 import { useDocumentOnce } from 'react-firebase-hooks/firestore'
 import { SplashIcon } from "../../../../assets/svg/SplashIcon";
+import * as ImagePicker from 'expo-image-picker';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { useUploadFile } from 'react-firebase-hooks/storage';
+import { updateProfile } from "firebase/auth";
+import * as FileSystem from 'expo-file-system';
 
 export default function EditProfileScreen() {
     
@@ -17,9 +22,14 @@ export default function EditProfileScreen() {
 
     const reference = doc(firestore, "users", user.uid)
     const [snapshot, loading, error, reload] = useDocumentOnce(reference)
+    // const [downloadUrl, setDownloadUrl] = useState<string>(null);
+
+    const [uploadFile, uploading, imageSnapshot, imageError] = useUploadFile();
+    const profileImageRef = ref(storage, 'profileImages/' + user.uid + '/profileImage.jpg');
 
     const [values, setValues] = useState({
         ...defaultUser,
+        image: null,
         message: "",
         loading: false,
         showSnackBar: false,
@@ -45,19 +55,91 @@ export default function EditProfileScreen() {
         }
     }, [error])
 
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        })
+    
+        console.log("Result: ", result);
+    
+        if (!result.canceled) {
+          setValues({...values, image: result.assets[0].uri});
+        }
+      };
+
     async function updateUserProfile() {
-        console.log("Update Values: ", values)
+        // console.log("Update Values: ", values)
         setValues({...values, loading: true})
         const userRef = doc(firestore, "users", user.uid)
         await updateDoc(userRef, { 
             bio: values.bio,
             company: values.company,
             school: values.school,
-            link: values.link
+            link: values.link,
+            photo: values.image !== null ? user.photoURL : values.photo /* If the user selected an image, then the photo 
+            field should be the users photoURL since the user photo gets uploaded first else, set it to what it was initially */
          }).then(() => {
             setValues({...values, loading: false})
             navigation.goBack()
         })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            console.log(errorCode, errorMessage)
+            setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+        })
+    }
+
+    async function uploadImage() {
+        console.log("Upload Image: ", values.image)
+        try {
+            const { uri } = await FileSystem.getInfoAsync(values.image);
+            const blob: Blob = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest()
+                xhr.responseType = "blob";
+                xhr.onload = function () {resolve(xhr.response)}
+                xhr.onerror = function (e) {
+                  console.log(e)
+                  reject(new TypeError("Network request failed"))
+                }
+                xhr.open("GET", uri, true)
+                xhr.send(null)
+            });
+            await uploadFile(profileImageRef, blob, {contentType: 'image/jpeg'})
+            .then(() => getUrl() ).catch((error) => {
+                const errorCode = error.code
+                const errorMessage = error.message
+                console.log(errorCode, errorMessage)
+                setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+            })
+            // blob.close()
+        } catch(e) {
+            console.log(e)
+            setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+        }
+    }
+
+    async function getUrl() {
+        await getDownloadURL(ref(storage, 'profileImages/' + user.uid + '/profileImage.jpg'))
+        .then((url) => {
+            // setDownloadUrl(url)
+            updateFirebaseProfile(url)
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            console.log(errorCode, errorMessage)
+            setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+        });
+    }
+
+    async function updateFirebaseProfile(downloadUrl: string) {
+        await updateProfile(user, {photoURL: downloadUrl})
+        .then(() => updateUserProfile() )
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -79,7 +161,7 @@ export default function EditProfileScreen() {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => {return (
-              <TouchableOpacity onPress={updateUserProfile}>
+              <TouchableOpacity onPress={uploadImage}>
                 <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Done</Text>
               </TouchableOpacity>
             )},
@@ -89,16 +171,20 @@ export default function EditProfileScreen() {
     return ( 
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
 
-            <Loader showLoader={values.loading || loading} />
+            <Loader showLoader={values.loading || loading || uploading} />
 
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                 <View style={{flex: 1}}>
 
-                    <TouchableOpacity activeOpacity={.6} style={{alignSelf: 'center'}}>
+                    <TouchableOpacity onPress={pickImage} activeOpacity={.6} style={{alignSelf: 'center'}}>
                         <View style={{ overflow: 'hidden', width: 85, height: 85, borderRadius: 83 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            { user.photoURL ? 
-                                <Avatar.Image size={80} source={{ uri: user.photoURL }} />
-                                : <SplashIcon />
+                            { values.image || user.photoURL ? 
+                                <View>
+                                    {
+                                        values.image ? <Avatar.Image size={80} source={{ uri: values.image }} />
+                                        : <Avatar.Image size={80} source={{ uri: user.photoURL }} />
+                                    }
+                                </View> : <SplashIcon />
                             }
                         </View>
                         <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary, marginTop: SIZES.sm}}>Edit picture</Text>

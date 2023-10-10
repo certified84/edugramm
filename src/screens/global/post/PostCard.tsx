@@ -3,7 +3,7 @@ import {
     TouchableOpacity, Image, useWindowDimensions, FlatList
 } from 'react-native'
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
@@ -12,6 +12,7 @@ import { SplashIcon } from '../../../../assets/svg/SplashIcon';
 import { auth, firestore } from '../../../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { formatDate } from '../../../util/Utils';
+import { useDocument } from 'react-firebase-hooks/firestore'
 
 export const PostCard = ({ item, navigation, userInfo }) => {
 
@@ -26,6 +27,10 @@ export const PostCard = ({ item, navigation, userInfo }) => {
     const [showImageDialog, setShowImageDialog] = useState(false)
     const [liked, setLiked] = useState(item.likes.includes(user.uid))
     const [imageIndex, setImageIndex] = useState(0)
+
+    const reference = doc(firestore, "users", item.uid)
+    const [snapshot, loading, error] = useDocument(reference)
+    const [photo, setPhoto] = useState<string>(null)
 
     async function likePost(isLiked: boolean) {
         let likes = item.likes
@@ -42,6 +47,12 @@ export const PostCard = ({ item, navigation, userInfo }) => {
             console.log(errorCode, errorMessage)
         })
     }
+
+    useEffect(() => {
+        if(snapshot && snapshot.exists()) {
+            setPhoto(snapshot.data().photo)
+        }
+    }, [snapshot])
 
     return (
         <View style={{flex: 1, width: width}}>
@@ -60,8 +71,8 @@ export const PostCard = ({ item, navigation, userInfo }) => {
                         item.uid === user.uid ? navigation.navigate('ProfileScreen', {userInfo: userInfo}) : navigation.navigate('UserDetailScreen', {account})
                     }}>
                         <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            { item.photoUrl ? 
-                                <Avatar.Image size={40} source={{ uri: item.photoUrl }} />
+                            { photo ? 
+                                <Avatar.Image size={40} source={{ uri: photo }} />
                                 : <SplashIcon />
                             }
                         </View>

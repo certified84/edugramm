@@ -82,8 +82,8 @@ const SignupScreen = () => {
         })
     }
 
-    async function updateUserProfile(user: FirebaseUser, displayName? : string | null, photoUrl? : string | null) {
-        await updateProfile(user, {displayName: displayName, photoURL: photoUrl})
+    async function updateUserProfile(user: FirebaseUser, displayName? : string | null) {
+        await updateProfile(user, {displayName: displayName})
         .then(() => {
             sendEmailVerification(user)
             setValue({ ...value, message: "A verification email has been sent to your email address.", loading: false, success: true })

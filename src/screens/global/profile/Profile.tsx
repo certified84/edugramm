@@ -88,7 +88,7 @@ export default function ProfileScreen({route}) {
                         </View>
                         <View style={{overflow: 'hidden', width: 53, height: 53, borderRadius: 53 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
                             { user.photoURL ? 
-                                <Avatar.Image size={80} source={{ uri: user.photoURL }} />
+                                <Avatar.Image size={50} source={{ uri: user.photoURL }} />
                                 : <SplashIcon />
                             }
                         </View>
