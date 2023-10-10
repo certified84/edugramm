@@ -67,10 +67,10 @@ const PostDetailedCard = ({ item, navigation }) => {
                     
                     <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('UserDetailScreen', { account })}>
                         <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            { post.photoUrl ? 
-                                <Avatar.Image size={40} source={{ uri: post.photoUrl }} />
-                                : <SplashIcon />
-                            }
+                            {/* { post.photoUrl ?  */}
+                                {/* <Avatar.Image size={40} source={{ uri: post.photoUrl }} /> */}
+                                <SplashIcon />
+                            {/* } */}
                         </View>
                     </TouchableOpacity>
 

@@ -161,7 +161,7 @@ export default function EditProfileScreen() {
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => {return (
-              <TouchableOpacity onPress={uploadImage}>
+              <TouchableOpacity onPress={() => values.image ? uploadImage() : updateUserProfile()}>
                 <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Done</Text>
               </TouchableOpacity>
             )},

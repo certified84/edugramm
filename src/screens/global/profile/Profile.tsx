@@ -32,7 +32,6 @@ export default function ProfileScreen({ route }) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        console.log("Posts: Changed")
         if (postsSnapshot) {
             setPosts(postsSnapshot.docs)
         }

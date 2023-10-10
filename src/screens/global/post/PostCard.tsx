@@ -16,12 +16,6 @@ import { useDocument } from 'react-firebase-hooks/firestore'
 
 export const PostCard = ({ item, navigation, userInfo }) => {
 
-    // const account = {
-    //     id: '3',
-    //     name: 'Kolawole Godstime',
-    //     image: 'https://source.unsplash.com/random/?man,kid',
-    //     follower_count: 200000,
-    // }
     const { width } = useWindowDimensions()
     const user = auth.currentUser
     const [showImageDialog, setShowImageDialog] = useState(false)
@@ -69,13 +63,13 @@ export const PostCard = ({ item, navigation, userInfo }) => {
             <View style={{flexDirection: 'row', paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
                 <View>
                     <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {
-                        item.uid === user.uid ? navigation.navigate('ProfileScreen', {userInfo: userInfo}) : navigation.navigate('UserDetailScreen', {account})
+                        item.uid === user.uid ? navigation.navigate('ProfileScreen', {userInfo: userInfo}) : navigation.navigate('UserDetailScreen', { userInfo: {...userInfo, name: item.name, uid: item.uid} })
                     }}>
                         <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
-                            { photo ? 
-                                <Avatar.Image size={40} source={{ uri: photo }} />
-                                : <SplashIcon />
-                            }
+                            {/* { photo ?  */}
+                                {/* <Avatar.Image size={40} source={{ uri: photo }} /> */}
+                                <SplashIcon />
+                            {/* } */}
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{flex: 1}} onPress={() => navigation.navigate("PostDetailedScreen", { item })}/>

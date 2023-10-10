@@ -91,7 +91,8 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     name="UserDetailScreen"
                     component={UserDetailScreen}
                     options={{
-                        headerShown: false
+                        headerShown: true,
+                        headerShadowVisible: false,
                     }}
                 />
                 <Stack.Screen
