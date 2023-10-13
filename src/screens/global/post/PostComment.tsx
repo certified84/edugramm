@@ -3,26 +3,38 @@ import {
     TouchableOpacity, Image, useWindowDimensions, FlatList
 } from 'react-native'
 import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
 import ImageDialog from '../../../components/ImageDialog';
 import { defaultComment } from '../../../data/model/Comment';
 import { SplashIcon } from '../../../../assets/svg/SplashIcon';
-import { auth } from '../../../../firebase';
+import { auth, firestore } from '../../../../firebase';
 import { defaultUser } from '../../../data/model/User';
+import { doc } from 'firebase/firestore';
+import { useDocument } from 'react-firebase-hooks/firestore';
+import { formatDate } from '../../../util/Utils';
 
 const PostComment = ({ item, navigation }) => {
 
     const { width } = useWindowDimensions()
     const user = auth.currentUser
-    const userInfo = {
-        ...defaultUser,
-        name: item.user.name,
-        uid: item.user.uid,
-    }
-    const [liked, setLiked] = useState(false);
-    const [showImageDialog, setShowImageDialog] = useState(false);
+    const [userInfo, setUserInfo] = useState({ ...defaultUser })
+
+    const [liked, setLiked] = useState(false)
+    const [showImageDialog, setShowImageDialog] = useState(false)
+
+    const userRef = doc(firestore, "users", item.uid)
+    const [snapshot, loading, error] = useDocument(userRef)
+
+    useEffect(() => {
+        if (snapshot && snapshot.exists()) {
+            setUserInfo({
+                ...userInfo,
+                ...snapshot.data()
+            })
+        }
+    }, [snapshot])
 
     return (
         <View style={{ flex: 1, width: width }}>
@@ -37,29 +49,29 @@ const PostComment = ({ item, navigation }) => {
 
             <View style={{ flexDirection: 'row', paddingStart: SIZES.md, paddingEnd: SIZES.md, paddingVertical: SIZES.xs }}>
                 <View>
-                    <TouchableOpacity activeOpacity={.9} style={{height: 50}} onPress={() => {
-                        item.user.uid === user.uid ? navigation.navigate('ProfileScreen', {userInfo: userInfo}) : navigation.navigate('UserDetailScreen', { userInfo: {...userInfo, name: item.name, uid: item.uid} })
+                    <TouchableOpacity activeOpacity={.9} style={{ height: 50 }} onPress={() => {
+                        userInfo.uid === user.uid ? navigation.navigate('ProfileScreen', { userInfo: userInfo }) : navigation.navigate('UserDetailScreen', { userInfo: userInfo })
                     }}>
                         <View style={{ overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center' }}>
-                            {/* { post.photoUrl ?  */}
-                            {/* <Avatar.Image size={40} source={{ uri: post.photoUrl }} /> */}
-                            <SplashIcon />
+                            {/* {userInfo.photo ?
+                                <Avatar.Image size={40} source={{ uri: userInfo.photo }} /> */}
+                                 <SplashIcon />
                             {/* } */}
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, marginStart: SIZES.xxs }}>
                     <View style={{ flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.user.name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{userInfo.name}</Text>
                         {
-                            item.user.verified && <MaterialIcons
+                            userInfo.verified && <MaterialIcons
                                 name='verified'
                                 size={SIZES.sm}
                                 color={"#0082CB"}
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text style={{ flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface }}>{` \u2022 11h`}</Text>
+                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 ${formatDate(item.date)}`}</Text>
                     </View>
                     <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>{item.comment}</Text>
                     {/* { 
@@ -99,8 +111,8 @@ const PostComment = ({ item, navigation }) => {
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
                             <Ionicons name='chatbubble-outline' size={SIZES.md} color={COLORS.onSurface} /> */}
-                            {/* <Text style={styles.commentSection}>{item.comments.length}</Text> */}
-                        {/* </View>
+                    {/* <Text style={styles.commentSection}>{item.comments.length}</Text> */}
+                    {/* </View>
                     </View> */}
                 </View>
             </View>

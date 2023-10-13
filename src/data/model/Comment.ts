@@ -2,7 +2,7 @@ import { User, defaultUser } from "./User"
 
 type Comment = {
     id: string,
-    user: User,
+    uid: string,
     comment: string,
     date?: number | null,
     likes: [],
@@ -12,7 +12,7 @@ type Comment = {
 
 const defaultComment: Comment = {
     id: "",
-    user: defaultUser,
+    uid: "",
     comment: "",
     date: null,
     likes: [],

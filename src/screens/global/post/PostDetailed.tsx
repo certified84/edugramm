@@ -70,10 +70,7 @@ const PostDetailedScreen = ({ route }) => {
         setValues({ ...values, loading: true, comment: "" })
         const data: Comment = {
             ...defaultComment,
-            user: {
-                ...defaultUser,
-                ...values,
-            },
+            uid: user.uid,
             postId: post.id,
             comment: values.comment,
             date: Timestamp.now().toMillis(),
