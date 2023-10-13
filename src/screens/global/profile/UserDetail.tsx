@@ -9,7 +9,7 @@ import { PostsTab } from "./Tabs";
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { collection, doc, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { PostCard } from "../post/PostCard";
 import { Loader } from "../../../components/Loader";
 import VerifiedIcon from "../../../components/VerifiedIcon";
@@ -18,6 +18,7 @@ import { SplashIcon } from "../../../../assets/svg/SplashIcon";
 export default function UserDetailScreen({ route }) {
 
     const navigation = useNavigation()
+    const user = auth.currentUser
     const [userInfo, setUserInfo] = useState(route.params.userInfo)
 
     const reference = doc(firestore, "users", userInfo.uid)
@@ -28,12 +29,6 @@ export default function UserDetailScreen({ route }) {
     const [postsSnapshot, postsLoading, postsError] = useCollection(q)
     const [posts, setPosts] = useState([])
 
-    useEffect(() => {
-        if (postsSnapshot) {
-            setPosts(postsSnapshot.docs)
-        }
-    }, [postsSnapshot])
-
     const [values, setValues] = useState({
         message: "",
         loading: false,
@@ -41,8 +36,15 @@ export default function UserDetailScreen({ route }) {
     })
 
     useEffect(() => {
+        if (postsSnapshot) {
+            setPosts(postsSnapshot.docs)
+        }
+    }, [postsSnapshot])
+
+    useEffect(() => {
         if (snapshot && snapshot.exists()) {
             setUserInfo(snapshot.data())
+            console.log("Followers", snapshot.data().followers)
         }
     }, [snapshot])
 
@@ -65,6 +67,18 @@ export default function UserDetailScreen({ route }) {
             },
         })
     }, [])
+
+    async function followAccount() {
+        let followers = userInfo.followers
+        console.log(followers)
+        followers.includes(user.uid) ? followers = followers.filter((it: string) => { it !== user.uid }) : followers.push(user.uid)
+        await updateDoc(reference, { followers: [...followers] })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+            })
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
@@ -105,8 +119,8 @@ export default function UserDetailScreen({ route }) {
                         </View>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: SIZES.md }}>
-                            <TouchableOpacity activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.surface }}>Follow</Text>
+                            <TouchableOpacity onPress={followAccount} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.surface }}>{userInfo.followers.includes(user.uid) ? 'Unfollow' : 'Follow'}</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => navigation.navigate('ChatScreen', { message: userInfo })} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
