@@ -74,7 +74,7 @@ export default function AddPostScreen({ route }) {
                     <TouchableOpacity 
                         activeOpacity={.6} 
                         style={{opacity: values.post.length > 0 || values.images.length > 0 ? 1 : .5}} 
-                        disabled={values.post.length <= 0 && values.images.length <= 0} 
+                        disabled={values.post.length < 1 && values.images.length < 1} 
                         onPress={() => values.post.length > 0 || values.images.length > 0 ? uploadPost() : {}}
                     >
                         <View style={{borderRadius: 50, paddingHorizontal: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.primary}}>

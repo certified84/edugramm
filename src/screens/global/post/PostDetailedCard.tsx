@@ -14,11 +14,10 @@ import { useDocument } from 'react-firebase-hooks/firestore';
 import { SplashIcon } from '../../../../assets/svg/SplashIcon';
 import { formatDate } from '../../../util/Utils';
 
-const PostDetailedCard = ({ item, navigation }) => {
-
-    const user = auth.currentUser
+const PostDetailedCard = ({ item, navigation, userInfo }) => {
 
     const { width } = useWindowDimensions()
+    const user = auth.currentUser
 
     const reference = doc(firestore, "posts", item.id)
     const [snapshot, loading, error] = useDocument(reference)
@@ -29,7 +28,7 @@ const PostDetailedCard = ({ item, navigation }) => {
     const [imageIndex, setImageIndex] = useState(0)
 
     useEffect(() => {
-        if(snapshot && snapshot.exists()) {
+        if (snapshot && snapshot.exists()) {
             setPost(snapshot.data())
         }
     }, [snapshot])
@@ -40,18 +39,18 @@ const PostDetailedCard = ({ item, navigation }) => {
         const postRef = doc(firestore, "posts", post.id)
         await updateDoc(postRef, {
             likes: [...likes]
-         }).then(() => {
+        }).then(() => {
             // setLiked(!isLiked)
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-        })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+            })
     }
 
     return (
-        <View style={{flex: 1, width: width}}>
+        <View style={{ flex: 1, width: width }}>
 
             <ImageDialog
                 showImageDialog={showImageDialog}
@@ -61,59 +60,61 @@ const PostDetailedCard = ({ item, navigation }) => {
                 index={imageIndex}
             />
 
-            <View style={{paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs}}>
-                
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('UserDetailScreen', { account })}>
-                        <View style={{overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{ paddingHorizontal: SIZES.md, paddingVertical: SIZES.xs }}>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                    <TouchableOpacity activeOpacity={.9} style={{ height: 50 }} onPress={() => {
+                        post.uid === user.uid ? navigation.navigate('ProfileScreen', { userInfo: userInfo }) : navigation.navigate('UserDetailScreen', { userInfo: { ...userInfo, name: post.name, uid: post.uid } })
+                    }}>
+                        <View style={{ overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center' }}>
                             {/* { post.photoUrl ?  */}
-                                {/* <Avatar.Image size={40} source={{ uri: post.photoUrl }} /> */}
-                                <SplashIcon />
+                            {/* <Avatar.Image size={40} source={{ uri: post.photoUrl }} /> */}
+                            <SplashIcon />
                             {/* } */}
                         </View>
                     </TouchableOpacity>
 
-                    <View style={{marginHorizontal: SIZES.xxs}}>
-                        
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ marginHorizontal: SIZES.xxs }}>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{post.name}</Text>
-                            { post.verified && <VerifiedIcon /> }
+                            {post.verified && <VerifiedIcon />}
                         </View>
 
                     </View>
 
-                    <Text style={{flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface}}>{`${formatDate(post.date)}`}</Text>
-                
+                    <Text style={{ flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface }}>{`${formatDate(post.date)}`}</Text>
+
                 </View>
 
-                <View style={{flex: 1, marginTop: SIZES.xxs}}>
+                <View style={{ flex: 1, marginTop: SIZES.sm }}>
                     <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }}>{post.post}</Text>
 
-                    { 
-                        post.images.length === 1 && 
-                        <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: '100%', height: width * .8, marginTop: SIZES.xs}}>
-                            <Image 
-                                source={{ uri: post.images[0] }} 
-                                style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm}} 
+                    {
+                        post.images.length === 1 &&
+                        <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(true)} style={{ width: '100%', height: width * .8, marginTop: SIZES.xs }}>
+                            <Image
+                                source={{ uri: post.images[0] }}
+                                style={{ width: '100%', height: width * .8, borderRadius: SIZES.sm }}
                             />
                         </TouchableOpacity>
                     }
-                    { 
-                        post.images.length > 1 && 
+                    {
+                        post.images.length > 1 &&
                         <>
                             <FlatList
                                 data={post.images}
                                 horizontal
-                                renderItem={({ item, index }) => 
-                                    <TouchableOpacity 
-                                        activeOpacity={.9} 
+                                renderItem={({ item, index }) =>
+                                    <TouchableOpacity
+                                        activeOpacity={.9}
                                         onPress={() => {
                                             setImageIndex(index)
                                             setShowImageDialog(true)
-                                        }} 
-                                        style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs, marginEnd: SIZES.xs}}>
-                                        <Image source={{ uri: item }} style={{ width: width * .7, height: width * .8, borderRadius: SIZES.sm}} />
+                                        }}
+                                        style={{ width: width * .7, height: width * .8, marginTop: SIZES.xs, marginEnd: SIZES.xs }}>
+                                        <Image source={{ uri: item }} style={{ width: width * .7, height: width * .8, borderRadius: SIZES.sm }} />
                                     </TouchableOpacity>
                                 }
                                 keyExtractor={(index) => index}
@@ -123,9 +124,9 @@ const PostDetailedCard = ({ item, navigation }) => {
                         </>
                     }
 
-                    <View style={{...styles.bottomSection}}>
+                    <View style={{ ...styles.bottomSection }}>
                         <View style={{ flexDirection: "row", flex: 0.4, alignItems: 'center' }}>
-                            <TouchableOpacity onPress={() => { 
+                            <TouchableOpacity onPress={() => {
                                 setLiked(!liked)
                                 likePost(!liked)
                             }}>
@@ -150,7 +151,6 @@ const PostDetailedCard = ({ item, navigation }) => {
                     </TouchableOpacity>
                 )
             } */}
-            <View style={{height: 1, width: '100%', backgroundColor: COLORS.lightGray}}/>
         </View>
     )
 }
