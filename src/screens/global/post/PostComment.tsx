@@ -89,7 +89,7 @@ const PostComment = ({ item, navigation }) => {
                         </>
                     } */}
 
-                    <View style={{ ...styles.bottomSection }}>
+                    {/* <View style={{ ...styles.bottomSection }}>
                         <View style={{ flexDirection: "row", flex: 1, alignItems: 'center' }}>
                             <TouchableOpacity onPress={() => {
                                 // setLiked(!liked)
@@ -98,10 +98,10 @@ const PostComment = ({ item, navigation }) => {
                                 <AntDesign name={item.likes.includes(item.user.uid) ? 'heart' : 'hearto'} size={SIZES.md} color={item.likes.includes(item.user.uid) ? COLORS.red : COLORS.onSurface} />
                             </TouchableOpacity>
                             <Text style={styles.commentSection}>{item.likes.length}</Text>
-                            <Ionicons name='chatbubble-outline' size={SIZES.md} color={COLORS.onSurface} />
+                            <Ionicons name='chatbubble-outline' size={SIZES.md} color={COLORS.onSurface} /> */}
                             {/* <Text style={styles.commentSection}>{item.comments.length}</Text> */}
-                        </View>
-                    </View>
+                        {/* </View>
+                    </View> */}
                 </View>
             </View>
 

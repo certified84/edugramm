@@ -20,12 +20,12 @@ import PostComment from './PostComment';
 
 const PostDetailedScreen = ({ route }) => {
 
-    const post = route.params.item
     const navigation = useNavigation()
     const user = auth.currentUser
 
     const userRef = doc(firestore, "users", user.uid)
     const [snapshot, loading, error] = useDocument(userRef)
+    const [post, setPost] = useState(route.params.item)
 
     const [values, setValues] = useState({
         ...defaultUser,
@@ -47,7 +47,7 @@ const PostDetailedScreen = ({ route }) => {
     }, [snapshot])
 
     const commentsRef = collection(firestore, "comments")
-    const q = query(commentsRef, where("postId", "==", post.id), orderBy("postId"), orderBy("date", "desc"))
+    const q = query(commentsRef, where("postId", "==", post.id), orderBy("postId"), orderBy("date", "asc"))
     const [commentsSnapshot, commentsLoading, commentsError] = useCollection(q)
     const [comments, setComments] = useState([])
 
@@ -57,8 +57,17 @@ const PostDetailedScreen = ({ route }) => {
         }
     }, [commentsSnapshot])
 
+    const postRef = doc(firestore, "posts", post.id)
+    const [postSnapshot, postLoading, postError] = useDocument(postRef)
+
+    useEffect(() => {
+        if (postSnapshot) {
+            setPost(postSnapshot.data())
+        }
+    }, [postSnapshot])
+
     async function addComment() {
-        setValues({ ...values, loading: true })
+        setValues({ ...values, loading: true, comment: "" })
         const data: Comment = {
             ...defaultComment,
             user: {
@@ -71,10 +80,23 @@ const PostDetailedScreen = ({ route }) => {
         }
         const docRef = addDoc(collection(firestore, "comments"), data)
         await docRef.then((snapshot) => {
-            updateDoc(snapshot, { id: snapshot.id })
-            setValues({ ...values, loading: false, comment: "" })
-            // navigation.goBack()
+            updateDoc(snapshot, { id: snapshot.id }).then(() => {
+                setValues({ ...values, loading: false, comment: "" })
+                updatePost(snapshot.id)
+            })
+        }).catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+            console.log(errorCode, errorMessage)
         })
+    }
+
+    async function updatePost(id: string) {
+        const comments: string[] = post.comments
+        comments.push(id)
+        updateDoc(postRef, { comments: comments })
+            .then(() => setValues({ ...values, comment: "" }))
             .catch((error) => {
                 const errorCode = error.code
                 const errorMessage = error.message
@@ -92,7 +114,7 @@ const PostDetailedScreen = ({ route }) => {
                 keyExtractor={(item) => item.id}
                 ListHeaderComponent={() =>
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.xs, marginBottom: SIZES.md }}>
                             <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
                                 <Ionicons name='chevron-back' size={SIZES.xl} color={COLORS.onSurface} />
                             </TouchableOpacity>
