@@ -72,7 +72,6 @@ export const FollowingTab = ({ uid, navigation }) => {
     useEffect(() => {
         if (snapshot) {
             setUsers(snapshot.docs)
-            console.log("Following", snapshot.docs.length)
         }
     }, [snapshot])
 

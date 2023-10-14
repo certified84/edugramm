@@ -61,8 +61,20 @@ export default function UserDetailScreen({ route }) {
     useEffect(() => {
         if (error && error.message !== "") {
             setValues({ ...values, showSnackBar: true, message: error.message })
+            console.log("Error:", error.message)
         }
     }, [error])
+
+    useEffect(() => {
+        if (userError) {
+            console.log("Error:", userError.message)
+        }
+    }, [userError])
+    useEffect(() => {
+        if (postsError) {
+            console.log("Error:", postsError.message)
+        }
+    }, [postsError])
 
     useEffect(() => {
         navigation.setOptions({
