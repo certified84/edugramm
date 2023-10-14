@@ -5,7 +5,6 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import { followerCount } from "../../../util/Utils";
 import { Avatar, Snackbar } from "react-native-paper";
-import { PostsTab } from "./Tabs";
 import { useEffect, useState } from "react";
 import { defaultUser } from '../../../data/model/User'
 import { auth, firestore } from '../../../../firebase';
@@ -107,7 +106,7 @@ export default function ProfileScreen({ route }) {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>
-                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
+                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen', { userInfo: userInfo })}>
                                 <Text style={{ ...TYPOGRAPHY.h2, opacity: .5 }}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={.8} style={{ flex: 1 }}>

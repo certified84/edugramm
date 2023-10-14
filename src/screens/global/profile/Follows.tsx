@@ -1,37 +1,52 @@
-import { SafeAreaView, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import { Platform, SafeAreaView, StatusBar, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { FollowersTab, FollowingTab } from "./Tabs";
-import { accounts } from "../../../components/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import { followerCount } from "../../../util/Utils";
+import { auth, firestore } from "../../../../firebase";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+import { collection, doc, orderBy, query, where } from "firebase/firestore";
+import { defaultUser } from "../../../data/model/User";
 
-export default function FollowScreen() {
+export default function FollowScreen({ route }) {
 
     const { width } = useWindowDimensions()
     const navigation = useNavigation()
+    const user = auth.currentUser
     const [index, setIndex] = useState(0);
     const [routes] = useState([
         { key: 'followers', title: 'Followers' },
         { key: 'following', title: 'Following' },
     ]);
 
+    const [userInfo, setUserInfo] = useState(defaultUser)
+    const userRef = doc(firestore, "users", route.params.userInfo.uid)
+    // const q = query(usersRef, where("uid", "==", user.uid), orderBy("uid"), orderBy("date", "desc"))
+    const [snapshot, loading, error] = useDocument(userRef)
+
+    useEffect(() => {
+        if (snapshot && snapshot.exists()) {
+            setUserInfo({ ...defaultUser, ...snapshot.data() })
+        }
+    }, [snapshot])
+
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
-            <View style={{flex: 1}}>
-                <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
+            <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: SIZES.md }}>
                     <TouchableOpacity activeOpacity={.9} onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back' size={SIZES.xl} color={COLORS.onSurface}/>
+                        <Ionicons name='chevron-back' size={SIZES.xl} color={COLORS.onSurface} />
                     </TouchableOpacity>
-                    <Text style={{...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl, color: COLORS.onSurface}}>Samson Achiaga</Text>
+                    <Text style={{ ...TYPOGRAPHY.h1, flex: 1, textAlign: 'center', marginEnd: SIZES.xl, color: COLORS.onSurface }}>{route.params.userInfo.name}</Text>
                 </View>
 
                 <TabView
-                    renderTabBar={() => <RenderTab index={index} setIndex={setIndex} />}
+                    renderTabBar={() => <RenderTab followers={userInfo.followers} following={userInfo.following} index={index} setIndex={setIndex} />}
                     navigationState={{ index, routes }}
-                    renderScene={renderScene({navigation})}
+                    renderScene={renderScene({ uid: route.params.userInfo.uid, navigation: navigation })}
                     onIndexChange={setIndex}
                     initialLayout={{ width: width }}
                     style={{ flex: 1, marginTop: SIZES.md }}
@@ -41,11 +56,11 @@ export default function FollowScreen() {
     )
 }
 
-const RenderTab = ({ index, setIndex }) => {
+const RenderTab = ({ index, setIndex, followers, following }) => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <TabTitle title={`${followerCount(234454)} Followers`} isSelected={index === 0} onPress={() => { setIndex(0) }} style={{ flex: 0.5 }} />
-            <TabTitle title={`${followerCount(23494)} Following`} isSelected={index === 1} onPress={() => { setIndex(1) }} style={{ flex: 0.5 }} />
+            <TabTitle title={`${followerCount(followers.length)} Followers`} isSelected={index === 0} onPress={() => { setIndex(0) }} style={{ flex: 0.5 }} />
+            <TabTitle title={`${followerCount(following.length)} Following`} isSelected={index === 1} onPress={() => { setIndex(1) }} style={{ flex: 0.5 }} />
         </View>
     );
 }
@@ -59,7 +74,7 @@ const TabTitle = ({ title, isSelected, onPress, style }) => {
     );
 }
 
-const renderScene = ({ navigation }) => SceneMap({
-    followers: () => <FollowersTab accounts={accounts} navigation={navigation}/>,
-    following: () => <FollowingTab accounts={accounts} navigation={navigation}/>,
+const renderScene = ({ uid, navigation }) => SceneMap({
+    followers: () => <FollowersTab uid={uid} navigation={navigation} />,
+    following: () => <FollowingTab uid={uid} navigation={navigation} />,
 });

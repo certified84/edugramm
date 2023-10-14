@@ -1,11 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, SafeAreaView, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import { FlatList, Platform, SafeAreaView, StatusBar, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { MaterialIcons, Ionicons, AntDesign, Feather } from '@expo/vector-icons'
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { Text } from "react-native";
 import { Avatar, Snackbar } from "react-native-paper";
 import { followerCount } from "../../../util/Utils";
-import { PostsTab } from "./Tabs";
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
@@ -14,12 +13,16 @@ import { PostCard } from "../post/PostCard";
 import { Loader } from "../../../components/Loader";
 import VerifiedIcon from "../../../components/VerifiedIcon";
 import { SplashIcon } from "../../../../assets/svg/SplashIcon";
+import { defaultUser } from "../../../data/model/User";
 
 export default function UserDetailScreen({ route }) {
 
     const navigation = useNavigation()
     const user = auth.currentUser
     const [userInfo, setUserInfo] = useState(route.params.userInfo)
+
+    const userRef = doc(firestore, "users", user.uid)
+    const [userSnapshot, userLoading, userError] = useDocument(userRef)
 
     const reference = doc(firestore, "users", userInfo.uid)
     const [snapshot, loading, error] = useDocument(reference)
@@ -30,10 +33,17 @@ export default function UserDetailScreen({ route }) {
     const [posts, setPosts] = useState([])
 
     const [values, setValues] = useState({
+        ...defaultUser,
         message: "",
         loading: false,
         showSnackBar: false,
     })
+
+    useEffect(() => {
+        if (userSnapshot && userSnapshot.exists()) {
+            setValues({ ...values, ...userSnapshot.data() })
+        }
+    }, [userSnapshot])
 
     useEffect(() => {
         if (postsSnapshot) {
@@ -44,7 +54,6 @@ export default function UserDetailScreen({ route }) {
     useEffect(() => {
         if (snapshot && snapshot.exists()) {
             setUserInfo(snapshot.data())
-            console.log("Followers", snapshot.data().followers)
         }
     }, [snapshot])
 
@@ -70,14 +79,17 @@ export default function UserDetailScreen({ route }) {
 
     async function followAccount() {
         let followers = userInfo.followers
-        console.log(followers)
+        let following: string[] = values.following
+
+        following.includes(userInfo.uid) ? following = following.filter((it: string) => { it !== userInfo.uid }) : following.push(userInfo.uid)
         followers.includes(user.uid) ? followers = followers.filter((it: string) => { it !== user.uid }) : followers.push(user.uid)
-        await updateDoc(reference, { followers: [...followers] })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-            })
+        await updateDoc(reference, { followers: [...followers] }).then(() => {
+            updateDoc(userRef, { following: [...following] })
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        })
     }
 
     return (
@@ -110,7 +122,7 @@ export default function UserDetailScreen({ route }) {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>
-                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
+                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen', { userInfo: userInfo })}>
                                 <Text style={{ ...TYPOGRAPHY.h2, opacity: .5 }}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={.8} style={{ flex: 1 }}>
