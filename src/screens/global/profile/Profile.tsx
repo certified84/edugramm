@@ -85,7 +85,7 @@ export default function ProfileScreen({ route }) {
                 data={posts}
                 ListHeaderComponent={() =>
                     <View style={{ paddingHorizontal: SIZES.md }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: SIZES.md }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flex: 1, marginEnd: SIZES.sm, flexDirection: 'row' }}>
                                 <Text style={{ ...TYPOGRAPHY.h1 }} numberOfLines={2}>{user.displayName}</Text>
                                 {userInfo.verified && <VerifiedIcon />}
@@ -98,11 +98,11 @@ export default function ProfileScreen({ route }) {
                             </View>
                         </View>
 
-                        <Text style={{ ...TYPOGRAPHY.p }}>{userInfo.bio}</Text>
+                        {userInfo.bio && <Text style={{ ...TYPOGRAPHY.p, marginVertical: SIZES.md }}>{userInfo.bio}</Text>}
 
-                        <View style={{ marginTop: SIZES.md }}>
-                            <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>
-                            <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>
+                        <View>
+                            {(userInfo.company || userInfo.schoool) && <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>}
+                            {!userInfo.location && <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>}
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>

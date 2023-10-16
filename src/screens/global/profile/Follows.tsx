@@ -24,7 +24,6 @@ export default function FollowScreen({ route }) {
 
     const [userInfo, setUserInfo] = useState(defaultUser)
     const userRef = doc(firestore, "users", route.params.userInfo.uid)
-    // const q = query(usersRef, where("uid", "==", user.uid), orderBy("uid"), orderBy("date", "desc"))
     const [snapshot, loading, error] = useDocument(userRef)
 
     useEffect(() => {
@@ -44,7 +43,7 @@ export default function FollowScreen({ route }) {
                 </View>
 
                 <TabView
-                    renderTabBar={() => <RenderTab followers={userInfo.followers} following={userInfo.following} index={index} setIndex={setIndex} />}
+                    renderTabBar={() => <RenderTab followers={userInfo.followers.length} following={userInfo.following.length} index={index} setIndex={setIndex} />}
                     navigationState={{ index, routes }}
                     renderScene={renderScene({ uid: route.params.userInfo.uid, navigation: navigation })}
                     onIndexChange={setIndex}
@@ -59,8 +58,8 @@ export default function FollowScreen({ route }) {
 const RenderTab = ({ index, setIndex, followers, following }) => {
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <TabTitle title={`${followerCount(followers.length)} Followers`} isSelected={index === 0} onPress={() => { setIndex(0) }} style={{ flex: 0.5 }} />
-            <TabTitle title={`${followerCount(following.length)} Following`} isSelected={index === 1} onPress={() => { setIndex(1) }} style={{ flex: 0.5 }} />
+            <TabTitle title={`${followerCount(followers)} Followers`} isSelected={index === 0} onPress={() => { setIndex(0) }} style={{ flex: 0.5 }} />
+            <TabTitle title={`${followerCount(following)} Following`} isSelected={index === 1} onPress={() => { setIndex(1) }} style={{ flex: 0.5 }} />
         </View>
     );
 }

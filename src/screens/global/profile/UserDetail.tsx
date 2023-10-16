@@ -8,7 +8,7 @@ import { followerCount } from "../../../util/Utils";
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { collection, doc, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, orderBy, query, updateDoc, where, writeBatch } from "firebase/firestore";
 import { PostCard } from "../post/PostCard";
 import { Loader } from "../../../components/Loader";
 import VerifiedIcon from "../../../components/VerifiedIcon";
@@ -21,11 +21,11 @@ export default function UserDetailScreen({ route }) {
     const user = auth.currentUser
     const [userInfo, setUserInfo] = useState(route.params.userInfo)
 
-    const userRef = doc(firestore, "users", user.uid)
-    const [userSnapshot, userLoading, userError] = useDocument(userRef)
+    const myRef = doc(firestore, "users", user.uid)
+    const [userSnapshot, userLoading, userError] = useDocument(myRef)
 
-    const reference = doc(firestore, "users", userInfo.uid)
-    const [snapshot, loading, error] = useDocument(reference)
+    const userRef = doc(firestore, "users", userInfo.uid)
+    const [snapshot, loading, error] = useDocument(userRef)
 
     const postRef = collection(firestore, "posts")
     const q = query(postRef, where("uid", "==", userInfo.uid), orderBy("uid"), orderBy("date", "desc"))
@@ -90,14 +90,15 @@ export default function UserDetailScreen({ route }) {
     }, [])
 
     async function followAccount() {
-        let followers = userInfo.followers
-        let following: string[] = values.following
+        let userFollowers = userInfo.followers
+        let myFollowing: string[] = values.following
+        myFollowing.includes(userInfo.uid) ? myFollowing = myFollowing.filter((it: string) => { it !== userInfo.uid }) : myFollowing.push(userInfo.uid)
+        userFollowers.includes(user.uid) ? userFollowers = userFollowers.filter((it: string) => { it !== user.uid }) : userFollowers.push(user.uid)
 
-        following.includes(userInfo.uid) ? following = following.filter((it: string) => { it !== userInfo.uid }) : following.push(userInfo.uid)
-        followers.includes(user.uid) ? followers = followers.filter((it: string) => { it !== user.uid }) : followers.push(user.uid)
-        await updateDoc(reference, { followers: [...followers] }).then(() => {
-            updateDoc(userRef, { following: [...following] })
-        }).catch((error) => {
+        const batch = writeBatch(firestore)
+        batch.update(userRef, { followers: [...userFollowers] })
+        batch.update(myRef, { following: [...myFollowing] })
+        await batch.commit().catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
@@ -113,7 +114,7 @@ export default function UserDetailScreen({ route }) {
                 data={posts}
                 ListHeaderComponent={() =>
                     <View style={{ paddingHorizontal: SIZES.md }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: SIZES.md }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <View style={{ flex: 1, marginEnd: SIZES.sm, flexDirection: 'row' }}>
                                 <Text style={{ ...TYPOGRAPHY.h1 }} numberOfLines={2}>{userInfo.name}</Text>
                                 {userInfo.verified && <VerifiedIcon />}
@@ -126,11 +127,11 @@ export default function UserDetailScreen({ route }) {
                             </View>
                         </View>
 
-                        <Text style={{ ...TYPOGRAPHY.p }}>{userInfo.bio}</Text>
+                        {userInfo.bio && <Text style={{ ...TYPOGRAPHY.p, marginVertical: SIZES.md }}>{userInfo.bio}</Text>}
 
-                        <View style={{ marginTop: SIZES.md }}>
-                            <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>
-                            <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>
+                        <View>
+                            {(userInfo.company || userInfo.schoool) && <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>}
+                            {!userInfo.location && <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>}
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>
@@ -144,7 +145,9 @@ export default function UserDetailScreen({ route }) {
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: SIZES.md }}>
                             <TouchableOpacity onPress={followAccount} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.surface }}>{userInfo.followers.includes(user.uid) ? 'Unfollow' : 'Follow'}</Text>
+                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.surface }}>
+                                    {userInfo.followers.includes(user.uid) ? 'Unfollow' : 'Follow'}
+                                </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => navigation.navigate('ChatScreen', { message: userInfo })} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
