@@ -5,7 +5,6 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import { followerCount } from "../../../util/Utils";
 import { Avatar, Snackbar } from "react-native-paper";
-import { PostsTab } from "./Tabs";
 import { useEffect, useState } from "react";
 import { defaultUser } from '../../../data/model/User'
 import { auth, firestore } from '../../../../firebase';
@@ -86,7 +85,7 @@ export default function ProfileScreen({ route }) {
                 data={posts}
                 ListHeaderComponent={() =>
                     <View style={{ paddingHorizontal: SIZES.md }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingBottom: SIZES.md }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flex: 1, marginEnd: SIZES.sm, flexDirection: 'row' }}>
                                 <Text style={{ ...TYPOGRAPHY.h1 }} numberOfLines={2}>{user.displayName}</Text>
                                 {userInfo.verified && <VerifiedIcon />}
@@ -99,15 +98,15 @@ export default function ProfileScreen({ route }) {
                             </View>
                         </View>
 
-                        <Text style={{ ...TYPOGRAPHY.p }}>{userInfo.bio}</Text>
+                        {userInfo.bio && <Text style={{ ...TYPOGRAPHY.p, marginVertical: SIZES.md }}>{userInfo.bio}</Text>}
 
-                        <View style={{ marginTop: SIZES.md }}>
-                            <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>
-                            <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>
+                        <View>
+                            {(userInfo.company || userInfo.schoool) && <Text style={{ ...TYPOGRAPHY.p }}>{`${userInfo.company} \u2022 ${userInfo.school}`}</Text>}
+                            {!userInfo.location && <Text style={{ ...TYPOGRAPHY.p, opacity: .5 }}>{`Badagry, Lagos state, Nigeria`}</Text>}
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>
-                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen' as never)}>
+                            <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen', { userInfo: userInfo })}>
                                 <Text style={{ ...TYPOGRAPHY.h2, opacity: .5 }}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={.8} style={{ flex: 1 }}>
@@ -123,6 +122,14 @@ export default function ProfileScreen({ route }) {
                                 <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>Share Profile</Text>
                             </TouchableOpacity>
                         </View>
+                        {
+                    posts.length === 0 && <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
+                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                                <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                                    Your posts will appear here when they are available...
+                                </Text>
+                            </View>
+                        }
                     </View>
                 }
                 renderItem={({ item }) => <PostCard item={item.data()} key={item.id} navigation={navigation} userInfo={{}} />}
