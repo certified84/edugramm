@@ -45,7 +45,7 @@ const HomeScreen = () => {
     }, [postsSnapshot])
 
     useEffect(() => {
-        if(snapshot && snapshot.exists()) {
+        if (snapshot && snapshot.exists()) {
             setValues({
                 ...values,
                 ...snapshot.data()
@@ -53,33 +53,44 @@ const HomeScreen = () => {
         }
     }, [snapshot])
 
-    useEffect(() => setValues({...values, showSnackBar: values.message !== ""}), [values.message])
+    useEffect(() => setValues({ ...values, showSnackBar: values.message !== "" }), [values.message])
     useEffect(() => {
         if (error && error.message !== "") {
-            setValues({...values, showSnackBar: true, message: error.message})
+            setValues({ ...values, showSnackBar: true, message: error.message })
         }
     }, [error])
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.surface}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
 
             <Loader showLoader={values.loading || loading || postsLoading} />
 
             <View style={{ flex: 1 }}>
                 <FlatList
+                    style={{ zIndex: 2 }}
                     data={posts}
                     ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} userInfo={values} />}
                     renderItem={({ item }) => <PostCard item={item.data()} navigation={navigation} userInfo={values} />}
                     keyExtractor={(item) => item.id}
-                    // alwaysBounceVertical={false}
+                    alwaysBounceVertical={posts.length > 0}
                 />
-                <FAB
-                    icon="plus"
-                    style={styles.fab}
-                    color={COLORS.onPrimary}
-                    onPress={() => navigation.navigate('AddPostScreen', { userInfo: {...values} }) }
-                    theme={{colors: fabColors}}
-                />
+                {
+                    posts.length === 0 && <View style={{ zIndex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
+                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                        <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                            There's nothing on your feed yet. They will appear here when they are available...
+                        </Text>
+                    </View>
+                }
+                <View style={{ zIndex: 2 }}>
+                    <FAB
+                        icon="plus"
+                        style={styles.fab}
+                        color={COLORS.onPrimary}
+                        onPress={() => navigation.navigate('AddPostScreen', { userInfo: { ...values } })}
+                        theme={{ colors: fabColors }}
+                    />
+                </View>
             </View>
         </SafeAreaView>
     )
@@ -88,8 +99,8 @@ const HomeScreen = () => {
 export default HomeScreen
 
 const fabColors = {
-    primary: COLORS.primary, 
-    secondary: COLORS.secondary, 
+    primary: COLORS.primary,
+    secondary: COLORS.secondary,
     tertiary: COLORS.tertiary,
     surface: COLORS.surface
 }

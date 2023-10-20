@@ -113,8 +113,8 @@ export default function UserDetailScreen({ route }) {
             <FlatList
                 data={posts}
                 ListHeaderComponent={() =>
-                    <View style={{ paddingHorizontal: SIZES.md }}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <View style={{ flex: 1, paddingHorizontal: SIZES.md }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ flex: 1, marginEnd: SIZES.sm, flexDirection: 'row' }}>
                                 <Text style={{ ...TYPOGRAPHY.h1 }} numberOfLines={2}>{userInfo.name}</Text>
                                 {userInfo.verified && <VerifiedIcon />}
@@ -154,6 +154,14 @@ export default function UserDetailScreen({ route }) {
                                 <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>Message</Text>
                             </TouchableOpacity>
                         </View>
+                        {
+                    posts.length === 0 && <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
+                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                                <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                                    This user's posts will appear here when they are available...
+                                </Text>
+                            </View>
+                        }
                     </View>
                 }
                 renderItem={({ item }) => <PostCard item={item.data()} key={item.id} navigation={navigation} userInfo={{}} />}
