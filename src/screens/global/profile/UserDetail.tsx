@@ -150,24 +150,24 @@ export default function UserDetailScreen({ route }) {
                                 </Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen', { message: userInfo })} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ChatScreen', { userInfo: userInfo })} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>Message</Text>
                             </TouchableOpacity>
                         </View>
-                        {
-                    posts.length === 0 && <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
-                                <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
-                                    This user's posts will appear here when they are available...
-                                </Text>
-                            </View>
-                        }
                     </View>
                 }
                 renderItem={({ item }) => <PostCard item={item.data()} key={item.id} navigation={navigation} userInfo={{}} />}
                 keyExtractor={(item) => item.id}
             // alwaysBounceVertical={false}
             />
+            {
+                posts.length === 0 && <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
+                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                    <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                        This user's posts will appear here when they are available...
+                    </Text>
+                </View>
+            }
 
             <Snackbar
                 visible={values.showSnackBar}
