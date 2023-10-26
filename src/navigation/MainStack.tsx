@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 import { COLORS, TYPOGRAPHY, SIZES } from '../../assets/theme';
 import {
-  // AnimatedSplashScreen,
-  MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
+    // AnimatedSplashScreen,
+    MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 export default function MainStack({ customHeaderTitleStyle }) {
     return (
         <NavigationContainer>
-            <Stack.Navigator 
-                initialRouteName="MainScreen" 
-                screenOptions={{ 
+            <Stack.Navigator
+                initialRouteName="MainScreen"
+                screenOptions={{
                     headerTitleStyle: { ...customHeaderTitleStyle },
                     headerBackTitle: " ",
                     headerTintColor: COLORS.onSurface,
@@ -56,20 +56,22 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     name="ChatScreen"
                     component={ChatScreen}
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         headerTitleContainerStyle: {
-                        overflow: 'hidden',
-                        margin: 0
+                            // overflow: 'hidden',
+                            margin: 0
                         },
                         headerLeftContainerStyle: {
-                        width: 100,
-                        marginEnd: 0,
-                        paddingStart: SIZES.xs
+                            // width: 100,
+                            marginEnd: 0,
+                            paddingStart: SIZES.xs
                         },
                         headerRightContainerStyle: {
-                        width: 150,
-                        paddingEnd: SIZES.xs
-                        }
+                            // width: 150,
+                            paddingEnd: SIZES.sm
+                        },
+                        // headerTitle: (props) => <Text>Samson Achiaga</Text>,
+                        // title: 'Samson Achiaga Terlumun'
                         // headerShadowVisible: false
                     }}
                 />
@@ -114,7 +116,7 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     name="EditProfileScreen"
                     component={EditProfileScreen}
                     options={{
-                        headerTitle: () => {return(<Text style={TYPOGRAPHY.h1}>Edit profile</Text>)},
+                        headerTitle: () => { return (<Text style={TYPOGRAPHY.h1}>Edit profile</Text>) },
                         cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
                         headerShadowVisible: false,
                         headerLeftContainerStyle: { paddingStart: SIZES.xs },
@@ -122,14 +124,14 @@ export default function MainStack({ customHeaderTitleStyle }) {
                     }}
                 />
                 <Stack.Screen
-                name="SettingsScreen"
-                component={SettingsScreen}
-                options={{
-                    headerTitle: () => {return(<Text style={TYPOGRAPHY.h1}>Settings</Text>)},
-                    // headerShadowVisible: false,
-                    headerLeftContainerStyle: { paddingStart: SIZES.xs },
-                    headerRightContainerStyle: { paddingEnd: SIZES.xs }
-                }}
+                    name="SettingsScreen"
+                    component={SettingsScreen}
+                    options={{
+                        headerTitle: () => { return (<Text style={TYPOGRAPHY.h1}>Settings</Text>) },
+                        // headerShadowVisible: false,
+                        headerLeftContainerStyle: { paddingStart: SIZES.xs },
+                        headerRightContainerStyle: { paddingEnd: SIZES.xs }
+                    }}
                 />
             </Stack.Navigator>
         </NavigationContainer>

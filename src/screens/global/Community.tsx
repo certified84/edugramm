@@ -101,9 +101,9 @@ export default function CommunityScreen() {
             
             <View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <View style={{flex: .2}}/>
-                    <Text style={{...TYPOGRAPHY.h1, alignSelf: 'center', color: COLORS.onSurface}}>Communities</Text>
-                    <TouchableOpacity activeOpacity={.8} style={{flex: .2, alignItems: 'center'}}>
+                    <View style={{flex: .3}}/>
+                    <Text style={{...TYPOGRAPHY.h1, alignSelf: 'center', color: COLORS.onSurface}}>Communities & Chat</Text>
+                    <TouchableOpacity activeOpacity={.8} style={{flex: .3, alignItems: 'center'}}>
                         <AntDesign name={'addusergroup'} color={COLORS.onSurface} size={SIZES.xl} />
                     </TouchableOpacity>
                 </View>
