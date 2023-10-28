@@ -7,6 +7,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useFonts } from 'expo-font';
 import React, { useState, useEffect } from 'react'
 
+import {PermissionsAndroid, Platform} from 'react-native';
+import {
+    ClientRoleType,
+    createAgoraRtcEngine,
+    IRtcEngine,
+    RtcSurfaceView,
+    ChannelProfileType,
+} from 'react-native-agora';
+
+
 const Stack = createStackNavigator();
 
 // SCREENS IMPORTS

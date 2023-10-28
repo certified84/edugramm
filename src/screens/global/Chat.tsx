@@ -6,9 +6,10 @@ import { useEffect, useState } from "react";
 import VerifiedIcon from "../../components/VerifiedIcon";
 import { Avatar, TextInput } from 'react-native-paper';
 import { SplashIcon } from "../../../assets/svg/SplashIcon";
+import AgoraUIKit from 'agora-rn-uikit';
 
 export default function ChatScreen({ route }) {
-
+    // 8bc017f304734bc0bb5178fd629e2bd7
     const navigation = useNavigation()
     const userInfo = route.params.userInfo
     console.log(userInfo)
@@ -17,6 +18,17 @@ export default function ChatScreen({ route }) {
     async function sendMessage() {
         setMessage("")
     }
+
+    const [videoCall, setVideoCall] = useState(false);
+    const connectionData = {
+        appId: '8bc017f304734bc0bb5178fd629e2bd7',
+        channel: 'test',
+        token: '007eJxTYNgilLl50jH9d6X8zziupqwSWfh6sjKfW6vE1RWSigvlj3IqMFgkJRsYmqcZG5iYG5sA2UlJpobmFmkpZkaWqUZJKeaqOTapDYGMDJLxkiyMDBAI4rMwlKQWlzAwAAC6/Bxp',
+    };
+
+    const callbacks = {
+        EndCall: () => setVideoCall(false),
+    };
 
     useEffect(() => {
         navigation.setOptions({
@@ -59,7 +71,7 @@ export default function ChatScreen({ route }) {
                         <TouchableOpacity onPress={() => { }} activeOpacity={.7} style={{ marginEnd: SIZES.md }}>
                             <Feather name='phone' size={SIZES.xl} color={COLORS.onSurface} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }} activeOpacity={.7}>
+                        <TouchableOpacity style={{backgroundColor: 'green'}} onPress={() => setVideoCall(true)} activeOpacity={.7}>
                             <Feather name='video' size={SIZES.xl} color={COLORS.onSurface} />
                         </TouchableOpacity>
                     </View>
@@ -69,13 +81,14 @@ export default function ChatScreen({ route }) {
     }, [])
 
     return (
+        videoCall ? <AgoraUIKit connectionData={connectionData} rtcCallbacks={callbacks} /> :
         <SafeAreaView style={styles.container}>
 
             <View style={{ flexDirection: 'row', marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0, alignItems: 'center', marginEnd: SIZES.sm }}>
                 <TouchableOpacity style={{ padding: SIZES.xxs }} onPress={() => { navigation.goBack() }}>
                     <Ionicons name="chevron-back" size={SIZES.xl} color={COLORS.onSurface} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate("UserDetailScreen", {userInfo: userInfo})} style={{ flex: 1, marginStart: SIZES.sm, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <TouchableOpacity onPress={() => navigation.navigate("UserDetailScreen", { userInfo: userInfo })} style={{ flex: 1, marginStart: SIZES.sm, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                     <View style={{ marginEnd: SIZES.sm, overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center' }}>
                         {userInfo.photo ?
                             <Avatar.Image size={40} source={{ uri: userInfo.photo }} />
@@ -101,7 +114,7 @@ export default function ChatScreen({ route }) {
             </View>
 
             <View style={{ height: 1, backgroundColor: COLORS.white, opacity: .2, marginTop: SIZES.xxs }} />
-            
+
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
 
                 <View style={{
