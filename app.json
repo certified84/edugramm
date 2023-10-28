@@ -23,7 +23,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.certified.edugramm"
+      "package": "com.certified.edugramm",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +40,11 @@
           "microphonePermission": "The app accesses your microphone to record audio"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ce970083-4c34-48e4-a550-f50d12442f21"
+      }
+    }
   }
 }
