@@ -124,7 +124,7 @@ export default function EditProfileScreen() {
     }
 
     async function getUrl() {
-        await getDownloadURL(ref(storage, 'profileImages/' + user.uid + '/profileImage.jpg'))
+        await getDownloadURL(profileImageRef)
         .then((url) => {
             // setDownloadUrl(url)
             updateFirebaseProfile(url)

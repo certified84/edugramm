@@ -15,6 +15,7 @@ import FollowScreen from './global/profile/Follows'
 import AddPostScreen from './global/post/AddPost'
 import EditProfileScreen from './global/profile/EditProfile'
 import SettingsScreen from './global/profile/Settings'
+import CreateCommunityScreen from './global/community/CreateCommunity'
 // import AnimatedSplashScreen from './global/AnimatedSplashScreen'
 
 export {
@@ -22,5 +23,5 @@ export {
     OnboardingScreen, ForgotPasswordScreen, LoginScreen, SignupScreen,
     MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen,
     NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen,
-    AddPostScreen, EditProfileScreen, SettingsScreen, 
+    AddPostScreen, EditProfileScreen, SettingsScreen, CreateCommunityScreen, 
 }
