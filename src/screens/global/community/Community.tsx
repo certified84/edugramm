@@ -103,7 +103,7 @@ export default function CommunityScreen() {
                     data={communities}
                     style={{ alignSelf: 'center' }}
                     horizontal
-                    renderItem={({ item }) => <Community item={item} />}
+                    renderItem={({ item }) => <Community item={item} navigation={navigation} />}
                     keyExtractor={(item) => `${item.id}`}
                     alwaysBounceVertical={false}
                     showsHorizontalScrollIndicator={false}
@@ -124,10 +124,10 @@ export default function CommunityScreen() {
     )
 }
 
-const Community = ({ item }) => {
+const Community = ({ item, navigation }) => {
     const community = item.data()
     return (
-        <TouchableOpacity activeOpacity={.7} style={{ borderRadius: 15, marginVertical: SIZES.sm, marginHorizontal: SIZES.xxs, width: 180, height: 130, overflow: 'hidden' }}>
+        <TouchableOpacity onPress={() => navigation.navigate("CommunityDetailScreen", { communityInfo: community })} activeOpacity={.7} style={{ borderRadius: 15, marginVertical: SIZES.sm, marginHorizontal: SIZES.xxs, width: 180, height: 130, overflow: 'hidden' }}>
             {
                 community.image ? <ImageBackground source={{ uri: community.image }} resizeMode='cover' style={{ width: '100%', height: '100%', }} />
                     : <CommunityPlaceHolder />

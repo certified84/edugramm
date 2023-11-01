@@ -4,7 +4,9 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { COLORS, TYPOGRAPHY, SIZES } from '../../assets/theme';
 import {
     // AnimatedSplashScreen,
-    MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen, NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen, EditProfileScreen, SettingsScreen, CreateCommunityScreen,
+    MainScreen, HomeScreen, PostDetailedScreen, PanZoomImage, ChatScreen,
+    NotificationScreen, ProfileScreen, UserDetailScreen, FollowScreen, AddPostScreen,
+    EditProfileScreen, SettingsScreen, CreateCommunityScreen, CommunityDetailScreen,
 } from '../screens';
 
 const Stack = createStackNavigator();
@@ -133,6 +135,11 @@ export default function MainStack({ customHeaderTitleStyle }) {
                         headerLeftContainerStyle: { paddingStart: SIZES.xs },
                         headerRightContainerStyle: { paddingEnd: SIZES.xs }
                     }}
+                />
+                <Stack.Screen
+                    name="CommunityDetailScreen"
+                    component={CommunityDetailScreen}
+                    options={{ headerShown: false }}
                 />
                 <Stack.Screen
                     name="SettingsScreen"
