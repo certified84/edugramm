@@ -2,18 +2,18 @@ import {
     StyleSheet, Text, View,
     TouchableOpacity, Image, useWindowDimensions, FlatList
 } from 'react-native'
-import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
+import { COLORS, SIZES, TYPOGRAPHY } from '../../assets/theme'
 import React, { useEffect, useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
-import ImageDialog from '../../../components/ImageDialog';
-import { defaultComment } from '../../../data/model/Comment';
-import { SplashIcon } from '../../../../assets/svg/SplashIcon';
-import { auth, firestore } from '../../../../firebase';
-import { defaultUser } from '../../../data/model/User';
+import ImageDialog from './ImageDialog';
+import { defaultComment } from '../data/model/Comment';
+import { SplashIcon } from '../../assets/svg/SplashIcon';
+import { auth, firestore } from '../../firebase';
+import { defaultUser } from '../data/model/User';
 import { doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
-import { formatDate } from '../../../util/Utils';
+import { formatDate } from '../util/Utils';
 
 const PostComment = ({ item, navigation }) => {
 

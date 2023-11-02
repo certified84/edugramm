@@ -9,7 +9,7 @@ import { Avatar, FAB } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
 import HomeHeader from './HomeHeader';
 import { useNavigation } from '@react-navigation/native';
-import { PostCard } from '../post/PostCard';
+import { PostCard } from '../../../components/PostCard';
 import { data } from '../../../components/data';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
 import { collection, doc, orderBy, query, where } from 'firebase/firestore';
@@ -33,7 +33,7 @@ const HomeScreen = () => {
     })
 
     const postRef = collection(firestore, "posts")
-    const q = query(postRef, orderBy("date", "desc"))
+    const q = query(postRef, where("communityId", "==", ""), orderBy("date", "desc"))
     const [postsSnapshot, postsLoading, postsError] = useCollection(q)
     const [posts, setPosts] = useState([])
 

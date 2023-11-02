@@ -9,14 +9,14 @@ import { Avatar, TextInput } from 'react-native-paper';
 import { MaterialIcons, Ionicons, AntDesign } from '@expo/vector-icons'
 import HomeHeader from '../home/HomeHeader';
 import { useNavigation } from '@react-navigation/native';
-import { PostCard } from './PostCard';
-import PostDetailedCard from './PostDetailedCard';
+import { PostCard } from '../../../components/PostCard';
+import PostDetailedCard from '../../../components/PostDetailedCard';
 import { auth, firestore } from '../../../../firebase';
 import { Comment, defaultComment } from '../../../data/model/Comment';
 import { Timestamp, addDoc, collection, doc, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { defaultUser } from '../../../data/model/User';
 import { useCollection, useDocument } from 'react-firebase-hooks/firestore';
-import PostComment from './PostComment';
+import PostComment from '../../../components/PostComment';
 
 const PostDetailedScreen = ({ route }) => {
 

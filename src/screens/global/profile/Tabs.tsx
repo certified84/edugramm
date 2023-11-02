@@ -8,7 +8,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, FontAwesome, AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native';
-import { PostCard } from '../post/PostCard';
+import { PostCard } from '../../../components/PostCard';
 import { Account } from '../search/Components/Account';
 import { collection, query, where } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';

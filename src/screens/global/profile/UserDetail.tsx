@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { collection, doc, orderBy, query, updateDoc, where, writeBatch } from "firebase/firestore";
-import { PostCard } from "../post/PostCard";
+import { PostCard } from "../../../components/PostCard";
 import { Loader } from "../../../components/Loader";
 import VerifiedIcon from "../../../components/VerifiedIcon";
 import { SplashIcon } from "../../../../assets/svg/SplashIcon";
@@ -28,7 +28,7 @@ export default function UserDetailScreen({ route }) {
     const [snapshot, loading, error] = useDocument(userRef)
 
     const postRef = collection(firestore, "posts")
-    const q = query(postRef, where("uid", "==", userInfo.uid), orderBy("uid"), orderBy("date", "desc"))
+    const q = query(postRef, where("uid", "==", userInfo.uid), where("communityId", "==", ""), orderBy("uid"), orderBy("communityId"), orderBy("date", "desc"))
     const [postsSnapshot, postsLoading, postsError] = useCollection(q)
     const [posts, setPosts] = useState([])
 

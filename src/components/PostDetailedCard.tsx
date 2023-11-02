@@ -2,17 +2,17 @@ import {
     StyleSheet, Text, View,
     TouchableOpacity, Image, useWindowDimensions, FlatList
 } from 'react-native'
-import { COLORS, SIZES, TYPOGRAPHY } from '../../../../assets/theme'
+import { COLORS, SIZES, TYPOGRAPHY } from '../../assets/theme'
 import React, { useEffect, useState } from 'react';
 import { Avatar } from 'react-native-paper';
 import { MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons'
-import ImageDialog from '../../../components/ImageDialog';
-import VerifiedIcon from '../../../components/VerifiedIcon';
-import { auth, firestore } from '../../../../firebase';
+import ImageDialog from './ImageDialog';
+import VerifiedIcon from './VerifiedIcon';
+import { auth, firestore } from '../../firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
-import { SplashIcon } from '../../../../assets/svg/SplashIcon';
-import { formatDate } from '../../../util/Utils';
+import { SplashIcon } from '../../assets/svg/SplashIcon';
+import { formatDate } from '../util/Utils';
 
 const PostDetailedCard = ({ item, navigation, userInfo }) => {
 

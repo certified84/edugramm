@@ -12,7 +12,7 @@ import { collection, doc, orderBy, query, updateDoc, where } from 'firebase/fire
 import { Loader } from "../../../components/Loader";
 import { useCollection, useDocument, useDocumentOnce } from 'react-firebase-hooks/firestore'
 import { data } from "../../../components/data";
-import { PostCard } from "../post/PostCard";
+import { PostCard } from "../../../components/PostCard";
 import { SplashIcon } from "../../../../assets/svg/SplashIcon";
 import VerifiedIcon from "../../../components/VerifiedIcon";
 
@@ -26,7 +26,7 @@ export default function ProfileScreen({ route }) {
     const [snapshot, loading, error] = useDocument(reference)
 
     const postRef = collection(firestore, "posts")
-    const q = query(postRef, where("uid", "==", user.uid), orderBy("uid"), orderBy("date", "desc"))
+    const q = query(postRef, where("uid", "==", user.uid), where("communityId", "==", ""), orderBy("uid"), orderBy("communityId"), orderBy("date", "desc"))
     const [postsSnapshot, postsLoading, postsError] = useCollection(q)
     const [posts, setPosts] = useState([])
 

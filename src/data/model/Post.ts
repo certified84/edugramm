@@ -2,6 +2,7 @@ import { FieldValue } from "firebase/firestore"
 
 export type Post = {
     id: string,
+    communityId: string,
     uid: string,
     name: string,
     photoUrl: string,
@@ -15,6 +16,7 @@ export type Post = {
 
 export const defaultPost: Post = {
     id: "",
+    communityId: "",
     uid: "",
     name: "",
     photoUrl: "",
