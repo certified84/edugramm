@@ -134,8 +134,8 @@ const Community = ({ item, navigation }) => {
             }
             {/* <ImageBackground source={{uri: community.image}} resizeMode='cover' style={{width: '100%', height: '100%', }}> */}
             {/* <View /> */}
-            <View style={{ position: 'absolute', bottom: 0, backgroundColor: COLORS.primary, width: '100%', padding: SIZES.xs }}>
-                <Text numberOfLines={1} style={{ ...TYPOGRAPHY.h2, color: COLORS.onPrimary, alignSelf: 'center' }}>{community.name}</Text>
+            <View style={{ position: 'absolute', bottom: 0, backgroundColor: community.color, width: '100%', padding: SIZES.xs }}>
+                <Text numberOfLines={1} style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, alignSelf: 'center' }}>{community.name}</Text>
             </View>
             {/* </ImageBackground> */}
         </TouchableOpacity>

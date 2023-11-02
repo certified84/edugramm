@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import Constants from 'expo-constants'
 import { Avatar, FAB } from 'react-native-paper';
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { collection, doc, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Loader } from "../../../components/Loader";
 import { PostCard } from "../../../components/PostCard";
@@ -71,6 +71,23 @@ export default function CommunityDetailScreen({ route }) {
         }
     }, [communitySnapshot])
 
+    async function joinCommunity(which: string) {
+        console.log("Which: ", which)
+        let members = community.members
+        which === "join" ? members.push(user.uid) : members = community.members.filter((it: string) => { it !== user.uid })
+        const communityRef = doc(firestore, "communities", community.id)
+        await updateDoc(communityRef, {
+            members: [...members]
+         }).then(() => {
+            // setLiked(!isLiked)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        })
+    }
+
     return (
         <View style={{ flex: 1, backgroundColor: COLORS.surface }}>
 
@@ -132,10 +149,10 @@ export default function CommunityDetailScreen({ route }) {
                                         <Text style={{ ...TYPOGRAPHY.p }}>{`${followerCount(community.members.length)} Members`}</Text>
                                         {
                                             community.members.includes(user.uid) ?
-                                                <TouchableOpacity>
+                                                <TouchableOpacity onPress={() => joinCommunity("exit")}>
                                                     <AntDesign name={'deleteusergroup'} color={COLORS.onSurface} size={SIZES.xl} />
                                                 </TouchableOpacity>
-                                                : <TouchableOpacity style={{ backgroundColor: COLORS.white, padding: SIZES.xxs, paddingHorizontal: SIZES.sm, borderRadius: SIZES.md }}>
+                                                : <TouchableOpacity onPress={() => joinCommunity("join")} style={{ backgroundColor: COLORS.white, padding: SIZES.xxs, paddingHorizontal: SIZES.sm, borderRadius: SIZES.md }}>
                                                     <Text style={{ ...TYPOGRAPHY.p, color: community.color }}>Join</Text>
                                                 </TouchableOpacity>
                                         }
