@@ -40,7 +40,7 @@ const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image, index 
                     </TouchableOpacity>
                 </View>
                 {
-                    images.length > 1 ? 
+                    images.length > 0 ? 
                     <FlatList
                         data={images}
                         horizontal
