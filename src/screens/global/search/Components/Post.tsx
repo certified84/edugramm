@@ -11,7 +11,7 @@ export const Post = ({ item, index, setCurrentIndex, setShowImageDialog, navigat
                 setCurrentIndex(index)
                 setShowImageDialog(true)
             }}
-            onPress={() => navigation.navigate("FeedDetailedScreen", { item })}
+            onPress={() => navigation.navigate("PostDetailedScreen", { item: item })}
             style={{ flex: 1, flexDirection: 'column', margin: 1 }}
         >
             <Image

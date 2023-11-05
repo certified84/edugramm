@@ -34,7 +34,7 @@ export const FollowersTab = ({ uid, navigation }) => {
             {
                 users.length > 0 ? <FlatList
                     data={users}
-                    renderItem={({ item }) => <Account uid={item.data().uid} navigation={navigation} />}
+                    renderItem={({ item }) => <Account accountInfo={item.data()} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0 }}>
@@ -66,7 +66,7 @@ export const FollowingTab = ({ uid, navigation }) => {
             {
                 users.length > 0 ? <FlatList
                     data={users}
-                    renderItem={({ item }) => <Account uid={item.data().uid} navigation={navigation} />}
+                    renderItem={({ item }) => <Account accountInfo={item.data()} navigation={navigation} />}
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0 }}>

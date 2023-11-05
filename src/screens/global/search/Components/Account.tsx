@@ -10,13 +10,13 @@ import { useDocument } from "react-firebase-hooks/firestore"
 import { useEffect, useState } from "react"
 import { User, defaultUser } from "../../../../data/model/User"
 
-export const Account = ({ uid, navigation }) => {
+export const Account = ({ navigation, accountInfo }) => {
 
     const user = auth.currentUser
 
-    const accountRef = doc(firestore, "users", uid) 
+    const accountRef = doc(firestore, "users", accountInfo.uid) 
     const [accountSnapshot, accountLoading, accountError] = useDocument(accountRef)
-    const [account, setAccount] = useState({ ...defaultUser })
+    const [account, setAccount] = useState(accountInfo)
 
     const userRef = doc(firestore, "users", user.uid)
     const [userSnapshot, userLoading, userError] = useDocument(userRef)
@@ -37,7 +37,7 @@ export const Account = ({ uid, navigation }) => {
     async function followAccount() {
         let accountFollowers = account.followers
         let userFollowing: string[] = userInfo.following
-        userFollowing.includes(uid) ? userFollowing = userFollowing.filter((it: string) => { it !== uid }) : userFollowing.push(uid)
+        userFollowing.includes(account.uid) ? userFollowing = userFollowing.filter((it: string) => { it !== account.uid }) : userFollowing.push(account.uid)
         accountFollowers.includes(user.uid) ? accountFollowers = accountFollowers.filter((it: string) => { it !== user.uid }) : accountFollowers.push(user.uid)
         
         const batch = writeBatch(firestore)

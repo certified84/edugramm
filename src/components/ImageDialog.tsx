@@ -35,7 +35,7 @@ const ChatDialog = ({ showImageDialog, setShowImageDialog, images, image, index 
             <SafeAreaView style={{...styles.container}} >
                 {/* {console.log(image)} */}
                 <View style={{flex: .2, justifyContent: 'center', paddingStart: SIZES.md}}>
-                    <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(false)} style={{backgroundColor: COLORS.white20, width: 35, height: 35, borderRadius: 25, justifyContent: 'center'}}>
+                    <TouchableOpacity activeOpacity={.9} onPress={() => setShowImageDialog(false)} style={{backgroundColor: COLORS.white + 20, width: 35, height: 35, borderRadius: 25, justifyContent: 'center'}}>
                         <MaterialIcons style={{alignSelf: 'center'}} name='close' size={30} color={COLORS.white} />
                     </TouchableOpacity>
                 </View>
