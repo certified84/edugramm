@@ -8,16 +8,104 @@ import VerifiedIcon from "../../components/VerifiedIcon";
 import { Avatar, TextInput } from 'react-native-paper';
 import { SplashIcon } from "../../../assets/svg/SplashIcon";
 import AgoraUIKit from 'agora-rn-uikit';
+import { auth, firestore } from "../../../firebase";
+import { Timestamp, addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
+import { defaultUser } from "../../data/model/User";
+import { defaultChat, Chat } from "../../data/model/Chat";
+import { FlatList } from "react-native-gesture-handler";
 
 export default function ChatScreen({ route }) {
 
     const navigation = useNavigation()
-    const userInfo = route.params.userInfo
-    console.log(userInfo)
-    const [message, setMessage] = useState("")
+    const user = auth.currentUser
+
+    const [values, setValues] = useState({
+        userInfo: {
+            ...defaultUser,
+            ...route.params.userInfo
+        },
+        chatId: "x",
+        messages: [],
+        message: "",
+        snackMessage: "",
+        loading: false,
+        showSnackBar: false,
+    })
+
+    const userRef = doc(firestore, "users", values.userInfo.uid)
+    const [snapshot, loading, error] = useDocument(userRef)
+
+    const chatRef = collection(firestore, `chats/${values.userInfo.uid}_${user.uid}/messages`)
+    const [chatSnapshot, chatLoading, chatError] = useCollection(chatRef)
+
+    const chatRef2 = collection(firestore, `chats/${user.uid}_${values.userInfo.uid}/messages`)
+    const [chatSnapshot2, chatLoading2, chatError2] = useCollection(chatRef2)
+
+    const mainChatRef = collection(firestore, `chats/${values.chatId}/messages`)
+    const [mainChatSnapshot, mainChatLoading, mainChatError] = useCollection(mainChatRef)
+
+    useEffect(() => {
+        if (mainChatSnapshot) {
+            const data = mainChatSnapshot.docs
+            setValues({
+                ...values,
+                messages: data
+            })
+        }
+    }, [mainChatSnapshot])
+
+    useEffect(() => {
+        if (chatSnapshot && chatSnapshot.docs.length > 0) {
+            setValues({
+                ...values,
+                chatId: `${values.userInfo.uid}_${user.uid}`
+            })
+        } else {
+            setValues({
+                ...values,
+                chatId: `${user.uid}_${values.userInfo.uid}`
+            })
+        }
+    }, [chatSnapshot])
+
+    useEffect(() => {
+        if (snapshot && snapshot.exists()) {
+            setValues({
+                ...values,
+                userInfo: {
+                    ...snapshot.data()
+                }
+            })
+        }
+    }, [snapshot])
+
+    useEffect(() => setValues({ ...values, showSnackBar: values.snackMessage !== "" }), [values.snackMessage])
+    useEffect(() => {
+        if (error && error.message !== "") {
+            setValues({ ...values, showSnackBar: true, snackMessage: error.message })
+        }
+    }, [error])
 
     async function sendMessage() {
-        setMessage("")
+        const data: Chat = {
+            ...defaultChat,
+            senderId: user.uid,
+            message: values.message,
+            date: Timestamp.now().toMillis(),
+        }
+
+        const docRef = addDoc(mainChatRef, data)
+        await docRef.then((snapshot) => {
+            setValues({ ...values, message: "" })
+            updateDoc(snapshot, { id: snapshot.id })
+        })
+            .catch((error) => {
+                const errorCode = error.code
+                const errorMessage = error.message
+                setValues({ ...values, message: "An error occurred. Please try again.", loading: false })
+                console.log(errorCode, errorMessage)
+            })
     }
 
     const [videoCall, setVideoCall] = useState(false);
@@ -68,7 +156,7 @@ export default function ChatScreen({ route }) {
             // },
             headerRight: () => {
                 return (
-                    <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => { }} activeOpacity={.7} style={{ marginEnd: SIZES.md }}>
                             <Feather name='phone' size={SIZES.xl} color={COLORS.onSurface} />
                         </TouchableOpacity>
@@ -89,17 +177,17 @@ export default function ChatScreen({ route }) {
                     <TouchableOpacity style={{ padding: SIZES.xxs }} onPress={() => { navigation.goBack() }}>
                         <Ionicons name="chevron-back" size={SIZES.xl} color={COLORS.onSurface} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate("UserDetailScreen", { userInfo: userInfo })} style={{ flex: 1, marginStart: SIZES.sm, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate("UserDetailScreen", { userInfo: values.userInfo })} style={{ flex: 1, marginStart: SIZES.sm, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                         <View style={{ marginEnd: SIZES.sm, overflow: 'hidden', width: 43, height: 43, borderRadius: 43 / 2, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center' }}>
-                            {userInfo.photo ?
-                                <Avatar.Image size={40} source={{ uri: userInfo.photo }} />
+                            {values.userInfo.photo ?
+                                <Avatar.Image size={40} source={{ uri: values.userInfo.photo }} />
                                 : <SplashIcon />
                             }
                         </View>
                         <View style={{ flex: 1 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ ...TYPOGRAPHY.h2 }} numberOfLines={1}>{userInfo.name}</Text>
-                                {userInfo.verified && <VerifiedIcon />}
+                                <Text style={{ ...TYPOGRAPHY.h2 }} numberOfLines={1}>{values.userInfo.name}</Text>
+                                {values.userInfo.verified && <VerifiedIcon />}
                             </View>
                             <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .8 }}>Active now</Text>
                         </View>
@@ -116,7 +204,16 @@ export default function ChatScreen({ route }) {
 
                 <View style={{ height: 1, backgroundColor: COLORS.white, opacity: .2, marginTop: SIZES.xxs }} />
 
-                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+                <View style={{ flex: 1}}>
+
+                    <FlatList
+                        // style={{ zIndex: 2 }}
+                        data={values.messages}
+                        // ListHeaderComponent={() => <HomeHeader titleText={"EduGramm"} navigation={navigation} userInfo={values} />}
+                        renderItem={({ item }) => <Text style={{...TYPOGRAPHY.h2, color: 'white', marginTop: SIZES.md}}>{item.data().message}</Text>}
+                        keyExtractor={(item) => item.id}
+                        alwaysBounceVertical={values.messages.length > 0}
+                    />
 
                     <View style={{
                         // flex: 1,
@@ -132,9 +229,9 @@ export default function ChatScreen({ route }) {
                         <TextInput
                             mode="outlined"
                             placeholder='Message'
-                            value={message}
+                            value={values.message}
                             onChangeText={(text) => {
-                                setMessage(text)
+                                setValues({ ...values, message: text })
                             }}
                             multiline
                             // numberOfLines={30}
@@ -147,9 +244,9 @@ export default function ChatScreen({ route }) {
                         />
                         <TouchableOpacity
                             activeOpacity={.6}
-                            style={{ padding: SIZES.xxs + 4, position: 'absolute', right: 4, bottom: SIZES.xxs / 2, borderRadius: 100, alignItems: 'center', marginHorizontal: SIZES.xxs, backgroundColor: COLORS.onSecondary, opacity: message.length > 0 ? 1 : .5, marginBottom: SIZES.xxs }}
-                            disabled={message.length < 1}
-                            onPress={() => message.length > 0 ? sendMessage() : {}}
+                            style={{ padding: SIZES.xxs + 4, position: 'absolute', right: 4, bottom: SIZES.xxs / 2, borderRadius: 100, alignItems: 'center', marginHorizontal: SIZES.xxs, backgroundColor: COLORS.onSecondary, opacity: values.message.length > 0 ? 1 : .5, marginBottom: SIZES.xxs }}
+                            disabled={values.message.length < 1}
+                            onPress={() => values.message.length > 0 ? sendMessage() : {}}
                         >
                             <Feather name='send' size={SIZES.md} color={COLORS.onSurface} />
                             {/* <Text style={{

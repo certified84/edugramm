@@ -1,4 +1,4 @@
-type Chat = {
+export type Chat = {
     id: string,
     senderId: string,
     message: string,
@@ -6,7 +6,7 @@ type Chat = {
     read: boolean,
 }
 
-const defaultChat: Chat = {
+export const defaultChat: Chat = {
     id: "",
     senderId: "",
     message: "",
