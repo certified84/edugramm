@@ -9,7 +9,7 @@ export default function OnboardingItem({ item }) {
             <View style={{ flex: .9, width: '100%'}}>
             <Lottie source={item.animation} autoPlay loop />
             </View>
-            <Text style={{flex: .1, ...TYPOGRAPHY.h2, textAlign: 'center', color: COLORS.onPrimary }}>{item.text}</Text>
+            <Text style={{flex: .1, ...TYPOGRAPHY.h3, textAlign: 'center', color: COLORS.onPrimary }}>{item.text}</Text>
         </View>
     )
 }

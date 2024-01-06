@@ -16,7 +16,7 @@ const ForgotPasswordScreen = () => {
         <SafeAreaView style={styles.container}>
             <View style={{flex: 1, margin: SIZES.md}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Forgot password?</Text>
-                <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>Enter your email and we'll send you a reset link</Text>
+                <Text style={{...TYPOGRAPHY.h3, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>Enter your email and we'll send you a reset link</Text>
                 
                 <TextInput
                     mode="outlined"

@@ -153,7 +153,7 @@ export default function EditProfileScreen() {
             headerLeft: () => {
                 return (
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Text style={TYPOGRAPHY.h2}>Cancel</Text>
+                        <Text style={TYPOGRAPHY.h3}>Cancel</Text>
                     </TouchableOpacity>
                 )
             }
@@ -165,7 +165,7 @@ export default function EditProfileScreen() {
             headerRight: () => {
                 return (
                     <TouchableOpacity onPress={() => values.image ? uploadImage() : updateUserProfile()}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.primary }}>Done</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>Done</Text>
                     </TouchableOpacity>
                 )
             },
@@ -191,7 +191,7 @@ export default function EditProfileScreen() {
                                 </View> : <SplashIcon />
                             }
                         </View>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.primary, marginTop: SIZES.sm }}>Edit picture</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary, marginTop: SIZES.sm }}>Edit picture</Text>
                     </TouchableOpacity>
 
                     <View style={{ width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .1, marginTop: SIZES.md }} />
@@ -199,7 +199,7 @@ export default function EditProfileScreen() {
                     <View style={{}}>
 
                         <View style={{ flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, flex: .25 }}>Name</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, flex: .25 }}>Name</Text>
                             <View style={{ flex: 1 }}>
                                 <TextInput
                                     value={user.displayName}
@@ -219,7 +219,7 @@ export default function EditProfileScreen() {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs }}>Bio</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, flex: .25, paddingBottom: SIZES.xxs }}>Bio</Text>
                             <View style={{ flex: 1 }}>
                                 <TextInput
                                     value={values.bio}
@@ -242,7 +242,7 @@ export default function EditProfileScreen() {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs }}>Company</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, flex: .25, paddingBottom: SIZES.xxs }}>Company</Text>
                             <View style={{ flex: 1 }}>
                                 <TextInput
                                     value={values.company}
@@ -265,7 +265,7 @@ export default function EditProfileScreen() {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, flex: .25, paddingBottom: SIZES.xxs }}>School</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, flex: .25, paddingBottom: SIZES.xxs }}>School</Text>
                             <View style={{ flex: 1 }}>
                                 <TextInput
                                     value={values.school}
@@ -288,7 +288,7 @@ export default function EditProfileScreen() {
                         </View>
 
                         <View style={{ flexDirection: 'row', marginStart: SIZES.md, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, flex: .25 }}>Link</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, flex: .25 }}>Link</Text>
                             <View style={{ flex: 1 }}>
                                 <TextInput
                                     value={values.link}
@@ -314,7 +314,7 @@ export default function EditProfileScreen() {
                         <View style={{ width: '100%', height: 1, backgroundColor: COLORS.onSurface, opacity: .1 }} />
 
                         <TouchableOpacity activeOpacity={.5} style={{ paddingVertical: SIZES.sm, marginStart: SIZES.md }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.primary }}>Sign up for Edugramm Verfied</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>Sign up for Edugramm Verfied</Text>
                         </TouchableOpacity>
 
                     </View>

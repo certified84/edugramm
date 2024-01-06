@@ -9,6 +9,7 @@ export type User = {
     photo? : string | null,
     followers: string[],
     following: string[],
+    bookmarks: string[]
     bio: string,
     company: string,
     school: string,
@@ -24,6 +25,7 @@ export const defaultUser: User = {
     photo: user ? user.photoURL : "",
     followers: [],
     following: [],
+    bookmarks: [],
     bio: "",
     company: "",
     school: "",

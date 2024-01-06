@@ -30,7 +30,7 @@ export const PostDetailed = ({ post, width, height }) => {
 
                 <View style={{ marginLeft: SIZES.xxs }}>
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ ...TYPOGRAPHY.h2 }}>{post.full_name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3 }}>{post.full_name}</Text>
                         <MaterialIcons
                             name='verified'
                             size={15}
@@ -38,7 +38,7 @@ export const PostDetailed = ({ post, width, height }) => {
                             style={{ alignSelf: "center" }}
                         />
                     </View>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: "#6F6F6F" }}>@{post.username}</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: "#6F6F6F" }}>@{post.username}</Text>
                 </View>
 
                 <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>

@@ -7,7 +7,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 export const AuthButton = ({text, textColor, buttonColor, onPress}) => {
   return (
     <TouchableOpacity style={styles.authButtonContainer} onPress={onPress} activeOpacity={0.5}>
-        <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.md }}>{text}</Text>
+        <Text style={{ ...TYPOGRAPHY.h3, fontSize: SIZES.md }}>{text}</Text>
     </TouchableOpacity>
   )
 }
@@ -50,7 +50,7 @@ export const GoogleButton = ({style, onPress, buttonTitle}) => {
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: SIZES.sm }}>
         <GoogleIcon />
         <View style={{ marginHorizontal: SIZES.xs, }} />
-        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
+        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -66,7 +66,7 @@ export const AppleButton = ({style, onPress, buttonTitle}) => {
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: SIZES.sm }}>
           <AppleIcon />
           <View style={{ marginHorizontal: SIZES.xs, }} />
-          <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
+          <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.black, textDecorationLine: "none" }}>{buttonTitle}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   defaultBtnText: {
-    ...TYPOGRAPHY.h2,
+    ...TYPOGRAPHY.h3,
     color: COLORS.white,
     textAlign: "center",
     padding: SIZES.sm

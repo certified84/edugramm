@@ -136,22 +136,22 @@ export default function UserDetailScreen({ route }) {
 
                         <View style={{ flexDirection: 'row', marginTop: SIZES.sm }}>
                             <TouchableOpacity activeOpacity={.8} onPress={() => navigation.navigate('FollowScreen', { userInfo: userInfo })}>
-                                <Text style={{ ...TYPOGRAPHY.h2, opacity: .5 }}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
+                                <Text style={{ ...TYPOGRAPHY.h3, opacity: .5 }}>{`${followerCount(userInfo.followers.length)} followers \u2022 `}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity activeOpacity={.8} style={{ flex: 1 }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, opacity: .5, color: COLORS.primary }} numberOfLines={1}>{userInfo.link}</Text>
+                                <Text style={{ ...TYPOGRAPHY.h3, opacity: .5, color: COLORS.primary }} numberOfLines={1}>{userInfo.link}</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: SIZES.md }}>
                             <TouchableOpacity onPress={followAccount} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.onSurface, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.surface }}>
+                                <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.surface }}>
                                     {userInfo.followers.includes(user.uid) ? 'Unfollow' : 'Follow'}
                                 </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => navigation.navigate('ChatScreen', { userInfo: userInfo })} activeOpacity={.5} style={{ flex: .47, padding: SIZES.md, paddingVertical: SIZES.xxs / 2, borderWidth: 2, borderColor: COLORS.lightGray, borderRadius: SIZES.xxs, justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>Message</Text>
+                                <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>Message</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -162,8 +162,8 @@ export default function UserDetailScreen({ route }) {
             />
             {
                 posts.length === 0 && <View style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
-                    <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
                         This user's posts will appear here when they are available...
                     </Text>
                 </View>

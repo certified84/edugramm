@@ -168,8 +168,8 @@ export default function CommunityDetailScreen({ route }) {
                 />
                 {
                     posts.length === 0 && <View style={{ zIndex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, justifyContent: 'center', alignItems: 'center', margin: SIZES.md }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
-                        <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
                             There are no conversations in this community yet. Click the add button to get it started...
                         </Text>
                     </View>

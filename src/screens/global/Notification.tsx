@@ -24,8 +24,8 @@ export default function NotificationScreen() {
                 </View>
                 {
                     notifications && <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>There's nothing here yet.</Text>
-                        <Text style={{...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7}}>Your notifications will appear here when they are available...</Text>
+                        <Text style={{...TYPOGRAPHY.h3, color: COLORS.onSurface}}>There's nothing here yet.</Text>
+                        <Text style={{...TYPOGRAPHY.h3, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7}}>Your notifications will appear here when they are available...</Text>
                         <View style={{flex: .1}}/>
                     </View>
                 }

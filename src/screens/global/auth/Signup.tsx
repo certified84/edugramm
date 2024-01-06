@@ -104,7 +104,7 @@ const SignupScreen = () => {
 
             <View style={{flex: 1, margin: SIZES.md, paddingTop: SIZES.lg}}>
                 <Text style={{...TYPOGRAPHY.h1, fontSize: SIZES.xl - 2, color: COLORS.onSurface, alignSelf: 'center'}}>Sign up</Text>
-                <Text style={{...TYPOGRAPHY.h2, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We could use your presence here</Text>
+                <Text style={{...TYPOGRAPHY.h3, fontFamily: 'space-grotesk-light', marginTop: SIZES.md, color: COLORS.onSurface, alignSelf: 'center'}}>We could use your presence here</Text>
                 
                 <TextInput
                     mode="outlined"
@@ -174,7 +174,7 @@ const SignupScreen = () => {
 
                 <View style={{flexDirection: 'row', width: '100%', marginTop: SIZES.xl, alignItems: 'center', justifyContent: 'space-evenly'}}>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
-                    <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>OR</Text>
+                    <Text style={{...TYPOGRAPHY.h3, color: COLORS.onSurface}}>OR</Text>
                     <View style={{flex: .42, height: 1, backgroundColor: COLORS.darkGray}}  />
                 </View>
 
@@ -185,9 +185,9 @@ const SignupScreen = () => {
                 <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
                     <View style={{height: 1, backgroundColor: COLORS.darkGray, marginBottom: SIZES.md, width: width}}/>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Already have an account?</Text>
+                        <Text style={{...TYPOGRAPHY.h3, color: COLORS.onSurface}}>Already have an account?</Text>
                         <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}} onPress={() => { navigation.navigate("LoginScreen" as never) }}>
-                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.primary}}>Sign in.</Text>
+                            <Text style={{...TYPOGRAPHY.h3, color: COLORS.primary}}>Sign in.</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

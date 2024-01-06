@@ -124,7 +124,7 @@ export default function CreateCommunityScreen() {
             headerLeft: () => {
                 return (
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Text style={TYPOGRAPHY.h2}>Cancel</Text>
+                        <Text style={TYPOGRAPHY.h3}>Cancel</Text>
                     </TouchableOpacity>
                 )
             }
@@ -140,7 +140,7 @@ export default function CreateCommunityScreen() {
                         disabled={values.name.length < 1}
                         style={{ opacity: values.name.length > 0 ? 1 : .5 }}
                     >
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.primary }}>Create</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>Create</Text>
                     </TouchableOpacity>
                 )
             },
@@ -162,7 +162,7 @@ export default function CreateCommunityScreen() {
                             }
                         </View>
                         <View style={{ position: 'absolute', width: '100%', marginTop: SIZES.sm, alignItems: 'center', bottom: 0, padding: SIZES.sm, backgroundColor: values.color + '80' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.white, }}>Click to change</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.white, }}>Click to change</Text>
                         </View>
                     </TouchableOpacity>
 
@@ -172,7 +172,7 @@ export default function CreateCommunityScreen() {
                         Tell us a little about your community. You can always change these details later.
                     </Text>
 
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, marginHorizontal: SIZES.md, marginTop: SIZES.xl }}>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface, marginHorizontal: SIZES.md, marginTop: SIZES.xl }}>
                         Community name
                     </Text>
 
@@ -193,7 +193,7 @@ export default function CreateCommunityScreen() {
                         Names must be between 3 and 30 characters and can't include hashtags or @usernames
                     </Text>
 
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, marginHorizontal: SIZES.md, marginTop: SIZES.xl }}>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface, marginHorizontal: SIZES.md, marginTop: SIZES.xl }}>
                         Community purpose (optional)
                     </Text>
 
@@ -216,12 +216,12 @@ export default function CreateCommunityScreen() {
                     </Text>
 
                     <View style={{ flexDirection: 'row', marginTop: SIZES.xl - SIZES.xxs, marginHorizontal: SIZES.md, justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, }}>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface, }}>
                             Membership type
                         </Text>
 
                         <TouchableOpacity onPress={() => setValues({ ...values, message: "Membership type can't be changed yet" })} style={{ flexDirection: 'row', padding: SIZES.xxs, alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: values.color, marginEnd: SIZES.xxs }}>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: values.color, marginEnd: SIZES.xxs }}>
                                 {
                                     values.restricted ? 'Restricted' : 'Public'
                                 }

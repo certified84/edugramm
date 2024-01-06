@@ -62,7 +62,7 @@ const PostComment = ({ item, navigation }) => {
                 </View>
                 <View style={{ flex: 1, marginStart: SIZES.xxs }}>
                     <View style={{ flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{userInfo.name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>{userInfo.name}</Text>
                         {
                             userInfo.verified && <MaterialIcons
                                 name='verified'
@@ -71,7 +71,7 @@ const PostComment = ({ item, navigation }) => {
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text style={{flex: 1, ...TYPOGRAPHY.h2, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 ${formatDate(item.date)}`}</Text>
+                        <Text style={{flex: 1, ...TYPOGRAPHY.h3, color: COLORS.onSurface, textAlign: 'right'}}>{` \u2022 ${formatDate(item.date)}`}</Text>
                     </View>
                     <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>{item.comment}</Text>
                     {/* { 
@@ -140,7 +140,7 @@ const PostSubComment = ({ item }) => {
                 </View>
                 <View style={{ flex: 1, marginStart: SIZES.xxs }}>
                     <View style={{ flexWrap: 'wrap', flexDirection: "row", alignItems: "center" }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>{item.full_name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>{item.full_name}</Text>
                         {
                             item.isVerified && <MaterialIcons
                                 name='verified'
@@ -149,7 +149,7 @@ const PostSubComment = ({ item }) => {
                                 style={{ alignSelf: "center" }}
                             />
                         }
-                        <Text style={{ flex: 1, ...TYPOGRAPHY.h2, textAlign: 'right', color: COLORS.onSurface }}>{` \u2022 11h`}</Text>
+                        <Text style={{ flex: 1, ...TYPOGRAPHY.h3, textAlign: 'right', color: COLORS.onSurface }}>{` \u2022 11h`}</Text>
                     </View>
                     <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface }} numberOfLines={8}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
         paddingTop: SIZES.sm
     },
     commentSection: {
-        ...TYPOGRAPHY.h2,
+        ...TYPOGRAPHY.h3,
         fontSize: SIZES.sm,
         marginStart: SIZES.xxs,
         marginEnd: SIZES.md,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     dateSection: {
         flex: 0.6,
-        ...TYPOGRAPHY.h2,
+        ...TYPOGRAPHY.h3,
         textAlign: "right",
         justifyContent: "flex-end",
         alignSelf: "center",

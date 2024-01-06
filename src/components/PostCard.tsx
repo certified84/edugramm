@@ -113,14 +113,14 @@ export const PostCard = ({ item, navigation, userInfo }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>
+            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
               {item.name}
             </Text>
             {item.verified && <VerifiedIcon />}
             <Text
               style={{
                 flex: 1,
-                ...TYPOGRAPHY.h2,
+                ...TYPOGRAPHY.h3,
                 color: COLORS.onSurface,
                 textAlign: "right",
               }}
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     paddingTop: SIZES.sm,
   },
   commentSection: {
-    ...TYPOGRAPHY.h2,
+    ...TYPOGRAPHY.h3,
     fontSize: SIZES.sm,
     marginStart: SIZES.xxs,
     marginEnd: SIZES.md,
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   },
   dateSection: {
     flex: 0.6,
-    ...TYPOGRAPHY.h2,
+    ...TYPOGRAPHY.h3,
     textAlign: "right",
     justifyContent: "flex-end",
     alignSelf: "center",

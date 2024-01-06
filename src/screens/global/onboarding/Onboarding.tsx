@@ -74,13 +74,13 @@ export default function OnboardingScreen() {
 
                 <View style={{flex: .1, justifyContent: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary, opacity: .5}}>Read about our</Text>
+                        <Text style={{...TYPOGRAPHY.h3, color: COLORS.onPrimary, opacity: .5}}>Read about our</Text>
                         <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}}>
-                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Terms</Text>
+                            <Text style={{...TYPOGRAPHY.h3, color: COLORS.onPrimary}}>Terms</Text>
                         </TouchableOpacity>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary, opacity: .5}}>and</Text>
+                        <Text style={{...TYPOGRAPHY.h3, color: COLORS.onPrimary, opacity: .5}}>and</Text>
                         <TouchableOpacity activeOpacity={.8} style={{marginHorizontal: SIZES.xxs}}>
-                            <Text style={{...TYPOGRAPHY.h2, color: COLORS.onPrimary}}>Privacy Policy</Text>
+                            <Text style={{...TYPOGRAPHY.h3, color: COLORS.onPrimary}}>Privacy Policy</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

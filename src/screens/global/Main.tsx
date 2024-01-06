@@ -7,7 +7,7 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { useTheme } from 'react-native-paper';
 import CommunityScreen from './community/Community';
 import EventScreen from './Event';
-import JobScreen from './Job';
+import JobScreen from './job/Job';
 import SearchScreen from './search/Search';
 
 const Tab = createMaterialBottomTabNavigator();

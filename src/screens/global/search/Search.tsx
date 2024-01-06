@@ -106,7 +106,7 @@ export default function SearchScreen() {
                                     />
                                 </View>
                                 <TouchableOpacity onPress={() => setValues({ ...values, searching: false })} activeOpacity={.9} style={{ flex: .2, paddingVertical: SIZES.sm, alignItems: 'center' }}>
-                                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSecondaryContainer }}>Cancel</Text>
+                                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSecondaryContainer }}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -122,13 +122,13 @@ export default function SearchScreen() {
                         : <View style={{ flex: 1 }}>
                             {
                                 !values.posts || values.posts.length === 0 ? <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0 }}>
-                                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>Coming soon...</Text>
+                                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>Coming soon...</Text>
                                     <View style={{ flex: .1 }} />
                                 </View>
                                     : <View style={{ flex: 1 }}>
                                         <TouchableOpacity onPress={() => setValues({ ...values, searching: true })} activeOpacity={.9} style={{ paddingVertical: SIZES.sm, backgroundColor: COLORS.surface1, alignItems: 'center', paddingHorizontal: SIZES.md, marginHorizontal: SIZES.md, flexDirection: 'row', borderRadius: SIZES.xs, overflow: 'hidden' }}>
                                             <Feather name="search" size={20} color={COLORS.onSecondaryContainer} />
-                                            <Text style={{ ...TYPOGRAPHY.h2, marginStart: SIZES.md, color: COLORS.onSecondaryContainer }}>Search</Text>
+                                            <Text style={{ ...TYPOGRAPHY.h3, marginStart: SIZES.md, color: COLORS.onSecondaryContainer }}>Search</Text>
                                         </TouchableOpacity>
 
                                         <FlatList

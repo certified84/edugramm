@@ -169,7 +169,7 @@ export default function AddPostScreen({ route }) {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity activeOpacity={.6} onPress={() => navigation.goBack()} style={{ paddingVertical: SIZES.xxs }}>
-                        <Text style={{ ...TYPOGRAPHY.h2 }}>Cancel</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3 }}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         activeOpacity={.6}
@@ -178,7 +178,7 @@ export default function AddPostScreen({ route }) {
                         onPress={() => values.post.length > 0 || values.images.length > 0 ? uploadPost() : {}}
                     >
                         <View style={{ borderRadius: 50, paddingHorizontal: SIZES.md, paddingVertical: SIZES.xxs, backgroundColor: COLORS.primary }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onPrimary }}>Post</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onPrimary }}>Post</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -192,7 +192,7 @@ export default function AddPostScreen({ route }) {
                     </View>
                     <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, marginStart: SIZES.sm }}>{user.displayName}</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, marginStart: SIZES.sm }}>{user.displayName}</Text>
                             {userInfo.verified && <VerifiedIcon />}
                         </View>
                         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>

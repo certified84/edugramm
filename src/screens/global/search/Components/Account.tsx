@@ -65,7 +65,7 @@ export const Account = ({ navigation, accountInfo }) => {
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <View style={{ flex: .95 }}>
                         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }} numberOfLines={1}>{account.name}</Text>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }} numberOfLines={1}>{account.name}</Text>
                             { account.verified && <VerifiedIcon style={{ marginEnd: 2 }} />}
                         </View>
                         <Text style={{ ...TYPOGRAPHY.p, color: COLORS.onSurface, opacity: .4, fontSize: SIZES.sm - 3 }}>{`${followerCount(account.followers.length)} followers`}</Text>
@@ -82,7 +82,7 @@ export const Account = ({ navigation, accountInfo }) => {
                                 borderColor: COLORS.lightGray,
                                 borderRadius: SIZES.xxs
                             }}>
-                            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>
+                            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
                                 {account.followers.includes(user.uid) ? 'Unfollow' : 'Follow'}
                             </Text>
                         </TouchableOpacity>

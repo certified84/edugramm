@@ -67,7 +67,7 @@ const RenderTab = ({ index, setIndex, followers, following }) => {
 const TabTitle = ({ title, isSelected, onPress, style }) => {
     return (
         <TouchableOpacity style={{ ...style, justifyContent: 'center', alignItems: 'center' }} onPress={onPress} activeOpacity={0.5}>
-            <Text style={{ ...TYPOGRAPHY.h2, opacity: isSelected ? 1 : .5 }}>{title}</Text>
+            <Text style={{ ...TYPOGRAPHY.h3, opacity: isSelected ? 1 : .5 }}>{title}</Text>
             <View style={{ width: '100%', height: 2, backgroundColor: COLORS.onSurface, marginTop: SIZES.xxs - 2, opacity: isSelected ? 1 : 0 }} />
         </TouchableOpacity>
     );

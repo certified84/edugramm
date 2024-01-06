@@ -342,14 +342,14 @@ export default function ChatScreen({ route }) {
           </View>
           <View style={{ flex: 1 }}>
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ ...TYPOGRAPHY.h2 }} numberOfLines={1}>
+              <Text style={{ ...TYPOGRAPHY.h3 }} numberOfLines={1}>
                 {values.userInfo.name}
               </Text>
               {values.userInfo.verified && <VerifiedIcon />}
             </View>
             <Text
               style={{
-                ...TYPOGRAPHY.h2,
+                ...TYPOGRAPHY.h3,
                 fontSize: SIZES.xs,
                 color: COLORS.onSurface,
                 opacity: 0.8,

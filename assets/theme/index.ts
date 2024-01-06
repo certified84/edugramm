@@ -84,6 +84,11 @@ export const TYPOGRAPHY = {
     },
     h2: {
         color: COLORS.onSurface,
+        fontFamily: "space-grotesk-semi-bold",
+        fontSize: SIZES.md,
+    },
+    h3: {
+        color: COLORS.onSurface,
         fontFamily: "space-grotesk-medium",
         fontSize: SIZES.sm,
     },

@@ -149,7 +149,7 @@ const PostDetailedScreen = ({ route }) => {
                     onPress={() => values.comment.length > 0 ? addComment() : {}}
                 >
                     <Text style={{
-                        ...TYPOGRAPHY.h2,
+                        ...TYPOGRAPHY.h3,
                         color: COLORS.primary,
                         position: "absolute",
                         right: SIZES.md,

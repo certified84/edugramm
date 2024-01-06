@@ -38,8 +38,8 @@ export const FollowersTab = ({ uid, navigation }) => {
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0 }}>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
-                    <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
                         Accounts that follows this user will appear here when they are available...
                     </Text>
                 </View>
@@ -70,8 +70,8 @@ export const FollowingTab = ({ uid, navigation }) => {
                     keyExtractor={(item) => item.id}
                     alwaysBounceVertical={true}
                 /> : <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0 }}>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>There's nothing here yet.</Text>
-                    <Text style={{ ...TYPOGRAPHY.h2, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>There's nothing here yet.</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, fontSize: SIZES.xs, color: COLORS.onSurface, opacity: .7, textAlign: 'center' }}>
                         Accounts that this user follows will appear here when they are available...
                     </Text>
                 </View>

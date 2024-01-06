@@ -135,7 +135,7 @@ const Community = ({ item, navigation }) => {
             {/* <ImageBackground source={{uri: community.image}} resizeMode='cover' style={{width: '100%', height: '100%', }}> */}
             {/* <View /> */}
             <View style={{ position: 'absolute', bottom: 0, backgroundColor: community.color, width: '100%', padding: SIZES.xs }}>
-                <Text numberOfLines={1} style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, alignSelf: 'center' }}>{community.name}</Text>
+                <Text numberOfLines={1} style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface, alignSelf: 'center' }}>{community.name}</Text>
             </View>
             {/* </ImageBackground> */}
         </TouchableOpacity>
@@ -149,13 +149,13 @@ const Message = ({ message, onPress }) => {
             <View style={{ flex: 1, marginHorizontal: SIZES.xs, justifyContent: 'center' }}>
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', flex: .8 }}>
-                        <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }} numberOfLines={1}>{message.name}</Text>
+                        <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }} numberOfLines={1}>{message.name}</Text>
                         <VerifiedIcon />
                     </View>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: message.isRead ? COLORS.onSurface : COLORS.primary }}>Yesterday</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: message.isRead ? COLORS.onSurface : COLORS.primary }}>Yesterday</Text>
                 </View>
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-                    <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface, opacity: .7, flex: .9 }} numberOfLines={2}>{message.message}</Text>
+                    <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface, opacity: .7, flex: .9 }} numberOfLines={2}>{message.message}</Text>
                     <View style={{ marginEnd: SIZES.xxs, width: SIZES.xxs, height: SIZES.xxs, backgroundColor: COLORS.primary, borderRadius: SIZES.xxs / 2, alignSelf: 'center' }} />
                 </View>
             </View>

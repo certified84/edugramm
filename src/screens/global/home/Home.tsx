@@ -110,12 +110,12 @@ const HomeScreen = () => {
               margin: SIZES.md,
             }}
           >
-            <Text style={{ ...TYPOGRAPHY.h2, color: COLORS.onSurface }}>
+            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
               There's nothing here yet.
             </Text>
             <Text
               style={{
-                ...TYPOGRAPHY.h2,
+                ...TYPOGRAPHY.h3,
                 fontSize: SIZES.xs,
                 color: COLORS.onSurface,
                 opacity: 0.7,

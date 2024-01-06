@@ -24,7 +24,7 @@ export default function EventScreen() {
                 </View>
                 {
                     events && <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: SIZES.md, marginTop: 0}}>
-                        <Text style={{...TYPOGRAPHY.h2, color: COLORS.onSurface}}>Coming soon...</Text>
+                        <Text style={{...TYPOGRAPHY.h3, color: COLORS.onSurface}}>Coming soon...</Text>
                         <View style={{flex: .1}}/>
                     </View>
                 }
