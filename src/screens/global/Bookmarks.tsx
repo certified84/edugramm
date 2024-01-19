@@ -4,13 +4,13 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Text,
   View,
   useWindowDimensions,
 } from "react-native";
-import Header from "../../../components/Header";
-import Search from "../../../components/Search";
+import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import JobComponent from "../../../components/JobComponent";
+import JobComponent from "../../components/JobComponent";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import {
   DocumentData,
@@ -20,14 +20,14 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { auth, firestore } from "../../../firebase";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
-import { QueryDocumentSnapshot } from "firebase-functions/v1/firestore";
-import { Loader } from "../../../components/Loader";
-import { defaultUser } from "../../../data/model/User";
-import { StackParamList } from "../../../../types";
-import { auth, firestore } from "../../../../firebase";
-import EmptyDesign from "../../../components/EmptyDesign";
-import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
+import { StackParamList } from "../../../types";
+import { Loader } from "../../components/Loader";
+import Search from "../../components/Search";
+import { SIZES, COLORS, TYPOGRAPHY } from "../../../assets/theme";
+import { defaultUser } from "../../data/model/User";
+import EmptyDesign from "../../components/EmptyDesign";
 
 type ScreenRouteProp = RouteProp<StackParamList, "BookmarksScreen">;
 type NavProp = NavigationProp<StackParamList, "BookmarksScreen">;
@@ -57,7 +57,7 @@ const BookmarksScreen: React.FC<Props> = ({ route, navigation }) => {
 
   useEffect(() => {
     if (userSnapshot?.exists) {
-      setUserData({...defaultUser, ...userSnapshot.data()});
+      setUserData({ ...defaultUser, ...userSnapshot.data() });
       console.log("User", userSnapshot.data());
     }
   }, [userSnapshot, jobsSnapshot]);
@@ -67,27 +67,27 @@ const BookmarksScreen: React.FC<Props> = ({ route, navigation }) => {
       const data = jobsSnapshot.docs.filter((item) =>
         userData.bookmarks?.includes(item.data().id)
       );
-      console.log(data.length)
+      console.log(data.length);
       setJobs(data);
     }
   }, [jobsSnapshot, userSnapshot, userData]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
       <Loader showLoader={jobsLoading} />
       <View style={styles.innerContainer}>
         <Header
           title={"Bookmarks"}
           navigation={navigation}
-          showBack={false}
+          showBack={true}
           showBookmark={false}
           bookmarked={false}
         />
 
         {jobs.length <= 0 ? (
           <EmptyDesign
-            title="No bookmarks"
-            description="You haven't bookmarked any jobs yet"
+            title="There's nothing here yet."
+            description="You haven't bookmarked any listings. They will appear here when they are abailable..."
           />
         ) : (
           <FlatList
@@ -126,9 +126,24 @@ export default BookmarksScreen;
 const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
-    marginTop:
-      Platform.OS === "android"
-        ? StatusBar.currentHeight! + SIZES.sm
-        : SIZES.sm,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  emptyContainer: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: SIZES.md,
+  },
+  emptySubtitle: {
+    ...TYPOGRAPHY.h3,
+    fontSize: SIZES.xs,
+    color: COLORS.onSurface,
+    opacity: 0.7,
+    textAlign: "center",
   },
 });

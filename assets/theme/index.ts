@@ -1,8 +1,13 @@
+import { useEffect, useState } from "react";
 import { Appearance, StyleSheet } from "react-native";
 
 const colorScheme = Appearance.getColorScheme()
 console.log(colorScheme)
-const isDarkTheme = colorScheme !== 'dark';
+
+var isDarkTheme = colorScheme === 'dark';
+// const [isDarkTheme, setIsDarkTheme] = useState(colorScheme === 'dark');
+// useEffect(() => {}, [colorScheme]);
+
 export const COLORS = {
 
     // General Colors

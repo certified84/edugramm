@@ -13,7 +13,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Avatar } from "react-native-paper";
-import { SimpleLineIcons, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
 import { collection, doc, query } from "firebase/firestore";
@@ -23,6 +23,7 @@ import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import Search from "../../../components/Search";
 import { Props } from "../../../../types";
 import JobComponent from "../../../components/JobComponent";
+import EmptyDesign from "../../../components/EmptyDesign";
 
 const JobScreen: React.FC<Props> = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -35,7 +36,7 @@ const JobScreen: React.FC<Props> = ({ route, navigation }) => {
 
   useEffect(() => {
     if (userSnapshot?.exists) {
-      setUserData(userSnapshot.data());
+      setUserData({ ...defaultUser, ...userSnapshot.data() });
     }
   }, [userSnapshot]);
 
@@ -63,7 +64,9 @@ const JobScreen: React.FC<Props> = ({ route, navigation }) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() => navigation.navigate("JobSeekerProfileScreen")}
+              onPress={() =>
+                navigation.navigate("ProfileScreen", { userInfo: userData })
+              }
             >
               {user.photoURL ? (
                 <Avatar.Image size={50} source={{ uri: user.photoURL }} />
@@ -78,106 +81,113 @@ const JobScreen: React.FC<Props> = ({ route, navigation }) => {
           </View>
           <TouchableOpacity
             activeOpacity={0.6}
-            onPress={() => navigation.navigate("NotificationsScreen")}
-            style={styles.notificationIconContainer}
+            onPress={() => navigation.navigate("BookmarkScreen")}
+            style={{ padding: 4 }}
           >
-            <SimpleLineIcons size={20} name="bell" color={COLORS.onBackground}/>
+            <Ionicons size={24} name="bookmark" color={COLORS.onBackground} />
           </TouchableOpacity>
         </View>
         <View style={styles.line} />
-
-        <ScrollView>
-          <ImageBackground
-            source={require("../../../../assets/images/home_card_background.png")}
-            style={styles.imageContainer}
-          >
-            <Text
-              style={{
-                ...TYPOGRAPHY.h1,
-                color: COLORS.white,
-              }}
+        {jobs.length === 0 ? (
+          <EmptyDesign
+            title="There's nothing here yet."
+            description="There are no job listings at the moment. They will appear here
+              when they are available..."
+          />
+        ) : (
+          <ScrollView>
+            <ImageBackground
+              source={require("../../../../assets/images/home_card_background.png")}
+              style={styles.imageContainer}
             >
-              Find a job or internship position on Edugram
-            </Text>
+              <Text
+                style={{
+                  ...TYPOGRAPHY.h1,
+                  color: COLORS.white,
+                }}
+              >
+                Find a job or internship position on Edugram
+              </Text>
 
-            <Search
-              text={searchText}
-              onChangeText={setSearchText}
-              placeHolder="Search for a job or skill..."
+              <Search
+                text={searchText}
+                onChangeText={setSearchText}
+                placeHolder="Search for a job or skill..."
+              />
+            </ImageBackground>
+
+            <View style={styles.moreContainer}>
+              <Text style={{ ...TYPOGRAPHY.h3 }}>Suggested Openings</Text>
+              <TouchableOpacity
+                style={{ padding: 4 }}
+                onPress={() =>
+                  navigation.navigate("JobsScreen", {
+                    title: "Suggested Jobs",
+                    bookmarked: false,
+                    showBookmark: false,
+                  })
+                }
+              >
+                <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>
+                  See more
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={jobs}
+              style={{ marginHorizontal: SIZES.md }}
+              renderItem={({ item, index }) => (
+                <JobComponent
+                  job={item.data()}
+                  width={width * 0.7}
+                  horizontal
+                  navigation={navigation}
+                  bookmarked={userData.bookmarks?.includes(item.data().id)}
+                />
+              )}
+              keyExtractor={(item) => item.id}
             />
-          </ImageBackground>
 
-          <View style={styles.moreContainer}>
-            <Text style={{ ...TYPOGRAPHY.h3 }}>Suggested Openings</Text>
-            <TouchableOpacity
-              style={{ padding: 4 }}
-              onPress={() =>
-                navigation.navigate("JobsScreen", {
-                  title: "Suggested Jobs",
-                  bookmarked: false,
-                  showBookmark: false,
-                })
-              }
-            >
-              <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>
-                See more
-              </Text>
-            </TouchableOpacity>
-          </View>
+            <View style={styles.moreContainer}>
+              <Text style={{ ...TYPOGRAPHY.h3 }}>Top Openings</Text>
+              <TouchableOpacity
+                style={{ padding: 4 }}
+                onPress={() =>
+                  navigation.navigate("JobsScreen", {
+                    title: "Top Jobs",
+                    bookmarked: false,
+                    showBookmark: false,
+                  })
+                }
+              >
+                <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>
+                  See more
+                </Text>
+              </TouchableOpacity>
+            </View>
 
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={jobs}
-            style={{ marginHorizontal: SIZES.md }}
-            renderItem={({ item, index }) => (
-              <JobComponent
-                job={item.data()}
-                width={width * 0.7}
-                horizontal
-                navigation={navigation}
-                bookmarked={userData.bookmarks?.includes(item.data().id)}
-              />
-            )}
-            keyExtractor={(item) => item.id}
-          />
-
-          <View style={styles.moreContainer}>
-            <Text style={{ ...TYPOGRAPHY.h3 }}>Top Openings</Text>
-            <TouchableOpacity
-              style={{ padding: 4 }}
-              onPress={() =>
-                navigation.navigate("JobsScreen", {
-                  title: "Top Jobs",
-                  bookmarked: false,
-                  showBookmark: false,
-                })
-              }
-            >
-              <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.primary }}>
-                See more
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={jobs}
-            style={{ marginHorizontal: SIZES.md }}
-            renderItem={({ item, index }) => (
-              <JobComponent
-                job={item.data()}
-                width={width * 0.7}
-                horizontal
-                navigation={navigation}
-                bookmarked={userData.bookmarks?.includes(item.data().id)}
-              />
-            )}
-            keyExtractor={(item) => item.id}
-          />
-          <View style={{ height: 90 }} />
-        </ScrollView>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={jobs}
+              style={{ marginHorizontal: SIZES.md }}
+              renderItem={({ item, index }) => (
+                <JobComponent
+                  job={item.data()}
+                  width={width * 0.7}
+                  horizontal
+                  navigation={navigation}
+                  bookmarked={userData.bookmarks?.includes(item.data().id)}
+                />
+              )}
+              keyExtractor={(item) => item.id}
+            />
+            <View style={{ height: 90 }} />
+          </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -211,14 +221,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  notificationIconContainer: {
-    borderWidth: 1,
-    borderRadius: 50,
-    borderColor: "gray",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 4,
-  },
   searchContainer: {
     paddingHorizontal: SIZES.sm,
     backgroundColor: "#FFFFFF",
@@ -233,5 +235,23 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: SIZES.md,
     alignItems: "center",
+  },
+  emptyContainer: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: SIZES.md,
+  },
+  emptySubtitle: {
+    ...TYPOGRAPHY.h3,
+    fontSize: SIZES.xs,
+    color: COLORS.onSurface,
+    opacity: 0.7,
+    textAlign: "center",
   },
 });

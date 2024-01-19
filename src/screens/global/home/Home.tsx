@@ -21,6 +21,7 @@ import { collection, doc, orderBy, query, where } from "firebase/firestore";
 import { auth, firestore } from "../../../../firebase";
 import { defaultUser } from "../../../data/model/User";
 import { Loader } from "../../../components/Loader";
+import EmptyDesign from "../../../components/EmptyDesign";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -110,21 +111,10 @@ const HomeScreen = () => {
               margin: SIZES.md,
             }}
           >
-            <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
-              There's nothing here yet.
-            </Text>
-            <Text
-              style={{
-                ...TYPOGRAPHY.h3,
-                fontSize: SIZES.xs,
-                color: COLORS.onSurface,
-                opacity: 0.7,
-                textAlign: "center",
-              }}
-            >
-              There's nothing on your feed yet. They will appear here when they
-              are available...
-            </Text>
+          <EmptyDesign
+            title="There's nothing here yet."
+            description="There's nothing on your feed yet. They will appear hear when they are available..."
+          />
           </View>
         )}
         <View style={{ zIndex: 2 }}>
