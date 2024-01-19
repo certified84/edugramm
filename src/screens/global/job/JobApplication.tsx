@@ -23,7 +23,6 @@ import {
   Mail,
   User,
 } from "../../../assets/svg/Job";
-import { is_email } from "../../../constants";
 import { auth, firestore, storage } from "../../../firebase";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";

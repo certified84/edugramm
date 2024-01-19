@@ -28,26 +28,16 @@ import {
 import { COLORS, SIZES, TYPOGRAPHY } from './assets/theme';
 import { MenuProvider } from 'react-native-popup-menu';
 import RootNavigation from './src/navigation';
+import { customFontLocation } from './src/constants';
 
 
 LogBox.ignoreLogs(["Constants.platform.ios.model",])
 
 const App = () => {
-
-  // FONT CONFIG 
-  const [fontsLoaded] = useFonts({
-    'space-grotesk-bold': require('./assets/fonts/space_grotesk_bold.ttf'), // lg
-    'space-grotesk-semi-bold': require('./assets/fonts/space_grotesk_semi_bold.ttf'), // md
-    'space-grotesk-medium': require('./assets/fonts/space_grotesk_medium.ttf'), // sm
-    'space-grotesk-regular': require('./assets/fonts/space_grotesk_regular.ttf'), // xs
-    'space-grotesk-light': require('./assets/fonts/space_grotesk_light.ttf'), // xxs
-    'sansita-italic': require('./assets/fonts/sansita-italic.ttf'), // sansita-italic
-  });
-
+  const [fontsLoaded] = useFonts(customFontLocation);
   if (!fontsLoaded) {
     return null;
   }
-
 
   return (
     // <AnimatedSplashScreen>

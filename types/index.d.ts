@@ -41,7 +41,13 @@ type StackParamList = {
   CommunityDetailScreen: { communityInfo: Community }
   CommunityScreen: {}
   ChatScreen: {}
+
+  SignupScreen: {}
+  LoginScreen: {}
+  ForgotPasswordScreen: {}
 };
+
+export type StackNavigation = StackNavigationProp<StackParamList>;
 
 type ScreenRouteProp = RouteProp<StackParamList>;
 type NavigationProp = NavigationProp<StackParamList>;
