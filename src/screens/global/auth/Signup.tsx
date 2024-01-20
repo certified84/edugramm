@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   useWindowDimensions,
-  Animated,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { TYPOGRAPHY, COLORS, SIZES } from "../../../../assets/theme";
@@ -14,9 +13,8 @@ import {
   GoogleButton,
 } from "../../../components/Buttons";
 import { styles } from "./Login";
-import { useNavigation } from "@react-navigation/native";
 import { Loader } from "../../../components/Loader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   User as FirebaseUser,
   createUserWithEmailAndPassword,
@@ -29,7 +27,7 @@ import { User, defaultUser } from "../../../data/model/User";
 import { Ionicons } from "@expo/vector-icons";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
-import { StackNavigation, StackParamList } from "../../../../types";
+import { StackParamList } from "../../../../types";
 import { isEmail } from "../../../constants";
 
 type ScreenRouteProp = RouteProp<StackParamList, "SignupScreen">;
@@ -155,27 +153,8 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
       <Loader showLoader={values.loading} />
 
       <View style={{ flex: 1, margin: SIZES.md, paddingTop: SIZES.lg }}>
-        <Text
-          style={{
-            ...TYPOGRAPHY.h1,
-            fontSize: SIZES.xl - 2,
-            color: COLORS.onSurface,
-            alignSelf: "center",
-          }}
-        >
-          Sign up
-        </Text>
-        <Text
-          style={{
-            ...TYPOGRAPHY.h3,
-            fontFamily: "space-grotesk-light",
-            marginTop: SIZES.md,
-            color: COLORS.onSurface,
-            alignSelf: "center",
-          }}
-        >
-          We could use your presence here
-        </Text>
+        <Text style={styles.titleText}>Sign up</Text>
+        <Text style={styles.subtitleText}>We could use your presence here</Text>
 
         <TextInput
           mode="outlined"
@@ -196,17 +175,7 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
           placeholderTextColor={COLORS.onSecondaryContainer}
           textColor={COLORS.onSecondaryContainer}
         />
-        {errors.name && (
-          <Text
-            style={{
-              ...TYPOGRAPHY.p,
-              alignSelf: "flex-end",
-              color: COLORS.error,
-            }}
-          >
-            Name is required
-          </Text>
-        )}
+        {errors.name && <Text style={styles.errorText}>Name is required</Text>}
 
         <TextInput
           mode="outlined"
@@ -229,15 +198,7 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
           textColor={COLORS.onSecondaryContainer}
         />
         {errors.email && (
-          <Text
-            style={{
-              ...TYPOGRAPHY.p,
-              alignSelf: "flex-end",
-              color: COLORS.error,
-            }}
-          >
-            Valid email is required
-          </Text>
+          <Text style={styles.errorText}>Valid email is required</Text>
         )}
 
         <TextInput
@@ -289,15 +250,7 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
           }
         />
         {errors.password && (
-          <Text
-            style={{
-              ...TYPOGRAPHY.p,
-              alignSelf: "flex-end",
-              color: COLORS.error,
-            }}
-          >
-            Password is required
-          </Text>
+          <Text style={styles.errorText}>Password is required</Text>
         )}
 
         <ActionButton
@@ -308,22 +261,10 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
           textColor={COLORS.onPrimary}
         />
 
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            marginTop: SIZES.xl,
-            alignItems: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <View
-            style={{ flex: 0.42, height: 1, backgroundColor: COLORS.darkGray }}
-          />
+        <View style={styles.orContainer}>
+          <View style={styles.orLine} />
           <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>OR</Text>
-          <View
-            style={{ flex: 0.42, height: 1, backgroundColor: COLORS.darkGray }}
-          />
+          <View style={styles.orLine} />
         </View>
 
         <GoogleButton
@@ -342,17 +283,8 @@ const SignupScreen: React.FC<Props> = ({ route, navigation }) => {
           buttonTitle={"Sign up with Apple"}
         />
 
-        <View
-          style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}
-        >
-          <View
-            style={{
-              height: 1,
-              backgroundColor: COLORS.darkGray,
-              marginBottom: SIZES.md,
-              width: width,
-            }}
-          />
+        <View style={styles.bottomSection}>
+          <View style={{ ...styles.line, width: width }} />
           <View style={{ flexDirection: "row" }}>
             <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
               Already have an account?

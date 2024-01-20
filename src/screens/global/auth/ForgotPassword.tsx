@@ -2,17 +2,16 @@ import {
   SafeAreaView,
   View,
   Text,
-  TouchableOpacity,
-  useWindowDimensions,
+  StyleSheet,
+  Platform,
+  StatusBar,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { TYPOGRAPHY, COLORS, SIZES } from "../../../../assets/theme";
-import { ActionButton, GoogleButton } from "../../../components/Buttons";
-import { styles } from "./Login";
-import { useNavigation } from "@react-navigation/native";
+import { ActionButton } from "../../../components/Buttons";
 import Header from "../../../components/Header";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
-import { StackNavigation, StackParamList } from "../../../../types";
+import { StackParamList } from "../../../../types";
 import { auth } from "../../../../firebase";
 import { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
@@ -29,8 +28,6 @@ type Props = {
 };
 
 const ForgotPasswordScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { width } = useWindowDimensions();
-
   const [values, setValues] = useState({
     email: "",
     loading: false,
@@ -83,15 +80,7 @@ const ForgotPasswordScreen: React.FC<Props> = ({ route, navigation }) => {
           bookmarked={false}
         />
         <View style={{ margin: SIZES.md, marginTop: 0 }}>
-          <Text
-            style={{
-              ...TYPOGRAPHY.h3,
-              fontFamily: "space-grotesk-light",
-              marginTop: SIZES.md,
-              color: COLORS.onSurface,
-              alignSelf: "center",
-            }}
-          >
+          <Text style={styles.subtitleText}>
             Enter your email and we'll send you a reset link
           </Text>
 
@@ -116,15 +105,7 @@ const ForgotPasswordScreen: React.FC<Props> = ({ route, navigation }) => {
             textColor={COLORS.onSecondaryContainer}
           />
           {emailError && (
-            <Text
-              style={{
-                ...TYPOGRAPHY.p,
-                alignSelf: "flex-end",
-                color: COLORS.error,
-              }}
-            >
-              Valid email is required
-            </Text>
+            <Text style={styles.errorText}>Valid email is required</Text>
           )}
 
           <ActionButton
@@ -141,3 +122,33 @@ const ForgotPasswordScreen: React.FC<Props> = ({ route, navigation }) => {
 };
 
 export default ForgotPasswordScreen;
+
+const styles = StyleSheet.create({
+  errorText: {
+    ...TYPOGRAPHY.p,
+    alignSelf: "flex-end",
+    color: COLORS.error,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.surface1,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
+  subtitleText: {
+    ...TYPOGRAPHY.h3,
+    fontFamily: "space-grotesk-light",
+    marginTop: SIZES.md,
+    color: COLORS.onSurface,
+    alignSelf: "center",
+  },
+  inputField: {
+    backgroundColor: COLORS.surface1,
+    color: COLORS.black,
+    marginTop: SIZES.sm,
+  },
+  forgotPassword: {
+    color: COLORS.primary,
+    fontWeight: "700",
+    textDecorationLine: "underline",
+  },
+});

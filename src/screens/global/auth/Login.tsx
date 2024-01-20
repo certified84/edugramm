@@ -15,8 +15,7 @@ import {
   AppleButton,
   GoogleButton,
 } from "../../../components/Buttons";
-import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { auth } from "../../../../firebase";
 import {
   signInWithEmailAndPassword,
@@ -29,7 +28,7 @@ import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 // import auth from '@react-native-firebase/auth';
 import { RouteProp, NavigationProp } from "@react-navigation/native";
-import { StackNavigation, StackParamList } from "../../../../types";
+import { StackParamList } from "../../../../types";
 import { isEmail } from "../../../constants";
 
 type ScreenRouteProp = RouteProp<StackParamList, "LoginScreen">;
@@ -40,8 +39,7 @@ type Props = {
   navigation?: NavProp;
 };
 
-const LoginScreen: React.FC<Props> = ({route, navigation}) => {
-
+const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
   const { width } = useWindowDimensions();
   const provider = new GoogleAuthProvider();
 
@@ -138,25 +136,8 @@ const LoginScreen: React.FC<Props> = ({route, navigation}) => {
       <Loader showLoader={values.loading} />
 
       <View style={{ flex: 1, margin: SIZES.md, paddingTop: SIZES.lg }}>
-        <Text
-          style={{
-            ...TYPOGRAPHY.h1,
-            fontSize: SIZES.xl - 2,
-            color: COLORS.onSurface,
-            alignSelf: "center",
-          }}
-        >
-          Sign in
-        </Text>
-        <Text
-          style={{
-            ...TYPOGRAPHY.h3,
-            fontFamily: "space-grotesk-light",
-            marginTop: SIZES.md,
-            color: COLORS.onSurface,
-            alignSelf: "center",
-          }}
-        >
+        <Text style={styles.titleText}>Sign in</Text>
+        <Text style={styles.subtitleText}>
           We missed you while you were away
         </Text>
 
@@ -180,15 +161,7 @@ const LoginScreen: React.FC<Props> = ({route, navigation}) => {
           textColor={COLORS.onSecondaryContainer}
         />
         {errors.email && (
-          <Text
-            style={{
-              ...TYPOGRAPHY.p,
-              alignSelf: "flex-end",
-              color: COLORS.error,
-            }}
-          >
-            Valid email is required
-          </Text>
+          <Text style={styles.errorText}>Valid email is required</Text>
         )}
 
         <TextInput
@@ -212,15 +185,7 @@ const LoginScreen: React.FC<Props> = ({route, navigation}) => {
           textColor={COLORS.onSecondaryContainer}
         />
         {errors.password && (
-          <Text
-            style={{
-              ...TYPOGRAPHY.p,
-              alignSelf: "flex-end",
-              color: COLORS.error,
-            }}
-          >
-            Password is required
-          </Text>
+          <Text style={styles.errorText}>Password is required</Text>
         )}
 
         <TouchableOpacity
@@ -243,22 +208,10 @@ const LoginScreen: React.FC<Props> = ({route, navigation}) => {
           onPress={signIn}
         />
 
-        <View
-          style={{
-            flexDirection: "row",
-            width: "100%",
-            marginTop: SIZES.xl,
-            alignItems: "center",
-            justifyContent: "space-evenly",
-          }}
-        >
-          <View
-            style={{ flex: 0.42, height: 1, backgroundColor: COLORS.darkGray }}
-          />
+        <View style={styles.orContainer}>
+          <View style={styles.orLine} />
           <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>OR</Text>
-          <View
-            style={{ flex: 0.42, height: 1, backgroundColor: COLORS.darkGray }}
-          />
+          <View style={styles.orLine} />
         </View>
 
         <GoogleButton
@@ -285,17 +238,8 @@ const LoginScreen: React.FC<Props> = ({route, navigation}) => {
           buttonTitle={"Sign in with Apple"}
         />
 
-        <View
-          style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}
-        >
-          <View
-            style={{
-              height: 1,
-              backgroundColor: COLORS.darkGray,
-              marginBottom: SIZES.md,
-              width: width,
-            }}
-          />
+        <View style={styles.bottomSection}>
+          <View style={{ ...styles.line, width: width }} />
           <View style={{ flexDirection: "row" }}>
             <Text style={{ ...TYPOGRAPHY.h3, color: COLORS.onSurface }}>
               New to EduGramm?
@@ -326,6 +270,33 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.surface1,
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
+  titleText: {
+    ...TYPOGRAPHY.h1,
+    fontSize: SIZES.xl - 2,
+    color: COLORS.onSurface,
+    alignSelf: "center",
+  },
+  subtitleText: {
+    ...TYPOGRAPHY.h3,
+    fontFamily: "space-grotesk-light",
+    marginTop: SIZES.md,
+    color: COLORS.onSurface,
+    alignSelf: "center",
+  },
+  errorText: {
+    ...TYPOGRAPHY.p,
+    alignSelf: "flex-end",
+    color: COLORS.error,
+  },
+  orContainer: {
+    flexDirection: "row",
+    width: "100%",
+    marginTop: SIZES.xl,
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
+  orLine: { flex: 0.42, height: 1, backgroundColor: COLORS.darkGray },
+  bottomSection: { flex: 1, justifyContent: "flex-end", alignItems: "center" },
   inputField: {
     backgroundColor: COLORS.surface1,
     color: COLORS.black,
@@ -340,5 +311,10 @@ export const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: "700",
     textDecorationLine: "underline",
+  },
+  line: {
+    height: 1,
+    backgroundColor: COLORS.darkGray,
+    marginBottom: SIZES.md,
   },
 });

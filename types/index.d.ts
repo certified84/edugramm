@@ -42,6 +42,7 @@ type StackParamList = {
   CommunityScreen: {}
   ChatScreen: {}
 
+  OnboardingScreen: {}
   SignupScreen: {}
   LoginScreen: {}
   ForgotPasswordScreen: {}
