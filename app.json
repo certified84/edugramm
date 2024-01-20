@@ -2,25 +2,31 @@
   "expo": {
     "name": "edugramm",
     "slug": "edugramm",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/edugramm_splash.png",
+      "backgroundColor": "#ffffff",
+      "resizeMode": "cover"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.certified.edugramm"
+      "bundleIdentifier": "com.certified.edugramm",
+      "splash": {
+        "image": "./assets/edugramm_splash.png",
+        "backgroundColor": "#ffffff",
+        "tabletImage": "./assets/edugramm_splash.png",
+        "resizeMode": "cover"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.certified.edugramm",
