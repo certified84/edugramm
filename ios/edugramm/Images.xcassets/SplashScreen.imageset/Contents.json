@@ -12,6 +12,15 @@
     {
       "idiom": "universal",
       "scale": "3x"
+    },
+    {
+      "idiom": "ipad",
+      "filename": "tablet_image.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "ipad",
+      "scale": "2x"
     }
   ],
   "info": {

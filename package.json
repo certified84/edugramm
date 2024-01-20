@@ -12,7 +12,7 @@
     "@brainsbeards/react-native-animated-code-input": "^1.0.1",
     "@expo/ngrok": "^4.1.1",
     "@expo/plist": "^0.0.20",
-    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-firebase/app": "^18.7.3",
     "@react-native-firebase/auth": "^18.7.3",
     "@react-native-google-signin/google-signin": "^10.0.1",

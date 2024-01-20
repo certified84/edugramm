@@ -30,6 +30,7 @@ import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { StackParamList } from "../../../../types";
 import { isEmail } from "../../../constants";
+import {Ionicons} from "@expo/vector-icons";
 
 type ScreenRouteProp = RouteProp<StackParamList, "LoginScreen">;
 type NavProp = NavigationProp<StackParamList, "LoginScreen">;
@@ -144,6 +145,7 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
         <TextInput
           mode="outlined"
           placeholder="Email"
+          keyboardType="email-address"
           theme={{ roundness: SIZES.xs }}
           value={values.email}
           onChangeText={(text) => {
@@ -167,6 +169,7 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
         <TextInput
           mode="outlined"
           placeholder="Password"
+          keyboardType="visible-password"
           theme={{ roundness: SIZES.xs }}
           value={values.password}
           onChangeText={(text) => {
@@ -177,12 +180,39 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
             }
             setValues({ ...values, password: text });
           }}
-          secureTextEntry={true}
+          secureTextEntry={values.showPassword}
           style={styles.inputField}
           underlineColor={COLORS.onSecondaryContainer}
           activeOutlineColor={COLORS.secondaryContainer}
           placeholderTextColor={COLORS.onSecondaryContainer}
           textColor={COLORS.onSecondaryContainer}
+          right={
+            <TextInput.Icon
+              icon={() => (
+                <TouchableOpacity
+                  onPress={() =>
+                    setValues({ ...values, showPassword: !values.showPassword })
+                  }
+                  activeOpacity={0.5}
+                >
+                  {values.showPassword ? (
+                    <Ionicons
+                      name="eye-off"
+                      color={COLORS.primary}
+                      size={SIZES.md}
+                    />
+                  ) : (
+                    <Ionicons
+                      name="eye"
+                      color={COLORS.primary}
+                      size={SIZES.md}
+                    />
+                  )}
+                </TouchableOpacity>
+              )}
+              color={COLORS.primary}
+            />
+          }
         />
         {errors.password && (
           <Text style={styles.errorText}>Password is required</Text>
