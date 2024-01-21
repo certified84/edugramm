@@ -3,6 +3,7 @@ export type StackNavigation = StackNavigationProp<StackParamList>;
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { Application, Job } from "../data/models/Job";
 import { Community } from "../src/data/model/Community";
+import {defaultUser, User} from '../src/data/model/User';
 
 type StackParamList = {
   ExpertiseSelectionScreen: {};
@@ -37,7 +38,8 @@ type StackParamList = {
     application: Application;
     title: string;
   };
-  AddPostScreen: { userInfo: {  }, communityId: community.id }
+
+  AddPostScreen: { userInfo: User, communityId: string }
   CommunityDetailScreen: { communityInfo: Community }
   CommunityScreen: {}
   ChatScreen: {}

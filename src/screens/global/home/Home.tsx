@@ -19,12 +19,21 @@ import { data } from "../../../components/data";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { collection, doc, orderBy, query, where } from "firebase/firestore";
 import { auth, firestore } from "../../../../firebase";
-import { defaultUser } from "../../../data/model/User";
+import { defaultUser, User } from "../../../data/model/User";
 import { Loader } from "../../../components/Loader";
 import EmptyDesign from "../../../components/EmptyDesign";
+import { RouteProp, NavigationProp } from "@react-navigation/native";
+import { StackParamList } from "../../../../types";
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
+type ScreenRouteProp = RouteProp<StackParamList, "HomeScreen">;
+type NavProp = NavigationProp<StackParamList, "HomeScreen">;
+
+type Props = {
+  route?: ScreenRouteProp;
+  navigation?: NavProp;
+};
+
+const HomeScreen: React.FC<Props> = ({ route, navigation }) => {
   const user = auth.currentUser;
 
   const userRef = doc(firestore, "users", user.uid);
@@ -98,23 +107,11 @@ const HomeScreen = () => {
           alwaysBounceVertical={posts.length > 0}
         />
         {posts.length === 0 && (
-          <View
-            style={{
-              zIndex: 1,
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              margin: SIZES.md,
-            }}
-          >
-          <EmptyDesign
-            title="There's nothing here yet."
-            description="There's nothing on your feed yet. They will appear hear when they are available..."
-          />
+          <View style={styles.emptyDesignContainer}>
+            <EmptyDesign
+              title="There's nothing here yet."
+              description="There's nothing on your feed yet. They will appear hear when they are available..."
+            />
           </View>
         )}
         <View style={{ zIndex: 2 }}>
@@ -123,7 +120,10 @@ const HomeScreen = () => {
             style={styles.fab}
             color={COLORS.onPrimary}
             onPress={() =>
-              navigation.navigate("AddPostScreen", { userInfo: { ...values } })
+              navigation.navigate("AddPostScreen", {
+                userInfo: { ...values },
+                communityId: "",
+              })
             }
             theme={{ colors: fabColors }}
           />
@@ -154,5 +154,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: COLORS.primary,
     borderRadius: 50,
+  },
+  emptyDesignContainer: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: SIZES.md,
   },
 });

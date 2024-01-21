@@ -168,6 +168,7 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
 
         <TextInput
           mode="outlined"
+          autoCapitalize={"none"}
           placeholder="Password"
           keyboardType="visible-password"
           theme={{ roundness: SIZES.xs }}
