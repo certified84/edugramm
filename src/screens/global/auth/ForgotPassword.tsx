@@ -99,10 +99,11 @@ const ForgotPasswordScreen: React.FC<Props> = ({ route, navigation }) => {
               setValues({ ...values, email: text });
             }}
             style={[styles.inputField, { marginTop: SIZES.xl }]}
-            underlineColor={COLORS.onSecondaryContainer}
-            activeOutlineColor={COLORS.secondaryContainer}
-            placeholderTextColor={COLORS.onSecondaryContainer}
-            textColor={COLORS.onSecondaryContainer}
+            selectionColor={COLORS.onSurface}
+            underlineColor={COLORS.secondaryContainer}
+            activeOutlineColor={COLORS.primary}
+            placeholderTextColor={COLORS.darkGray}
+            textColor={COLORS.onSurface}
           />
           {emailError && (
             <Text style={styles.errorText}>Valid email is required</Text>

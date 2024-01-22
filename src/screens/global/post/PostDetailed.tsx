@@ -217,6 +217,7 @@ const PostDetailedScreen = ({ route }) => {
           theme={{ roundness: 55 }}
           style={styles.inputField}
           outlineColor={COLORS.secondaryContainer}
+          selectionColor={COLORS.onSecondaryContainer}
           underlineColor={COLORS.onSecondaryContainer}
           activeOutlineColor={COLORS.secondaryContainer}
           placeholderTextColor={COLORS.onSecondaryContainer}
@@ -257,8 +258,6 @@ const styles = StyleSheet.create({
   },
   inputField: {
     backgroundColor: COLORS.secondaryContainer,
-    color: COLORS.black,
-    borderColor: "red",
     // borderRadius: 55,
     // width: "100%",
     // backgroundColor: COLORS.onSurface

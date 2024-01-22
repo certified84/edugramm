@@ -7,9 +7,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { COLORS, SIZES } from "../../../theme";
 import Header from "../../../components/Header";
-import { StackParamList } from "../../../types";
 import Search from "../../../components/Search";
 import { useEffect, useState } from "react";
 import JobComponent from "../../../components/JobComponent";
@@ -21,11 +19,13 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { firestore } from "../../../firebase";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { Job } from "../../../data/models/Job";
 import { QueryDocumentSnapshot } from "firebase-functions/v1/firestore";
 import { Loader } from "../../../components/Loader";
+import { FAB } from "react-native-paper";
+import { StackParamList } from "../../../../types";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
+import { firestore } from "../../../../firebase";
 
 type ScreenRouteProp = RouteProp<StackParamList, "JobsScreen">;
 type NavProp = NavigationProp<StackParamList, "JobsScreen">;
@@ -42,7 +42,7 @@ const JobsScreen: React.FC<Props> = ({ route, navigation }) => {
 
   const jobsRef = collection(firestore, route?.params.which ?? "jobs");
   const q = query(
-    jobsRef,
+    jobsRef
     // where("communityId", "==", "")
     // orderBy("date", "desc")
   );
@@ -52,14 +52,14 @@ const JobsScreen: React.FC<Props> = ({ route, navigation }) => {
   useEffect(() => {
     if (jobsSnapshot) {
       const data = jobsSnapshot.docs;
-      console.log("Jobs", data)
+      console.log("Jobs", data);
       setJobs(data);
     }
   }, [jobsSnapshot]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <Loader showLoader={jobsLoading}/>
+      <Loader showLoader={jobsLoading} />
       <View style={styles.innerContainer}>
         <Header
           title={route!.params.title}

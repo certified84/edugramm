@@ -157,10 +157,11 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
             setValues({ ...values, email: text });
           }}
           style={[styles.inputField, { marginTop: SIZES.xl }]}
-          underlineColor={COLORS.onSecondaryContainer}
-          activeOutlineColor={COLORS.secondaryContainer}
-          placeholderTextColor={COLORS.onSecondaryContainer}
-          textColor={COLORS.onSecondaryContainer}
+          selectionColor={COLORS.onSurface}
+          underlineColor={COLORS.secondaryContainer}
+          activeOutlineColor={COLORS.primary}
+          placeholderTextColor={COLORS.darkGray}
+          textColor={COLORS.onSurface}
         />
         {errors.email && (
           <Text style={styles.errorText}>Valid email is required</Text>
@@ -183,10 +184,11 @@ const LoginScreen: React.FC<Props> = ({ route, navigation }) => {
           }}
           secureTextEntry={values.showPassword}
           style={styles.inputField}
-          underlineColor={COLORS.onSecondaryContainer}
-          activeOutlineColor={COLORS.secondaryContainer}
-          placeholderTextColor={COLORS.onSecondaryContainer}
-          textColor={COLORS.onSecondaryContainer}
+          selectionColor={COLORS.onSurface}
+          underlineColor={COLORS.secondaryContainer}
+          activeOutlineColor={COLORS.primary}
+          placeholderTextColor={COLORS.darkGray}
+          textColor={COLORS.onSurface}
           right={
             <TextInput.Icon
               icon={() => (

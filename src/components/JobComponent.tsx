@@ -36,7 +36,7 @@ const JobComponent: React.FC<JobProps> = ({
         width: width,
         marginEnd: horizontal ? SIZES.md : 0,
         marginTop: !horizontal ? SIZES.md : 0,
-        backgroundColor: horizontal ? "white" : "#F9F9F9",
+        backgroundColor: horizontal ? COLORS.secondaryContainer : "#F9F9F9",
       }}
     >
       <View style={styles.logoBookmarkContainer}>
@@ -54,7 +54,7 @@ const JobComponent: React.FC<JobProps> = ({
         <MaterialCommunityIcons
           name={bookmarked ? "bookmark" : "bookmark-outline"}
           size={30}
-          color={COLORS.primary}
+          color={COLORS.onSecondaryContainer}
         />
         {/* </TouchableOpacity> */}
       </View>
@@ -79,13 +79,13 @@ const JobComponent: React.FC<JobProps> = ({
           style={{
             ...styles.jobTypeContainer,
             borderWidth: horizontal ? 1 : 0,
-            backgroundColor: horizontal ? COLORS.white : "#DDEAFF",
+            backgroundColor: horizontal ? COLORS.onSecondaryContainer : "#DDEAFF",
           }}
         >
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: horizontal ? "#ADADAF" : COLORS.primary,
+              color: horizontal ? COLORS.secondaryContainer : COLORS.primary,
             }}
           >
             {job.type}
@@ -95,13 +95,13 @@ const JobComponent: React.FC<JobProps> = ({
           style={{
             ...styles.jobTypeContainer,
             borderWidth: horizontal ? 1 : 0,
-            backgroundColor: horizontal ? COLORS.white : "#DDEAFF",
+            backgroundColor: horizontal ? COLORS.onSecondaryContainer : "#DDEAFF",
           }}
         >
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: horizontal ? "#ADADAF" : COLORS.primary,
+              color: horizontal ? COLORS.secondaryContainer : COLORS.primary,
             }}
           >
             {job.locationType}
@@ -118,20 +118,20 @@ const styles = StyleSheet.create({
   line: {
     height: 1,
     width: "100%",
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: COLORS.onSecondaryContainer,
     marginVertical: SIZES.sm,
   },
   jobContainer: {
     borderRadius: SIZES.xs,
     borderWidth: 2,
-    borderColor: "#CACACA",
+    borderColor: COLORS.onSecondaryContainer,
     padding: SIZES.sm,
   },
   companyLogoContainer: {
     padding: SIZES.xs,
     borderRadius: SIZES.xxs,
     borderWidth: 2,
-    borderColor: "#CACACA",
+    borderColor: COLORS.onSecondaryContainer,
   },
   logoBookmarkContainer: {
     flexDirection: "row",

@@ -12,7 +12,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { Avatar } from "react-native-paper";
+import { Avatar, FAB } from "react-native-paper";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { auth, firestore } from "../../../../firebase";
@@ -24,6 +24,7 @@ import Search from "../../../components/Search";
 import { Props } from "../../../../types";
 import JobComponent from "../../../components/JobComponent";
 import EmptyDesign from "../../../components/EmptyDesign";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
 const JobScreen: React.FC<Props> = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -106,7 +107,7 @@ const JobScreen: React.FC<Props> = ({ route, navigation }) => {
                   color: COLORS.white,
                 }}
               >
-                Find a job or internship position on Edugram
+                Find a job or internship position on EduGramm
               </Text>
 
               <Search
@@ -188,12 +189,35 @@ const JobScreen: React.FC<Props> = ({ route, navigation }) => {
             <View style={{ height: 90 }} />
           </ScrollView>
         )}
+
+        <View style={{ zIndex: 2 }}>
+          <FAB
+            icon="plus"
+            style={styles.fab}
+            color={COLORS.onPrimary}
+            onPress={() =>
+              Toast.show({
+                title: "Verification Required",
+                textBody: "The job listing feature is only available to verified users.",
+                type: ALERT_TYPE.WARNING,
+              })
+            }
+            theme={{ colors: fabColors }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
 };
 
 export default JobScreen;
+
+const fabColors = {
+  primary: COLORS.primary,
+  secondary: COLORS.secondary,
+  tertiary: COLORS.tertiary,
+  surface: COLORS.surface,
+};
 
 const styles = StyleSheet.create({
   innerContainer: {
@@ -253,5 +277,13 @@ const styles = StyleSheet.create({
     color: COLORS.onSurface,
     opacity: 0.7,
     textAlign: "center",
+  },
+  fab: {
+    position: "absolute",
+    margin: SIZES.sm,
+    right: 0,
+    bottom: 0,
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
   },
 });
