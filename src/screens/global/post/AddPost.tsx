@@ -11,6 +11,7 @@ import {
   Platform,
   StatusBar,
   ImageBackground,
+  Alert,
 } from "react-native";
 import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { useNavigation } from "@react-navigation/native";
@@ -39,6 +40,8 @@ import { useUploadFile } from "react-firebase-hooks/storage";
 import * as FileSystem from "expo-file-system";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { StackParamList } from "../../../../types";
+import { sendPost } from "../../../api/post";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
 type ScreenRouteProp = RouteProp<StackParamList, "AddPostScreen">;
 type NavProp = NavigationProp<StackParamList, "AddPostScreen">;
@@ -77,6 +80,29 @@ const AddPostScreen: React.FC<Props> = ({ route, navigation }) => {
       });
     }
   }, [snapshot]);
+
+  async function verifyPost(post: string) {
+    setValues({ ...values, loading: true });
+    const response = await sendPost(post);
+    setValues({ ...values, loading: false });
+    console.log("Response: ", response.data);
+
+    if (response === undefined || response.data.error) {
+      Toast.show({
+        title: "Error",
+        textBody: "An error occurred. Please try again.",
+        type: ALERT_TYPE.DANGER,
+      });
+      return;
+    }
+
+    if (response.data.tag === "Non-Educational")
+      Alert.alert(
+        "Post Not Allowed",
+        "Your post was not uploaded because it does not meet our educational content guidelines. Please ensure your posts are educational in nature and adhere to our community guidelines."
+      );
+    else uploadPost();
+  }
 
   async function uploadPost() {
     setValues({ ...values, loading: true });
@@ -236,7 +262,7 @@ const AddPostScreen: React.FC<Props> = ({ route, navigation }) => {
             disabled={values.post.length < 1 && values.images.length < 1}
             onPress={() =>
               values.post.length > 0 || values.images.length > 0
-                ? uploadPost()
+                ? verifyPost(values.post)
                 : {}
             }
           >
