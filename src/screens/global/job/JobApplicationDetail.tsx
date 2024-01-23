@@ -8,17 +8,17 @@ import {
   useWindowDimensions,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES, TYPOGRAPHY } from "../../../theme";
 import Header from "../../../components/Header";
-import { StackParamList } from "../../../types";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import JobDetailComponent from "../../../components/JobDetailComponent";
 import { JobStatus } from "../../../constants";
-import { FileUploaded } from "../../../assets/svg/Job";
-import { auth, firestore } from "../../../firebase";
+import { FileUploaded } from "../../../../assets/svg/Job";
 import { Timestamp, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
+import { StackParamList } from "../../../../types";
+import { auth, firestore } from "../../../../firebase";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 
 type ScreenRouteProp = RouteProp<StackParamList, "JobApplicationDetailScreen">;
 type NavProp = NavigationProp<StackParamList, "JobApplicationDetailScreen">;
@@ -51,7 +51,7 @@ const JobApplicationDetailScreen: React.FC<Props> = ({ route, navigation }) => {
   }, [snapshot]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
       <View style={styles.innerContainer}>
         <Header
           title={"Application Details"}
@@ -64,7 +64,7 @@ const JobApplicationDetailScreen: React.FC<Props> = ({ route, navigation }) => {
         <JobDetailComponent application={application} />
 
         <View style={{ marginHorizontal: SIZES.md, marginTop: SIZES.lg }}>
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Resume</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Resume</Text>
 
           <TouchableOpacity
             activeOpacity={0.5}
@@ -82,7 +82,7 @@ const JobApplicationDetailScreen: React.FC<Props> = ({ route, navigation }) => {
             </Text>
           </TouchableOpacity>
 
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Application Status</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Application Status</Text>
 
           <View style={styles.statusDateContainer}>
             <View
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     borderColor: "#ADADAF",
   },
   resume: {
-    ...TYPOGRAPHY.h5,
+    ...TYPOGRAPHY.h3,
     fontFamily: "outfit_semi_bold",
     color: "#ADADAF",
     marginStart: SIZES.md,

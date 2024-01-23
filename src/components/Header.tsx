@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({
         <MaterialCommunityIcons
           name={bookmarked ? "bookmark" : "bookmark-outline"}
           size={24}
-          color={bookmarked ? COLORS.primary : COLORS.black}
+          color={bookmarked ? COLORS.primary : COLORS.onSurface}
         />
       </TouchableOpacity>
     </View>

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { SIZES, COLORS, TYPOGRAPHY } from "../../../../theme";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../../assets/theme";
 
 interface RenderTabProps {
   index: number;
@@ -38,13 +38,13 @@ const TabTitle: React.FC<TabTitleProps> = ({ title, selected, onPress }) => {
       activeOpacity={0.5}
       style={{
         ...styles.tabTitleContainer,
-        backgroundColor: selected ? "#1472FF" : COLORS.white,
+        backgroundColor: selected ? COLORS.primary : COLORS.surface,
       }}
     >
       <Text
         style={{
           ...styles.tabTitle,
-          color: selected ? COLORS.white : COLORS.black,
+          color: selected ? COLORS.onPrimary : COLORS.onSurface,
         }}
       >
         {title}
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     padding: SIZES.sm,
   },
   tabTitle: {
-    ...TYPOGRAPHY.h4,
+    ...TYPOGRAPHY.h3,
     fontSize: SIZES.sm,
   },
 });

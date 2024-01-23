@@ -10,20 +10,20 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES, TYPOGRAPHY } from "../../../theme";
 import Header from "../../../components/Header";
-import { StackNavigation, StackParamList } from "../../../types";
 import Search from "../../../components/Search";
 import { useEffect, useState } from "react";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
-import { Application, Job } from "../../../data/models/Job";
 import { Ionicons } from "@expo/vector-icons";
-import { Briefcase } from "../../../assets/svg/Onboarding";
 import { JobStatus } from "../../../constants";
 import { collection, query } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { auth, firestore } from "../../../firebase";
 import EmptyDesign from "../../../components/EmptyDesign";
+import { StackNavigation, StackParamList } from "../../../../types";
+import { auth, firestore } from "../../../../firebase";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
+import { Application } from "../../../data/model/Job";
+import { Briefcase } from "../../../../assets/svg/Onboarding";
 
 type ScreenRouteProp = RouteProp<StackParamList, "JobApplicationsScreen">;
 type NavProp = NavigationProp<StackParamList, "JobApplicationsScreen">;
@@ -58,7 +58,7 @@ const JobApplicationsScreen: React.FC<Props> = ({ route, navigation }) => {
   }, [jobsSnapshot]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
       <View style={styles.innerContainer}>
         <Header
           title={"Applications"}
@@ -134,7 +134,7 @@ const JobComponent: React.FC<JobComponentProps> = ({
           </View>
           <View>
             <View>
-              <Text style={{ ...TYPOGRAPHY.h4 }}>{job.title}</Text>
+              <Text style={{ ...TYPOGRAPHY.h3 }}>{job.title}</Text>
             </View>
             <View style={styles.companyContainer}>
               <Text style={styles.company}>{job.company}</Text>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   company: {
-    ...TYPOGRAPHY.h5,
+    ...TYPOGRAPHY.h3,
     fontFamily: "outfit_semi_bold",
     color: "#ADADAF",
   },

@@ -36,7 +36,7 @@ const JobComponent: React.FC<JobProps> = ({
         width: width,
         marginEnd: horizontal ? SIZES.md : 0,
         marginTop: !horizontal ? SIZES.md : 0,
-        backgroundColor: horizontal ? COLORS.secondaryContainer : "#F9F9F9",
+        backgroundColor: COLORS.secondaryContainer,
       }}
     >
       <View style={styles.logoBookmarkContainer}>
@@ -79,13 +79,13 @@ const JobComponent: React.FC<JobProps> = ({
           style={{
             ...styles.jobTypeContainer,
             borderWidth: horizontal ? 1 : 0,
-            backgroundColor: horizontal ? COLORS.onSecondaryContainer : "#DDEAFF",
+            backgroundColor: COLORS.onSecondaryContainer
           }}
         >
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: horizontal ? COLORS.secondaryContainer : COLORS.primary,
+              color: COLORS.secondaryContainer
             }}
           >
             {job.type}
@@ -95,13 +95,13 @@ const JobComponent: React.FC<JobProps> = ({
           style={{
             ...styles.jobTypeContainer,
             borderWidth: horizontal ? 1 : 0,
-            backgroundColor: horizontal ? COLORS.onSecondaryContainer : "#DDEAFF",
+            backgroundColor: COLORS.onSecondaryContainer
           }}
         >
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: horizontal ? COLORS.secondaryContainer : COLORS.primary,
+              color: COLORS.secondaryContainer
             }}
           >
             {job.locationType}

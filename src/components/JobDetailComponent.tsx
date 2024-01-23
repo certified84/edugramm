@@ -26,13 +26,17 @@ const JobDetailComponent: React.FC<JobProps> = ({ application, job }) => {
         {jb.title}
       </Text>
 
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={{ ...TYPOGRAPHY.p }}>{`${jb.company}   \u2022   `} </Text>
+      <View style={{ flexDirection: "row", alignItems: "center",  }}>
+        <View>
+          <Text style={{ ...TYPOGRAPHY.p }}>
+            {`${jb.company}   \u2022   `}{" "}
+          </Text>
+        </View>
         <View style={styles.jobTypeContainer}>
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: COLORS.primary,
+              color: COLORS.onPrimary,
             }}
           >
             {jb.type}
@@ -42,7 +46,7 @@ const JobDetailComponent: React.FC<JobProps> = ({ application, job }) => {
           <Text
             style={{
               ...TYPOGRAPHY.p,
-              color: COLORS.primary,
+              color: COLORS.onPrimary,
             }}
           >
             {jb.locationType}
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
     borderColor: "#CACACA",
   },
   jobTypeContainer: {
-    backgroundColor: "#DDEAFF",
+    backgroundColor: COLORS.primary,
     padding: 4,
     paddingHorizontal: SIZES.xs,
     borderRadius: SIZES.xxs,

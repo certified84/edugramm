@@ -9,9 +9,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES, TYPOGRAPHY } from "../../../theme";
 import Header from "../../../components/Header";
-import { StackParamList } from "../../../types";
 import { useEffect, useState } from "react";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
@@ -22,16 +20,19 @@ import {
   Link,
   Mail,
   User,
-} from "../../../assets/svg/Job";
-import { auth, firestore, storage } from "../../../firebase";
+} from "../../../../assets/svg/Job";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import { getDownloadURL, ref } from "firebase/storage";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { useUploadFile } from "react-firebase-hooks/storage";
-import { Application, defaultApplication } from "../../../data/models/Job";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { Loader } from "../../../components/Loader";
+import { StackParamList } from "../../../../types";
+import { Application, defaultApplication } from "../../../data/model/Job";
+import { auth, firestore, storage } from "../../../../firebase";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
+import { ActionButton } from "../../../components/Buttons";
 
 type ScreenRouteProp = RouteProp<StackParamList, "JobApplicationScreen">;
 type NavProp = NavigationProp<StackParamList, "JobApplicationScreen">;
@@ -89,14 +90,15 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
   );
 
   const getResume = async () => {
-    await DocumentPicker.getDocumentAsync({ type: "application/pdf" }).then(
-      (res) => {
-        if (res.assets !== null) {
-          setValues({ ...values, file: res.assets[0].uri });
-          uploadResume(res.assets[0].uri, user!.uid);
-        }
+    await DocumentPicker.getDocumentAsync({
+      type: "application/pdf",
+      copyToCacheDirectory: true,
+    }).then((res) => {
+      if (res.assets !== null) {
+        setValues({ ...values, file: res.assets[0].uri });
+        uploadResume(res.assets[0].uri, user!.uid);
       }
-    );
+    });
   };
 
   async function uploadResume(resumeUri: string, id: string) {
@@ -224,7 +226,7 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
       <Loader showLoader={values.loading} />
       <View style={styles.innerContainer}>
         <Header
@@ -237,7 +239,7 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
           }
         />
         <ScrollView style={{ margin: SIZES.md }}>
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Full Name</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Full Name</Text>
 
           <TextInput
             placeholder={"e.g Firstname Lastname"}
@@ -253,7 +255,7 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
             value={user?.displayName ?? ""}
           />
 
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Email</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Email</Text>
 
           <TextInput
             placeholder={"e.g name@example.com"}
@@ -269,14 +271,14 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
             editable={false}
           />
 
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Upload Resume</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Upload Resume</Text>
 
           {values.resumeUploaded ? (
             <View style={styles.resumeUploadedContainer}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <FileUploaded />
                 <View style={{ marginStart: SIZES.sm }}>
-                  <Text style={{ ...TYPOGRAPHY.h5 }}>
+                  <Text style={{ ...TYPOGRAPHY.h3 }}>
                     {`CV-${user?.displayName?.substring(
                       0,
                       splitIndex
@@ -307,21 +309,19 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
                   onPress={getResume}
                   style={styles.uploadResumeContainer}
                 >
-                  <FileUpload />
-                  <Text style={{ ...TYPOGRAPHY.p, marginTop: SIZES.xxs }}>
-                    Browse File
-                  </Text>
+                  <FileUpload fill={COLORS.secondaryContainer} />
+                  <Text style={styles.uploading}>Browse File</Text>
                 </TouchableOpacity>
               ) : (
                 <View style={styles.uploadResumeContainer}>
-                  <FileUpload />
+                  <FileUpload fill={COLORS.secondaryContainer} />
                   <Text style={styles.uploading}>Uploading...</Text>
                 </View>
               )}
             </View>
           )}
 
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Portfolio Link</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Portfolio Link</Text>
 
           <TextInput
             placeholder={"e.g https://link.portforlio.com"}
@@ -340,7 +340,7 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
             }
           />
 
-          <Text style={{ ...TYPOGRAPHY.h4 }}>Cover Letter</Text>
+          <Text style={{ ...TYPOGRAPHY.h3 }}>Cover Letter</Text>
 
           <TextInput
             placeholder={"Anything more you'd like to say to the recruiter..."}
@@ -357,16 +357,17 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
             onChangeText={(text) => setValues({ ...values, coverLetter: text })}
           />
 
-          <TouchableOpacity
-            activeOpacity={0.5}
+          <ActionButton
+            style={{
+              opacity: disabled ? 0.5 : 1,
+              width: "100%",
+              marginVertical: SIZES.xl,
+            }}
+            buttonTitle={"Submit"}
+            buttonColor={COLORS.primary}
+            textColor={COLORS.onPrimary}
             onPress={uploadApplication}
-            disabled={disabled}
-            style={{ ...styles.btnContinue, opacity: disabled ? 0.5 : 1 }}
-          >
-            <Text style={{ ...TYPOGRAPHY.h4, color: COLORS.white }}>
-              Submit
-            </Text>
-          </TouchableOpacity>
+          />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -388,14 +389,6 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     marginBottom: SIZES.sm,
   },
-  btnContinue: {
-    marginVertical: SIZES.xl,
-    padding: SIZES.sm,
-    backgroundColor: "#1472FF",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: SIZES.md,
-  },
   uploadResumeContainer: {
     borderWidth: 1,
     borderStyle: "dashed",
@@ -409,7 +402,7 @@ const styles = StyleSheet.create({
   uploading: {
     ...TYPOGRAPHY.p,
     marginTop: SIZES.xxs,
-    color: COLORS.primary,
+    color: COLORS.secondaryContainer,
   },
   resumeUploadedContainer: {
     flexDirection: "row",

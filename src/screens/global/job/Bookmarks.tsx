@@ -73,13 +73,12 @@ const BookmarksScreen: React.FC<Props> = ({ route, navigation }) => {
   }, [jobsSnapshot, userSnapshot, userData]);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
       <Loader showLoader={jobsLoading} />
       <View style={styles.innerContainer}>
         <Header
           title={"Bookmarks"}
           navigation={navigation}
-          showBack={false}
           showBookmark={false}
           bookmarked={false}
         />

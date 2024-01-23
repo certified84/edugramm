@@ -11,9 +11,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
-import { COLORS, SIZES, TYPOGRAPHY } from "../../../theme";
 import Header from "../../../components/Header";
-import { StackParamList } from "../../../types";
 import { useEffect, useState } from "react";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -21,15 +19,16 @@ import { SceneMap, TabView } from "react-native-tab-view";
 import DescriptionTab from "./tabs/Description";
 import RequirementsTab from "./tabs/Requirements";
 import RenderTab from "./components/RenderTab";
-import { Briefcase } from "../../../assets/svg/Onboarding";
 import JobDetailComponent from "../../../components/JobDetailComponent";
-import { Job } from "../../../data/models/Job";
 import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
-import { auth, firestore } from "../../../firebase";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { defaultUser } from "../../../data/models/User";
 import { Loader } from "../../../components/Loader";
+import { StackParamList } from "../../../../types";
+import { defaultUser } from "../../../data/model/User";
+import { auth, firestore } from "../../../../firebase";
+import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
+import { ActionButton } from "../../../components/Buttons";
 
 type ScreenRouteProp = RouteProp<StackParamList, "JobDetailScreen">;
 type NavProp = NavigationProp<StackParamList, "JobDetailScreen">;
@@ -70,7 +69,7 @@ const JobDetailScreen: React.FC<Props> = ({ route, navigation }) => {
     bookmarked
       ? bookmarks.push(job.id)
       : bookmarks.splice(bookmarks.indexOf(job.id), 1);
-    console.log("Bookmarks: ", bookmarks)
+    console.log("Bookmarks: ", bookmarks);
     await updateDoc(doc(firestore, "users", user!.uid), {
       bookmarks: bookmarks,
     }).catch((error) => {
@@ -90,8 +89,8 @@ const JobDetailScreen: React.FC<Props> = ({ route, navigation }) => {
     requirements: () => <RequirementsTab job={job} />,
   });
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-      <Loader showLoader={userLoading}/>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.surface }}>
+      <Loader showLoader={userLoading} />
       <View style={styles.innerContainer}>
         <Header
           title={route!.params.title}
@@ -122,8 +121,11 @@ const JobDetailScreen: React.FC<Props> = ({ route, navigation }) => {
           style={{ flex: 1, height: "auto" }}
         />
 
-        <TouchableOpacity
-          activeOpacity={0.5}
+        <ActionButton
+          style={styles.btnContinue}
+          buttonTitle={"Apply Now"}
+          buttonColor={COLORS.primary}
+          textColor={COLORS.onPrimary}
           onPress={() => {
             navigation?.navigate("JobApplicationScreen", {
               job: job,
@@ -132,12 +134,7 @@ const JobDetailScreen: React.FC<Props> = ({ route, navigation }) => {
               bookmarked: false,
             });
           }}
-          style={styles.btnContinue}
-        >
-          <Text style={{ ...TYPOGRAPHY.h4, color: COLORS.white }}>
-            Apply Now
-          </Text>
-        </TouchableOpacity>
+        />
         {/* </ScrollView> */}
       </View>
     </SafeAreaView>
@@ -162,11 +159,6 @@ const styles = StyleSheet.create({
   btnContinue: {
     marginBottom: SIZES.xxs,
     marginHorizontal: SIZES.md,
-    // marginTop: 80,
-    padding: SIZES.sm,
-    backgroundColor: "#1472FF",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: SIZES.md,
+    // borderRadius: SIZES.md,
   },
 });

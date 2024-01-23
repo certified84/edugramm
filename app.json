@@ -45,6 +45,12 @@
           "cameraPermission": "The app accesses your camera to enable picture and video sharing and chatting.",
           "microphonePermission": "The app accesses your microphone to record audio"
         }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
       ]
     ],
     "extra": {

@@ -17,8 +17,6 @@ export const sendPost = async (post: string) => {
 
     const data = await response.json();
   
-    // console.log([], data);
-  
     return {
       status: response.status === 200 ? "success" : "error",
       message: data.message,
@@ -40,6 +38,15 @@ export const getResult = async () => {
         data: [],
       };
     }
+
+    const data = await response.json();
+  
+    return {
+      status: response.status === 200 ? "success" : "error",
+      message: data.message,
+      error: data.error,
+      data: data.result,
+    };
 }
 
 // export const getResult = async (identifier: string) => {

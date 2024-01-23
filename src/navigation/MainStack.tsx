@@ -22,6 +22,8 @@ import {
   CreateCommunityScreen,
   CommunityDetailScreen,
   BookmarksScreen,
+  JobDetailScreen,
+  JobApplicationScreen,
 } from "../screens";
 
 const Stack = createStackNavigator();
@@ -175,6 +177,20 @@ export default function MainStack({ customHeaderTitleStyle }) {
         <Stack.Screen
           name="BookmarkScreen"
           component={BookmarksScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="JobDetailScreen"
+          component={JobDetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="JobApplicationScreen"
+          component={JobApplicationScreen}
           options={{
             headerShown: false,
           }}

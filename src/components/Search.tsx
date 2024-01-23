@@ -27,7 +27,7 @@ const Search: React.FC<SearchProps> = ({
     left={
       <TextInput.Icon
         icon={() => (
-          <Ionicons name="search-outline" size={SIZES.md} color={"black"} />
+          <Ionicons name="search-outline" size={SIZES.md} color={COLORS.onSecondaryContainer} />
         )}
         color={COLORS.primary}
       />
@@ -36,7 +36,7 @@ const Search: React.FC<SearchProps> = ({
       <TextInput.Icon
         icon={() => (
           <TouchableOpacity activeOpacity={0.5}>
-            <Filter />
+            <Filter fill={COLORS.onSecondaryContainer}/>
           </TouchableOpacity>
         )}
         color={COLORS.primary}
@@ -57,8 +57,8 @@ export default Search;
 
 const styles = StyleSheet.create({
   searchStyle: {
-    backgroundColor: "white",
-    color: COLORS.primary,
+    backgroundColor: COLORS.secondaryContainer,
+    color: COLORS.onSecondaryContainer,
     marginTop: SIZES.xl,
   },
 });
