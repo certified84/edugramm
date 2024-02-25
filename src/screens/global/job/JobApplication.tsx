@@ -90,15 +90,15 @@ const JobApplicationScreen: React.FC<Props> = ({ route, navigation }) => {
   );
 
   const getResume = async () => {
-    await DocumentPicker.getDocumentAsync({
-      type: "application/pdf",
-      copyToCacheDirectory: true,
-    }).then((res) => {
-      if (res.assets !== null) {
-        setValues({ ...values, file: res.assets[0].uri });
-        uploadResume(res.assets[0].uri, user!.uid);
-      }
-    });
+    // await DocumentPicker.getDocumentAsync({
+    //   type: "application/pdf",
+    //   copyToCacheDirectory: true,
+    // }).then((res) => {
+    //   if (res.assets !== null) {
+    //     setValues({ ...values, file: res.assets[0].uri });
+    //     uploadResume(res.assets[0].uri, user!.uid);
+    //   }
+    // });
   };
 
   async function uploadResume(resumeUri: string, id: string) {
