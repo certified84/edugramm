@@ -13,13 +13,14 @@ import { COLORS, SIZES, TYPOGRAPHY } from "../../../../assets/theme";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import VerifiedIcon from "../../../components/VerifiedIcon";
-import { collection, orderBy, query } from "firebase/firestore";
-import { firestore } from "../../../../firebase";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, doc, orderBy, query, where } from "firebase/firestore";
+import { auth, firestore } from "../../../../firebase";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import { useEffect, useState } from "react";
 import CommunityPlaceHolder from "../../../../assets/svg/CommunityPlaceHolder";
 import { StackParamList } from "../../../../types";
 import { RouteProp, NavigationProp } from "@react-navigation/native";
+import { defaultUser } from "../../../data/model/User";
 
 type ScreenRouteProp = RouteProp<StackParamList, "CommunityScreen">;
 type NavProp = NavigationProp<StackParamList, "CommunityScreen">;
@@ -29,77 +30,57 @@ type Props = {
   navigation?: NavProp;
 };
 
-const messages = [
-  {
-    id: 1,
-    name: "Samson Achiaga",
-    image: "https://source.unsplash.com/random/?android,developer",
-    message: "Hey man. How's it going?",
-  },
-  {
-    id: 2,
-    name: "Olorunnegan Ifeoluwa",
-    image: "https://source.unsplash.com/random/?computer,github",
-    message: "Agba Developer 🙌🏾. How Vella dey go an?",
-  },
-  {
-    id: 3,
-    name: "James Oluseyi",
-    image: "https://source.unsplash.com/random/?android,device",
-    message: "My boy! What's good?",
-  },
-  {
-    id: 4,
-    name: "OKafe Vincent",
-    image: "https://source.unsplash.com/random/?code,computer",
-    message: "Yo Billionaire! How your life.",
-  },
-  {
-    id: 5,
-    name: "Kolawole Godstime",
-    image: "https://source.unsplash.com/random/?code,computer",
-    message: "Hey man. How's it going?",
-  },
-  {
-    id: 6,
-    name: "Samson Achiaga",
-    image: "https://source.unsplash.com/random/?android,developer",
-    message: "Hey man. How's it going?",
-  },
-  {
-    id: 7,
-    name: "Olorunnegan Ifeoluwa",
-    image: "https://source.unsplash.com/random/?computer,github",
-    message: "Agba Developer 🙌🏾. How Vella dey go an?",
-  },
-  {
-    id: 8,
-    name: "James Oluseyi",
-    image: "https://source.unsplash.com/random/?android,device",
-    message: "My boy! What's good?",
-  },
-  {
-    id: 9,
-    name: "OKafe Vincent",
-    image: "https://source.unsplash.com/random/?code,computer",
-    message: "Yo Billionaire! How your life.",
-  },
-  {
-    id: 10,
-    name: "Kolawole Godstime",
-    image: "https://source.unsplash.com/random/?code,computer",
-    message: "Hey man. How's it going?",
-  },
-];
-
 const CommunityScreen: React.FC<Props> = ({ route, navigation }) => {
-//   const navigation = useNavigation();
+
+  const [values, setValues] = useState({
+    userInfo: defaultUser,
+    chatId: "x",
+    messages: [],
+    message: "",
+    snackMessage: "",
+    loading: false,
+    showSnackBar: false,
+  });
+
+  const user = auth.currentUser;
+  const userRef = doc(firestore, "users", user.uid);
+  const [snapshot, loading, error] = useDocument(userRef);
 
   const communitiesRef = collection(firestore, "communities");
-  const q = query(communitiesRef);
+  const communitiesQuery = query(communitiesRef);
   const [communitiesSnapshot, communitiesLoading, communitiesError] =
-    useCollection(communitiesRef);
+    useCollection(communitiesQuery);
   const [communities, setCommunities] = useState([]);
+
+  const chatsRef = collection(firestore, "chats");
+  const chatsQuery = query(
+    chatsRef,
+    where("ids", "array-contains", user.uid),
+    // orderBy("timestamp", "desc")
+  );
+  const [chatSnapshot, chatLoading, chatError] = useCollection(chatsQuery);
+
+  useEffect(() => {
+    if (chatSnapshot) {
+      // const data = chatSnapshot.docs
+      setValues({
+        ...values,
+        messages: chatSnapshot.docs
+      });
+    }
+  }, [chatSnapshot]);
+
+  useEffect(() => {
+    if (snapshot && snapshot.exists()) {
+      setValues({
+        ...values,
+        userInfo: {
+          ...defaultUser,
+          ...snapshot.data(),
+        },
+      });
+    }
+  }, [snapshot]);
 
   useEffect(() => {
     if (communitiesSnapshot) {
@@ -159,13 +140,14 @@ const CommunityScreen: React.FC<Props> = ({ route, navigation }) => {
 
       <View>
         <FlatList
-          data={messages}
+          data={values.messages}
           renderItem={({ item }) => (
             <Message
               onPress={() =>
-                navigation.navigate("ChatScreen", { message: item })
+                {}
+                // navigation.navigate("ChatScreen", { userInfo: item })
               }
-              message={item}
+              message={item.data()}
             />
           )}
           keyExtractor={(item) => `${item.id}`}

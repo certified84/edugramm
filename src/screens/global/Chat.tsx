@@ -1,5 +1,9 @@
 import "expo-dev-client";
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+} from "@react-navigation/native";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -22,7 +26,7 @@ import { useCallback, useEffect, useState } from "react";
 import VerifiedIcon from "../../components/VerifiedIcon";
 import { Avatar, TextInput } from "react-native-paper";
 import { SplashIcon } from "../../../assets/svg/SplashIcon";
-import AgoraUIKit from "agora-rn-uikit";
+// import AgoraUIKit from "agora-rn-uikit";
 import { auth, firestore } from "../../../firebase";
 import {
   Timestamp,
@@ -43,9 +47,18 @@ import {
   Send,
   InputToolbar,
 } from "react-native-gifted-chat";
+import { StackParamList } from "../../../types";
+import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 
-export default function ChatScreen({ route }) {
-  const navigation = useNavigation();
+type ScreenRouteProp = RouteProp<StackParamList, "ChatScreen">;
+type NavProp = NavigationProp<StackParamList, "ChatScreen">;
+
+type Props = {
+  route?: ScreenRouteProp;
+  navigation?: NavProp;
+};
+
+const ChatScreen: React.FC<Props> = ({ route, navigation }) => {
   const user = auth.currentUser;
 
   const [values, setValues] = useState({
@@ -115,6 +128,7 @@ export default function ChatScreen({ route }) {
       setValues({
         ...values,
         userInfo: {
+          ...defaultUser,
           ...snapshot.data(),
         },
       });
@@ -172,7 +186,7 @@ export default function ChatScreen({ route }) {
       });
   }
 
-  const [videoCall, setVideoCall] = useState(false);
+  // const [videoCall, setVideoCall] = useState(false);
   const connectionData = {
     appId: "8bc017f304734bc0bb5178fd629e2bd7",
     channel: "test",
@@ -180,9 +194,9 @@ export default function ChatScreen({ route }) {
       "007eJxTYNgxU2xSy1PfZ1xLvjhc5v7/gaN1+rZ1ZcnnVdYE/zd6Nq1bgcEiKdnA0DzN2MDE3NgEyE5KMjU0t0hLMTOyTDVKSjH/+dgrtSGQkSH9hjEDIxSC+CwMJanFJQwMAAzcIjY=",
   };
 
-  const callbacks = {
-    EndCall: () => setVideoCall(false),
-  };
+  // const callbacks = {
+  //   EndCall: () => setVideoCall(false),
+  // };
 
   useEffect(() => {
     navigation.setOptions({
@@ -284,9 +298,10 @@ export default function ChatScreen({ route }) {
     );
   };
 
-  return videoCall ? (
-    <AgoraUIKit connectionData={connectionData} rtcCallbacks={callbacks} />
-  ) : (
+  // videoCall ? (
+  //   <AgoraUIKit connectionData={connectionData} rtcCallbacks={callbacks} />
+  // ) :
+  return (
     <SafeAreaView style={styles.container}>
       <View
         style={{
@@ -361,16 +376,29 @@ export default function ChatScreen({ route }) {
         </TouchableOpacity>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() =>
+              Toast.show({
+                title: "Feature not available",
+                textBody:
+                  "This feature is not available yet. Please check back later.",
+                type: ALERT_TYPE.INFO,
+              })
+            }
             activeOpacity={0.7}
             style={{ padding: SIZES.xxs }}
           >
             <Feather name="phone" size={SIZES.xl} color={COLORS.onSurface} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPressIn={() => setVideoCall(true)}
+            onPress={() =>
+              Toast.show({
+                title: "Feature not available",
+                textBody:
+                  "This feature is not available yet. Please check back later.",
+                type: ALERT_TYPE.INFO,
+              })
+            }
             style={{ padding: SIZES.xxs }}
-            onPress={() => {}}
             activeOpacity={0.7}
           >
             <Feather name="video" size={SIZES.xl} color={COLORS.onSurface} />
@@ -396,7 +424,7 @@ export default function ChatScreen({ route }) {
           // alwaysShowSend
           renderAvatar={null}
           // messagesContainerStyle={{ backgroundColor: 'green'}}
-          textInputStyle={{ color: COLORS.onSurface }}
+          // textInputStyle={{ color: COLORS.onSurface }}
           onSend={(messages) => onSend(messages)}
           user={{ _id: user.uid }}
           scrollToBottom
@@ -437,7 +465,9 @@ export default function ChatScreen({ route }) {
       </View>
     </SafeAreaView>
   );
-}
+};
+
+export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {

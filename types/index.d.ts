@@ -3,9 +3,11 @@ export type StackNavigation = StackNavigationProp<StackParamList>;
 import { RouteProp, NavigationProp } from "@react-navigation/native";
 import { Application, Job } from "../data/models/Job";
 import { Community } from "../src/data/model/Community";
-import {defaultUser, User} from '../src/data/model/User';
+import { defaultUser, User } from "../src/data/model/User";
 
 type StackParamList = {
+  FollowScreen: { userInfo: User };
+  UserDetailScreen: { userInfo: User };
   ExpertiseSelectionScreen: {};
   HomeScreen: {};
   NotificationsScreen: {};
@@ -16,8 +18,7 @@ type StackParamList = {
     showBack: boolean;
     which?: string;
   };
-  BookmarksScreen: {
-  };
+  BookmarksScreen: {};
   JobDetailScreen: {
     job: Job;
     title: string;
@@ -39,15 +40,15 @@ type StackParamList = {
     title: string;
   };
 
-  AddPostScreen: { userInfo: User, communityId: string }
-  CommunityDetailScreen: { communityInfo: Community }
-  CommunityScreen: {}
-  ChatScreen: {}
+  AddPostScreen: { userInfo: User; communityId: string };
+  CommunityDetailScreen: { communityInfo: Community };
+  CommunityScreen: {};
+  ChatScreen: {userInfo: User};
 
-  OnboardingScreen: {}
-  SignupScreen: {}
-  LoginScreen: {}
-  ForgotPasswordScreen: {}
+  OnboardingScreen: {};
+  SignupScreen: {};
+  LoginScreen: {};
+  ForgotPasswordScreen: {};
 };
 
 export type StackNavigation = StackNavigationProp<StackParamList>;

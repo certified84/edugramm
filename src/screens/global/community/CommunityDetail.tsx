@@ -16,7 +16,6 @@ import { followerCount } from "../../../util/Utils";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { auth, firestore } from "../../../../firebase";
 import { useNavigation } from "@react-navigation/native";
-import Constants from "expo-constants";
 import { Avatar, FAB } from "react-native-paper";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 import {
@@ -194,7 +193,7 @@ const CommunityDetailScreen: React.FC<Props> = ({ route, navigation }) => {
                   alignItems: "center",
                   backgroundColor: community.color + "80",
                   position: "absolute",
-                  top: Constants.statusBarHeight,
+                  top: StatusBar.currentHeight,
                 }}
               >
                 <Ionicons

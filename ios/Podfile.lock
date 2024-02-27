@@ -1,38 +1,4 @@
 PODS:
-  - agora-react-native-rtm (1.5.1):
-    - AgoraRtm_iOS (= 1.5.1)
-    - React-Core
-  - AgoraIrisRTC_iOS (4.2.6-build.3)
-  - AgoraRtcEngine_iOS (4.2.6):
-    - AgoraRtcEngine_iOS/AIAEC (= 4.2.6)
-    - AgoraRtcEngine_iOS/AINS (= 4.2.6)
-    - AgoraRtcEngine_iOS/AudioBeauty (= 4.2.6)
-    - AgoraRtcEngine_iOS/ClearVision (= 4.2.6)
-    - AgoraRtcEngine_iOS/ContentInspect (= 4.2.6)
-    - AgoraRtcEngine_iOS/DRM (= 4.2.6)
-    - AgoraRtcEngine_iOS/FaceDetection (= 4.2.6)
-    - AgoraRtcEngine_iOS/ReplayKit (= 4.2.6)
-    - AgoraRtcEngine_iOS/RtcBasic (= 4.2.6)
-    - AgoraRtcEngine_iOS/SpatialAudio (= 4.2.6)
-    - AgoraRtcEngine_iOS/VideoCodecDec (= 4.2.6)
-    - AgoraRtcEngine_iOS/VideoCodecEnc (= 4.2.6)
-    - AgoraRtcEngine_iOS/VirtualBackground (= 4.2.6)
-    - AgoraRtcEngine_iOS/VQA (= 4.2.6)
-  - AgoraRtcEngine_iOS/AIAEC (4.2.6)
-  - AgoraRtcEngine_iOS/AINS (4.2.6)
-  - AgoraRtcEngine_iOS/AudioBeauty (4.2.6)
-  - AgoraRtcEngine_iOS/ClearVision (4.2.6)
-  - AgoraRtcEngine_iOS/ContentInspect (4.2.6)
-  - AgoraRtcEngine_iOS/DRM (4.2.6)
-  - AgoraRtcEngine_iOS/FaceDetection (4.2.6)
-  - AgoraRtcEngine_iOS/ReplayKit (4.2.6)
-  - AgoraRtcEngine_iOS/RtcBasic (4.2.6)
-  - AgoraRtcEngine_iOS/SpatialAudio (4.2.6)
-  - AgoraRtcEngine_iOS/VideoCodecDec (4.2.6)
-  - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.6)
-  - AgoraRtcEngine_iOS/VirtualBackground (4.2.6)
-  - AgoraRtcEngine_iOS/VQA (4.2.6)
-  - AgoraRtm_iOS (1.5.1)
   - AppAuth (1.6.2):
     - AppAuth/Core (= 1.6.2)
     - AppAuth/ExternalUserAgent (= 1.6.2)
@@ -61,17 +27,17 @@ PODS:
   - EXJSONUtils (0.7.1)
   - EXManifests (0.7.2):
     - ExpoModulesCore
-  - Expo (49.0.22):
+  - Expo (49.0.23):
     - ExpoModulesCore
-  - expo-dev-client (2.4.12):
+  - expo-dev-client (2.4.13):
     - EXManifests
     - expo-dev-launcher
     - expo-dev-menu
     - expo-dev-menu-interface
     - EXUpdatesInterface
-  - expo-dev-launcher (2.4.14):
+  - expo-dev-launcher (2.4.15):
     - EXManifests
-    - expo-dev-launcher/Main (= 2.4.14)
+    - expo-dev-launcher/Main (= 2.4.15)
     - expo-dev-menu
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -79,7 +45,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-launcher/Main (2.4.14):
+  - expo-dev-launcher/Main (2.4.15):
     - EXManifests
     - expo-dev-launcher/Unsafe
     - expo-dev-menu
@@ -89,7 +55,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-launcher/Unsafe (2.4.14):
+  - expo-dev-launcher/Unsafe (2.4.15):
     - EXManifests
     - expo-dev-menu
     - expo-dev-menu-interface
@@ -98,23 +64,23 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - React-RCTAppDelegate
-  - expo-dev-menu (3.2.2):
-    - expo-dev-menu/Main (= 3.2.2)
+  - expo-dev-menu (3.2.4):
+    - expo-dev-menu/Main (= 3.2.4)
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - expo-dev-menu-interface (1.3.0)
-  - expo-dev-menu/Main (3.2.2):
+  - expo-dev-menu/Main (3.2.4):
     - EXManifests
     - expo-dev-menu-interface
     - expo-dev-menu/Vendored
     - ExpoModulesCore
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - expo-dev-menu/SafeAreaView (3.2.2):
+  - expo-dev-menu/SafeAreaView (3.2.4):
     - ExpoModulesCore
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - expo-dev-menu/Vendored (3.2.2):
+  - expo-dev-menu/Vendored (3.2.4):
     - expo-dev-menu/SafeAreaView
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -122,6 +88,8 @@ PODS:
     - ExpoModulesCore
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - ExpoDocumentPicker (11.5.4):
+    - ExpoModulesCore
   - ExpoImagePicker (14.3.2):
     - ExpoModulesCore
   - ExpoKeepAwake (12.3.0):
@@ -156,24 +124,24 @@ PODS:
     - React-Core (= 0.72.6)
     - React-jsi (= 0.72.6)
     - ReactCommon/turbomodule/core (= 0.72.6)
-  - Firebase/Auth (10.19.0):
+  - Firebase/Auth (10.20.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.19.0)
-  - Firebase/CoreOnly (10.19.0):
-    - FirebaseCore (= 10.19.0)
-  - FirebaseAppCheckInterop (10.20.0)
-  - FirebaseAuth (10.19.0):
+    - FirebaseAuth (~> 10.20.0)
+  - Firebase/CoreOnly (10.20.0):
+    - FirebaseCore (= 10.20.0)
+  - FirebaseAppCheckInterop (10.21.0)
+  - FirebaseAuth (10.20.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseCore (10.19.0):
+  - FirebaseCore (10.20.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
-  - FirebaseCoreInternal (10.20.0):
+  - FirebaseCoreInternal (10.21.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - fmt (6.2.1)
   - glog (0.3.5)
@@ -208,7 +176,7 @@ PODS:
   - lottie-react-native (5.1.6):
     - lottie-ios (~> 3.4.0)
     - React-Core
-  - PromisesObjC (2.3.1)
+  - PromisesObjC (2.4.0)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -510,14 +478,9 @@ PODS:
   - React-jsinspector (0.72.6)
   - React-logger (0.72.6):
     - glog
-  - react-native-agora (4.2.6):
-    - AgoraIrisRTC_iOS (= 4.2.6-build.3)
-    - AgoraRtcEngine_iOS (= 4.2.6)
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core
   - react-native-pager-view (6.2.0):
     - React-Core
-  - react-native-paystack-webview (4.0.3):
+  - react-native-paystack-webview (4.1.4):
     - React
   - react-native-safe-area-context (4.6.3):
     - RCT-Folly
@@ -638,15 +601,15 @@ PODS:
     - React-logger (= 0.72.6)
     - React-perflogger (= 0.72.6)
   - RecaptchaInterop (100.0.0)
-  - RNCAsyncStorage (1.21.0):
+  - RNCAsyncStorage (1.22.2):
     - React-Core
   - RNCMaskedView (0.2.9):
     - React-Core
-  - RNFBApp (18.7.3):
-    - Firebase/CoreOnly (= 10.19.0)
+  - RNFBApp (18.9.0):
+    - Firebase/CoreOnly (= 10.20.0)
     - React-Core
-  - RNFBAuth (18.7.3):
-    - Firebase/Auth (= 10.19.0)
+  - RNFBAuth (18.9.0):
+    - Firebase/Auth (= 10.20.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (2.12.1):
@@ -694,7 +657,6 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
-  - agora-react-native-rtm (from `../node_modules/agora-react-native-rtm`)
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EASClient (from `../node_modules/expo-eas-client/ios`)
@@ -712,6 +674,7 @@ DEPENDENCIES:
   - expo-dev-menu (from `../node_modules/expo-dev-menu`)
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - "ExpoAdapterGoogleSignIn (from `../node_modules/@react-native-google-signin/google-signin/expo/ios`)"
+  - ExpoDocumentPicker (from `../node_modules/expo-document-picker/ios`)
   - ExpoImagePicker (from `../node_modules/expo-image-picker/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
@@ -741,7 +704,6 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-agora (from `../node_modules/react-native-agora`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-paystack-webview (from `../node_modules/react-native-paystack-webview`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -777,9 +739,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AgoraIrisRTC_iOS
-    - AgoraRtcEngine_iOS
-    - AgoraRtm_iOS
     - AppAuth
     - ASN1Decoder
     - Firebase
@@ -800,8 +759,6 @@ SPEC REPOS:
     - SocketRocket
 
 EXTERNAL SOURCES:
-  agora-react-native-rtm:
-    :path: "../node_modules/agora-react-native-rtm"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -836,6 +793,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoAdapterGoogleSignIn:
     :path: "../node_modules/@react-native-google-signin/google-signin/expo/ios"
+  ExpoDocumentPicker:
+    :path: "../node_modules/expo-document-picker/ios"
   ExpoImagePicker:
     :path: "../node_modules/expo-image-picker/ios"
   ExpoKeepAwake:
@@ -891,8 +850,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
-  react-native-agora:
-    :path: "../node_modules/react-native-agora"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-paystack-webview:
@@ -959,10 +916,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  agora-react-native-rtm: 20cd594088d33caa46c75f2d079efbac62848cec
-  AgoraIrisRTC_iOS: 8346499b82968a4967e3d0bec2cf14bf7c0c3f76
-  AgoraRtcEngine_iOS: ac647332ad8f86d79cf810601c9e62b28c3a4de0
-  AgoraRtm_iOS: 595a9fa33a409831e6183396ea8f8bc563918403
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   ASN1Decoder: 4f4bbcaf1d1b8be56daa3280e82863a607f5bda9
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
@@ -976,12 +929,13 @@ SPEC CHECKSUMS:
   EXImageLoader: 34b214f9387e98f3c73989f15d8d5b399c9ab3f7
   EXJSONUtils: 6802be4282d42b97c51682468ddc1026a06f8276
   EXManifests: cf66451b11b2c2f6464917528d792759f7fd6ce0
-  Expo: 9060b49fecf07bebf1dd967730d079aa5e750ebe
-  expo-dev-client: 1e20e0d67534fd63da37604747a60e7d69fc46f5
-  expo-dev-launcher: e9411e0c91abaa448682d0fa688957e7dbff356e
-  expo-dev-menu: f7036f78c69f0f6ecb386f5543a06266dde64bf5
+  Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
+  expo-dev-client: f350e6ddced33d2c14008c6d70c7904c0cd78b1f
+  expo-dev-launcher: 3c29a60a0e17e62d02cddcb6c106a25f63f1c75c
+  expo-dev-menu: c5f789b6228f4176f83a1f47dba54350e63437e1
   expo-dev-menu-interface: bda969497e73dadc2663c479e0fa726ca79a306e
   ExpoAdapterGoogleSignIn: 6c55782832b7fbdc2c27dac05ef00445c103b8f3
+  ExpoDocumentPicker: 5cb7389ff935b4addefdd466a606de51a512e922
   ExpoImagePicker: c58fdf28be551681a8edc550bcec76c397a8dfcd
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoModulesCore: cf14fc49a3d5df3ed3cf2a38fc758d073bfd1c13
@@ -991,11 +945,11 @@ SPEC CHECKSUMS:
   EXUpdatesInterface: 82ed48d417cdcd376c12ca1c2ce390d35500bed6
   FBLazyVector: 748c0ef74f2bf4b36cfcccf37916806940a64c32
   FBReactNativeSpec: 966f29e4e697de53a3b366355e8f57375c856ad9
-  Firebase: 63ce8ece0d43743dc28eacac0c6867a2d7fd5a9d
-  FirebaseAppCheckInterop: e81bdb1cdb82f8e0cef353ba5018a8402682032c
-  FirebaseAuth: 2492acdcd1245d841fabdf58a050d6aa07dfce3f
-  FirebaseCore: dc5c7badf99d47613c52b2e3a57a64cd187f8554
-  FirebaseCoreInternal: efeeb171ac02d623bdaefe121539939821e10811
+  Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
+  FirebaseAppCheckInterop: 69fc7d8f6a1cbfa973efb8d1723651de30d12525
+  FirebaseAuth: 9c5c400d2c3055d8ae3a0284944c86fa95d48dac
+  FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
+  FirebaseCoreInternal: 43c1788eaeee9d1b97caaa751af567ce11010d00
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
@@ -1006,7 +960,7 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   lottie-ios: 8f97d3271e155c2d688875c29cd3c74908aef5f8
   lottie-react-native: 8f9d4be452e23f6e5ca0fdc11669dc99ab52be81
-  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 28469809442eb4eb5528462705f7d852948c8a74
   RCTTypeSafety: e9c6c409fca2cc584e5b086862d562540cb38d29
@@ -1023,9 +977,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 3bf18ff7cb03cd8dfdce08fbbc0d15058c1d71ae
   React-jsinspector: 194e32c6aab382d88713ad3dd0025c5f5c4ee072
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
-  react-native-agora: 7026292738f2de759f532938db629c7acda377af
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
-  react-native-paystack-webview: d8ed4a0300c7872673e186294cb6176cca46c696
+  react-native-paystack-webview: db1cbcc4aee27f1d6a05f90f8569a54508e6b19b
   react-native-safe-area-context: 36cc67648134e89465663b8172336a19eeda493d
   react-native-webview: b8ec89966713985111a14d6e4bf98d8b54bced0d
   React-NativeModulesApple: 02e35e9a51e10c6422f04f5e4076a7c02243fff2
@@ -1046,10 +999,10 @@ SPEC CHECKSUMS:
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
+  RNCAsyncStorage: 014a78b2cc8cc107c9e92ee428dc0c1ac3223416
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
-  RNFBApp: c21258de1485419a845efbba9c09ec946c89891d
-  RNFBAuth: 079bb1bc37a912a277aedf366fe5bf4632b069c9
+  RNFBApp: a3e139715386fe79a09c387f2dbeb6890eb05b39
+  RNFBAuth: b967a31a2ce307557a4237564d8e5f7cd83a316f
   RNGestureHandler: c0d04458598fcb26052494ae23dda8f8f5162b13
   RNGoogleSignin: aac5c1ec73422109dec1da770247a1e410dcc620
   RNReanimated: 9f7068e43b9358a46a688d94a5a3adb258139457
